@@ -1,0 +1,1 @@
+"/Applications/wechatwebdevtools.app/Contents/MacOS/cli" cloud functions deploy --e gt-prod-9gnqj4ed4afe96df --n quickstartFunctions --r --project "/Users/choco/WeChatProjects/gt" --report_first --report
