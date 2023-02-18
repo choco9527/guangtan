@@ -33,11 +33,11 @@
     "backgroundColor": "#000000",
     "list": [
       {
-        "pagePath": "page/component/index",
+        "pagePath": "pages/index/index",
         "text": "组件"
       },
       {
-        "pagePath": "page/searchList/index",
+        "pagePath": "pages/searchList/index",
         "text": "搜索"
       }
     ]
