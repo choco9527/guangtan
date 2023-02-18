@@ -12,16 +12,13 @@
     "pages/updateRecordSuccess/index",
     "pages/sumRecord/index",
     "pages/sumRecordResult/index",
-    "pages/searchList",
-    "pages/custom-tab-bar",
-    "pages/custom-tab-bar/index",
     "pages/searchList/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarTitleText": "廣探",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",
