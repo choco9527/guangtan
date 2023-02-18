@@ -7,5 +7,8 @@
     "test": ""
   },
   "author": "CHOCO",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@vant/weapp": "^1.10.13"
+  }
 }
