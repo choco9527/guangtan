@@ -1,6 +1,5 @@
 <van-tabbar active="{{ active }}" bind:change="onChange">
-    <van-tabbar-item icon="home-o">标签</van-tabbar-item>
-    <van-tabbar-item icon="search" dot>标签</van-tabbar-item>
-    <van-tabbar-item icon="friends-o" info="5">标签</van-tabbar-item>
-    <van-tabbar-item icon="setting-o" info="20">标签</van-tabbar-item>
+    <van-tabbar-item icon="location">地图</van-tabbar-item>
+    <van-tabbar-item icon="like">聚焦</van-tabbar-item>
+    <van-tabbar-item icon="star">星标</van-tabbar-item>
 </van-tabbar>

@@ -12,7 +12,8 @@
     "pages/updateRecordSuccess/index",
     "pages/sumRecord/index",
     "pages/sumRecordResult/index",
-    "pages/searchList/index"
+    "pages/searchList/index",
+    "pages/userPage/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -30,12 +31,13 @@
     "backgroundColor": "#000000",
     "list": [
       {
-        "pagePath": "pages/index/index",
-        "text": "组件"
+        "pagePath": "pages/index/index"
       },
       {
-        "pagePath": "pages/searchList/index",
-        "text": "搜索"
+        "pagePath": "pages/searchList/index"
+      },
+      {
+        "pagePath": "pages/userPage/index"
       }
     ]
   },
