@@ -1,5 +1,6 @@
-Page({
+import {$q} from '../../request'
 
+Page({
   /**
    * 页面的初始数据
    */
@@ -21,15 +22,7 @@ Page({
       title: '',
     });
     console.log(this.data.envId);
-    wx.cloud.callFunction({
-      name: 'quickstartFunctions',
-      config: {
-        env: this.data.envId
-      },
-      data: {
-        type: 'getOpenId'
-      }
-    }).then((resp) => {
+    $q('getOpenId').then(resp => {
       console.log(resp);
 
       this.setData({

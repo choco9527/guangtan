@@ -9,10 +9,10 @@ exports.main = async (event, context) => {
   // 获取基础信息
   const wxContext = cloud.getWXContext();
   console.log('日志 获取基础信息', wxContext);
-
   return {
     openid: wxContext.OPENID,
     appid: wxContext.APPID,
     unionid: wxContext.UNIONID,
+    choco: 123
   };
 };

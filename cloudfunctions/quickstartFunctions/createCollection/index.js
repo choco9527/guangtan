@@ -9,7 +9,7 @@ const db = cloud.database();
 // 创建集合云函数入口函数
 exports.main = async (event, context) => {
   try {
-    
+    console.log('choco创建集合云函数入口函数');
     // 创建集合
     const res = await db.createCollection('sales');
     console.log('创建集合云函数入口函数choco', res)

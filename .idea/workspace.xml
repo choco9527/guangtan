@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1c1df578-55ff-474e-917d-6153d05846c8" name="默认变更列表" comment="列表添加">
-      <change afterPath="$PROJECT_DIR$/miniprogram/request.js" afterDir="false" />
+    <list default="true" id="1c1df578-55ff-474e-917d-6153d05846c8" name="默认变更列表" comment="云函数调试">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cloudfunctions/quickstartFunctions/createCollection/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/cloudfunctions/quickstartFunctions/createCollection/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cloudfunctions/quickstartFunctions/getOpenId/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/cloudfunctions/quickstartFunctions/getOpenId/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/miniprogram/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/miniprogram/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/miniprogram/pages/getOpenId/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/miniprogram/pages/getOpenId/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/miniprogram/pages/index/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/miniprogram/pages/index/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/miniprogram/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/miniprogram/request.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +70,8 @@
       <workItem from="1676738746334" duration="227000" />
       <workItem from="1676773745074" duration="192000" />
       <workItem from="1676773953510" duration="18936000" />
-      <workItem from="1676816296521" duration="1491000" />
+      <workItem from="1676816296521" duration="1510000" />
+      <workItem from="1676821366787" duration="1247000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1676730175177</created>
@@ -136,7 +136,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676807735341</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="云函数调试">
+      <created>1676818738307</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1676818738307</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -158,7 +165,8 @@
     <MESSAGE value="init" />
     <MESSAGE value="tabbar" />
     <MESSAGE value="列表添加" />
-    <option name="LAST_COMMIT_MESSAGE" value="列表添加" />
+    <MESSAGE value="云函数调试" />
+    <option name="LAST_COMMIT_MESSAGE" value="云函数调试" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

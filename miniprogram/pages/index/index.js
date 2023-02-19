@@ -114,26 +114,18 @@ Page({
     wx.showLoading({
       title: '',
     });
-    wx.cloud.callFunction({
-      name: 'quickstartFunctions',
-      config: {
-        env: this.data.selectedEnv.envId
-      },
-      data: {
-        type: 'createCollection'
-      }
-    }).then((resp) => {
-      console.log('createCollection', resp);
-      if (resp.result.success) {
+    $q('createCollection')
+      .then(resp => {
+        if (resp.success) {
+          this.setData({
+            haveCreateCollection: true
+          });
+        }
         this.setData({
-          haveCreateCollection: true
+          powerList
         });
-      }
-      this.setData({
-        powerList
-      });
-      wx.hideLoading();
-    }).catch((e) => {
+        wx.hideLoading();
+      }).catch((e) => {
       console.log(e);
       this.setData({
         showUploadTip: true
