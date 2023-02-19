@@ -1,5 +1,0 @@
-<van-tabbar active="{{ active }}" bind:change="onChange">
-    <van-tabbar-item icon="location">地图</van-tabbar-item>
-    <van-tabbar-item icon="like">聚焦</van-tabbar-item>
-    <van-tabbar-item icon="star">星标</van-tabbar-item>
-</van-tabbar>

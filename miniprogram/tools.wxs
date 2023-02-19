@@ -1,0 +1,27 @@
+function parsePlayNum(num) {
+  if (num > Math.pow(10, 4)) {
+    var k = Math.floor(num / Math.pow(10, 3)).toString().slice(-1)
+    var w = Math.floor(num / Math.pow(10, 4))
+    return w + '.' + k + 'w'
+  } else {
+    return num
+  }
+}
+
+function formatDate(s) {
+  var t = getDate(s * Math.pow(10,3))
+  var n = getDate().getTime()
+    , r = t.getTime()
+    , o = n - r,
+    e = getDate(); // 现在
+
+  var just = 6 * Math.pow(10, 4)
+  var min = 36 * Math.pow(10, 5)
+  var hour = 864 * Math.pow(10, 5)
+  return o < just ? "刚刚" : o < min ? Math.floor(o / just) + "分钟前" : o < hour ? Math.floor(o / min) + "小时前" : r >= getDate(e.getFullYear(), e.getMonth(), e.getDate() - 1).getTime() ? "昨天" : r >= getDate(e.getFullYear(), 0, 1).getTime() ? t.getMonth() + 1 + "-" + t.getDate() : t.getFullYear() + "-" + (t.getMonth() + 1) + "-" + t.getDate()
+}
+
+module.exports = {
+  parsePlayNum: parsePlayNum,
+  formatDate: formatDate
+};

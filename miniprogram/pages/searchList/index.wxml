@@ -1,2 +1,49 @@
-<!--pages/searchList/index.wxml-->
-<text>666</text>
+<wxs src="../../tools.wxs" module="tools"/>
+
+<view class="search-page">
+    <van-sticky>
+        <van-nav-bar>
+            <view slot="left">
+                <van-search
+                        shape="round"
+                        value="{{ value }}"
+                        placeholder=""
+                        bind:search="onSearch"
+                        use-left-icon-slot
+                >
+                    <view slot="left-icon">
+                        <image class="w-18 h-18 mt-6" src="/images/tabbar/search-2.png"></image>
+                    </view>
+                </van-search>
+            </view>
+        </van-nav-bar>
+    </van-sticky>
+
+    <scroll-view>
+        <view wx:for="{{list}}" wx:key="aid">
+            <van-card
+                    num="2"
+                    price="2.00"
+                    desc="{{item.play}}"
+                    title="{{ item.title }}"
+            >
+                <view slot="thumb">
+                    <view>
+                        <image mode="widthFix" class="w-88 h-56 br-4 over-hide" src="{{item.pic}}"></image>
+                        <van-row class="text-sec fs-10">
+                            <van-col span="12">
+                                <van-icon name="play-circle"/>
+                                <van-icon name="fire" {{item.meta.}} />
+                                <text>{{tools.parsePlayNum(item.play)}}</text>
+                            </van-col>
+                            <van-col span="12">
+                                <text>{{tools.formatDate(item.created)}}</text>
+                            </van-col>
+                        </van-row>
+
+                    </view>
+                </view>
+            </van-card>
+        </view>
+    </scroll-view>
+</view>

@@ -25,19 +25,26 @@
   "sitemapLocation": "sitemap.json",
   "style": "v2",
   "tabBar": {
-    "custom": true,
-    "color": "#000000",
-    "selectedColor": "#000000",
-    "backgroundColor": "#000000",
+    "color": "#dbdbdb",
+    "selectedColor": "#2c2c2c",
+    "backgroundColor": "#f4f4f4",
     "list": [
       {
-        "pagePath": "pages/index/index"
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tabbar/shouye-2.png",
+        "selectedIconPath": "images/tabbar/shouye.png"
       },
       {
-        "pagePath": "pages/searchList/index"
-      },
-      {
-        "pagePath": "pages/userPage/index"
+        "pagePath": "pages/searchList/index",
+        "text": "聚焦",
+        "iconPath": "images/tabbar/search-2.png",
+        "selectedIconPath": "images/tabbar/search.png"
+      }, {
+        "pagePath": "pages/userPage/index",
+        "text": "我的",
+        "iconPath": "images/tabbar/me-2.png",
+        "selectedIconPath": "images/tabbar/me.png"
       }
     ]
   },
@@ -45,6 +52,15 @@
     "van-button": "@vant/weapp/button/index",
     "van-config-provider": "@vant/weapp/config-provider/index",
     "van-tabbar": "@vant/weapp/tabbar/index",
-    "van-tabbar-item": "@vant/weapp/tabbar-item/index"
+    "van-tabbar-item": "@vant/weapp/tabbar-item/index",
+    "van-nav-bar": "@vant/weapp/nav-bar/index",
+    "van-search": "@vant/weapp/search/index",
+    "van-toast": "@vant/weapp/toast/index",
+    "van-image": "@vant/weapp/image/index",
+    "van-card": "@vant/weapp/card/index",
+    "van-sticky": "@vant/weapp/sticky/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-row": "@vant/weapp/row/index",
+    "van-col": "@vant/weapp/col/index"
   }
 }

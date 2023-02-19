@@ -1,1 +1,5 @@
-/* pages/searchList/index.wxss */
+.search-page .van-search {
+  background: transparent !important;
+}
+
+/*# sourceMappingURL=index.wxss.map */
