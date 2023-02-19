@@ -20,7 +20,8 @@ Page({
     wx.showLoading({
       title: '',
     });
-   wx.cloud.callFunction({
+    console.log(this.data.envId);
+    wx.cloud.callFunction({
       name: 'quickstartFunctions',
       config: {
         env: this.data.envId
@@ -29,9 +30,11 @@ Page({
         type: 'getOpenId'
       }
     }).then((resp) => {
+      console.log(resp);
+
       this.setData({
         haveGetOpenId: true,
-        openId: resp.result.openid
+        openId: resp.result.userInfo.openId
       });
      wx.hideLoading();
    }).catch((e) => {

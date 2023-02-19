@@ -9,8 +9,11 @@ const db = cloud.database();
 // 创建集合云函数入口函数
 exports.main = async (event, context) => {
   try {
+    
     // 创建集合
-    await db.createCollection('sales');
+    const res = await db.createCollection('sales');
+    console.log('创建集合云函数入口函数choco', res)
+
     await db.collection('sales').add({
       // data 字段表示需新增的 JSON 数据
       data: {

@@ -1,6 +1,7 @@
 // index.js
 // const app = getApp()
-const { envList } = require('../../envList.js');
+const {envList} = require('../../envList.js');
+import {$q} from '../../request'
 
 Page({
   data: {
@@ -13,17 +14,17 @@ Page({
         title: '获取OpenId',
         page: 'getOpenId'
       },
-      //  {
-      //   title: '微信支付'
-      // },
-       {
-        title: '生成小程序码',
-        page: 'getMiniProgramCode'
-      },
-      // {
-      //   title: '发送订阅消息',
-      // }
-    ]
+        //  {
+        //   title: '微信支付'
+        // },
+        {
+          title: '生成小程序码',
+          page: 'getMiniProgramCode'
+        },
+        // {
+        //   title: '发送订阅消息',
+        // }
+      ]
     }, {
       title: '数据库',
       tip: '安全稳定的文档型数据库',
@@ -82,7 +83,7 @@ Page({
       success: (res) => {
         this.onChangeSelectedEnv(res.tapIndex);
       },
-      fail (res) {
+      fail(res) {
         console.log(res.errMsg);
       }
     });
@@ -122,6 +123,7 @@ Page({
         type: 'createCollection'
       }
     }).then((resp) => {
+      console.log('createCollection', resp);
       if (resp.result.success) {
         this.setData({
           haveCreateCollection: true

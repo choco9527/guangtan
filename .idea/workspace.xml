@@ -2,31 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1c1df578-55ff-474e-917d-6153d05846c8" name="默认变更列表" comment="列表添加">
-      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/miniprogram/app.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/miniprogram/app.wxss.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/miniprogram/images/tabbar/me-2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/miniprogram/images/tabbar/me.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/miniprogram/images/tabbar/search-2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/miniprogram/images/tabbar/search.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/miniprogram/images/tabbar/shouye-2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/miniprogram/images/tabbar/shouye.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/miniprogram/pages/searchList/index.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/miniprogram/pages/searchList/index.wxss.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/miniprogram/tools.wxs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/minitest/test.config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/miniprogram/request.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/miniprogram/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/miniprogram/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/miniprogram/app.wxss" beforeDir="false" afterPath="$PROJECT_DIR$/miniprogram/app.wxss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/miniprogram/custom-tab-bar/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/miniprogram/custom-tab-bar/index.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/miniprogram/custom-tab-bar/index.wxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/miniprogram/custom-tab-bar/index.wxss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/miniprogram/pages/searchList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/miniprogram/pages/searchList/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/miniprogram/pages/searchList/index.json" beforeDir="false" afterPath="$PROJECT_DIR$/miniprogram/pages/searchList/index.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/miniprogram/pages/searchList/index.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/miniprogram/pages/searchList/index.wxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/miniprogram/pages/searchList/index.wxss" beforeDir="false" afterPath="$PROJECT_DIR$/miniprogram/pages/searchList/index.wxss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project.private.config.json" beforeDir="false" afterPath="$PROJECT_DIR$/project.private.config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloudfunctions/quickstartFunctions/createCollection/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/cloudfunctions/quickstartFunctions/createCollection/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cloudfunctions/quickstartFunctions/getOpenId/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/cloudfunctions/quickstartFunctions/getOpenId/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/miniprogram/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/miniprogram/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/miniprogram/pages/getOpenId/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/miniprogram/pages/getOpenId/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/miniprogram/pages/index/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/miniprogram/pages/index/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +19,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Less File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -87,7 +70,8 @@
       <workItem from="1676736860504" duration="1065000" />
       <workItem from="1676738746334" duration="227000" />
       <workItem from="1676773745074" duration="192000" />
-      <workItem from="1676773953510" duration="16655000" />
+      <workItem from="1676773953510" duration="18936000" />
+      <workItem from="1676816296521" duration="1491000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1676730175177</created>
@@ -145,7 +129,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676807593266</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="列表添加">
+      <created>1676807735341</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1676807735341</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
