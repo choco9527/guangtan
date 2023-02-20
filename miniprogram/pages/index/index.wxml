@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="home-page container">
   <view class="title">
-    <van-button round type="primary">朴素按钮</van-button>
+    <van-button bindtap="createBiliCollection" round type="primary">朴素按钮</van-button>
   </view>
 
   <view class="top_tip">免鉴权接口调用 免部署后台 高并发</view>

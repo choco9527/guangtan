@@ -16,3 +16,18 @@ export function $q(type) {
     })
   })
 }
+
+export function $req(type) {
+  return new Promise((resolve, reject) => {
+    wx.cloud.callFunction({
+      name: 'mFunctions',
+      config: {env: selectedEnv.envId},
+      data: {type}
+    }).then(res => {
+      console.log('$req: ' + type, res)
+      resolve(res.result)
+    }).catch(e => {
+      reject(e)
+    })
+  })
+}

@@ -1,7 +1,7 @@
 // index.js
 // const app = getApp()
 const {envList} = require('../../envList.js');
-import {$q} from '../../request'
+import {$q,$req} from '../../request'
 
 Page({
   data: {
@@ -62,6 +62,16 @@ Page({
     envList,
     selectedEnv: envList[0],
     haveCreateCollection: false
+  },
+
+  createBiliCollection() {
+    wx.showLoading();
+    // 创建bilibili数据库
+    $req('createCollection')
+      .then(resp => {
+        console.log(resp);
+        wx.hideLoading();
+      })
   },
 
   onClickPowerInfo(e) {
