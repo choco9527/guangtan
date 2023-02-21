@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1c1df578-55ff-474e-917d-6153d05846c8" name="默认变更列表" comment="创建云函数 mFunction" />
+    <list default="true" id="1c1df578-55ff-474e-917d-6153d05846c8" name="默认变更列表" comment="创建云函数 mFunction">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -69,6 +72,8 @@
       <workItem from="1676816296521" duration="1510000" />
       <workItem from="1676821366787" duration="1508000" />
       <workItem from="1676898653370" duration="2799000" />
+      <workItem from="1676944250006" duration="59000" />
+      <workItem from="1676977603836" duration="46000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1676730175177</created>
@@ -168,7 +173,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676901712680</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="创建云函数 mFunction">
+      <created>1676944298312</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1676944298312</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
