@@ -1,5 +1,6 @@
 const cloud = require('wx-server-sdk');
-const rp = require('request-promise');
+const axios = require('axios');
+import {bApiList} from "../utils";
 
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
@@ -8,11 +9,15 @@ cloud.init({
 // 创建集合云函数入口函数
 exports.main = async (event, context) => {
   try {
-    console.log('test');
-    // 创建集合
+    console.log('获取b站列表信息');
+    // 获取b站列表信息
 
-    const biliRes = await rp('https://api.bilibili.com/x/space/wbi/arc/search?mid=429582883&ps=30&tid=0&pn=1&keyword=&order=pubdate&order_avoided=true&w_rid=d7d946e528c33357cbfa25b769f311f9&wts=1676807041c')
-    console.log(biliRes);
+    const biliRes = await axios.get(bApiList)
+    let list = []
+    if (biliRes.data && biliRes.data.code===0){
+      list = biliRes.data.list.vList
+    }
+    console.log(list);
 
     return {
       success: true

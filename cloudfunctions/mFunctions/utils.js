@@ -1,16 +1,3 @@
-// // 云函数入口文件
-// const cloud = require('wx-server-sdk')
-// var rp = require('request-promise');
-// cloud.init()
-//
-// // 云函数入口函数
-// exports.main = async (event, context) => {
-//   let url = 'https://www.baidu.com';
-//   return await rp(url)
-//     .then(function (res) {
-//       return res
-//     })
-//     .catch(function (err) {
-//       return '失败'
-//     });
-// }
+export const bApiList = { // b请求api列表
+  list: 'https://api.bilibili.com/x/space/wbi/arc/search?mid=429582883&ps=30&tid=0&pn=1&order=pubdate&order_avoided=true',
+}
