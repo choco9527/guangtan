@@ -9,7 +9,7 @@ export function $q(type) {
       config: {env: selectedEnv.envId},
       data: {type}
     }).then(res => {
-      console.log('$q: ' + type, res)
+      console.log('$q: ' + type, res.result)
       resolve(res.result)
     }).catch(e => {
       reject(e)
@@ -17,14 +17,14 @@ export function $q(type) {
   })
 }
 
-export function $req(type) {
+export function $req(type, params = {}) {
   return new Promise((resolve, reject) => {
     wx.cloud.callFunction({
       name: 'mFunctions',
       config: {env: selectedEnv.envId},
-      data: {type}
+      data: {type, ...params}
     }).then(res => {
-      console.log('$req: ' + type, res)
+      console.log('$req: ' + type, res.result)
       resolve(res.result)
     }).catch(e => {
       reject(e)

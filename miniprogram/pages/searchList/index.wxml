@@ -4,44 +4,58 @@
     <van-sticky>
         <van-nav-bar>
             <view slot="left">
-                <van-search
-                        shape="round"
-                        value="{{ value }}"
-                        placeholder=""
-                        bind:search="onSearch"
-                        use-left-icon-slot
-                >
-                    <view slot="left-icon">
-                        <image class="w-18 h-18 mt-6" src="/images/tabbar/search-2.png"></image>
-                    </view>
-                </van-search>
+                <van-search shape="round" value="{{ search }}"
+                            bind:search="onSearch"
+                            placeholder="想吃的🔍"
+                            clearable
+                            custom-class="c-search"
+                />
+
             </view>
         </van-nav-bar>
+        <van-dropdown-menu>
+            <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}"/>
+            <van-dropdown-item value="{{ value2 }}" options="{{ option2 }}"/>
+        </van-dropdown-menu>
+
     </van-sticky>
 
-    <scroll-view>
-        <view wx:for="{{list}}" wx:key="aid">
-            <van-card
-                    num="2"
-                    price="2.00"
-                    desc="{{item.play}}"
-                    title="{{ item.title }}"
-            >
-                <view slot="thumb">
-                    <view>
-                        <image mode="widthFix" class="w-88 h-56 br-4 over-hide" src="{{item.pic}}"></image>
-                        <van-row class="text-sec fs-10">
-                            <van-col span="12">
-<!--                                <van-icon name="play-circle"/>-->
-                                <van-icon name="fire"  />
-                                <text>{{tools.parsePlayNum(item.video_review)}}</text>
-                            </van-col>
-                            <van-col span="12">
-                                <text>{{tools.formatDate(item.created)}}</text>
-                            </van-col>
-                        </van-row>
 
-                    </view>
+    <scroll-view scroll-y
+                 bindscrolltolower="onScrollToEnd"
+                 lower-threshold="20px"
+                 refresher-enabled
+                 bindrefresherrefresh="onPullDown"
+                 enable-passive
+                 refresher-triggered="{{ pulling }}"
+                 class="main-list"
+    >
+        <view wx:for="{{list}}" wx:key="aid">
+            <van-card title="{{ item.title }}">
+                <van-row slot="desc" class="text-sec fs-12">
+                    <van-col span="6">
+                        <van-icon name="eye-o" />
+                        <text>{{tools.parsePlayNum(item.play)}}</text>
+                    </van-col>
+                    <van-col span="6">
+                        <van-icon name="comment-circle-o" />
+                        <text>{{tools.parsePlayNum(item.comment)}}</text>
+                    </van-col>
+                    <van-col span="6">
+                        <van-icon name="chat-o" />
+                        <text>{{tools.parsePlayNum(item.video_review)}}</text>
+                    </van-col>
+                    <van-col span="6" class="t-right">
+                        <text>{{tools.formatDate(item.created)}}</text>
+                    </van-col>
+
+                </van-row>
+                <view slot="thumb">
+                    <image mode="widthFix" class="w-88 h-56 br-4 over-hide" src="{{item.pic}}"></image>
+                </view>
+                <view slot="price-top">
+                </view>
+                <view slot="price">
                 </view>
             </van-card>
         </view>

@@ -1,5 +1,10 @@
 .search-page {
-  .van-search {
+  .c-search {
     background: transparent !important;
+    max-width: calc(100vw - 120px);
+  }
+
+  .main-list {
+    max-height: calc(100vh - 66px);
   }
 }

@@ -61,6 +61,8 @@
     "van-sticky": "@vant/weapp/sticky/index",
     "van-icon": "@vant/weapp/icon/index",
     "van-row": "@vant/weapp/row/index",
-    "van-col": "@vant/weapp/col/index"
+    "van-col": "@vant/weapp/col/index",
+    "van-dropdown-menu": "@vant/weapp/dropdown-menu/index",
+    "van-dropdown-item": "@vant/weapp/dropdown-item/index"
   }
 }

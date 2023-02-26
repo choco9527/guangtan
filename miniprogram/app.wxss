@@ -23,6 +23,15 @@ page button::after {
 page .over-hide {
   overflow: hidden !important;
 }
+page .t-center {
+  text-align: center;
+}
+page .t-right {
+  text-align: right;
+}
+page .t-left {
+  text-align: left;
+}
 page .text-desc {
   color: #646566;
 }

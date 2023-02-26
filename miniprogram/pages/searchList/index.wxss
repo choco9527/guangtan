@@ -1,5 +1,9 @@
-.search-page .van-search {
+.search-page .c-search {
   background: transparent !important;
+  max-width: calc(100vw - 120px);
+}
+.search-page .main-list {
+  max-height: calc(100vh - 66px);
 }
 
 /*# sourceMappingURL=index.wxss.map */
