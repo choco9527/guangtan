@@ -67,7 +67,7 @@ Page({
   createBiliCollection() {
     wx.showLoading();
     // 创建bilibili数据库
-    $req('test')
+    $req('getList')
       .then(resp => {
         console.log(resp);
         wx.hideLoading();

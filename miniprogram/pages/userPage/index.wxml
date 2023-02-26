@@ -1,2 +1,5 @@
-<!--pages/userPage/index.wxml-->
-<text>pages/userPage/index.wxml</text>
+<view>
+    <view class="title">
+        <van-button bindtap="createBiliCollection" round type="primary">存入视频列表信息</van-button>
+    </view>
+</view>

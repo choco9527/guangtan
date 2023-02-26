@@ -36,7 +36,36 @@ const bApiList = { // b站请求api
 
 const db = cloud.database();
 
-// 创建集合云函数入口函数
+// 获取并将列表信息存入videos表
+exports.getList = async (event, context) => {
+  try {
+    const videoDb = db.collection('videos')
+    let list = await bApiList.getVideoList({mid: 429582883, pageNum: 1})
+    if (list) {
+      for (const data of list) {
+        videoDb.add({
+          data // data 字段表示需新增的 JSON 数据
+        }).then(res => {
+          console.log('res', res);
+        }).catch(err => {
+          console.log('err', err)
+        })
+      }
+    }
+
+    return {
+      success: true,
+      msg: '添加成功',
+      data: list
+    };
+  } catch (e) {
+    return {
+      success: false,
+      msg: '添加失败',
+    };
+  }
+};
+
 exports.main = async (event, context) => {
   try {
     const videoDb = db.collection('videos')
@@ -65,3 +94,4 @@ exports.main = async (event, context) => {
     };
   }
 };
+
