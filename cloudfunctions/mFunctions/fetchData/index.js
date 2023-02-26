@@ -71,6 +71,8 @@ async function addNewData(mid) {
       for (const data of list) { // 逐条添加到数据库
         const hasData = await VIDEO.where({aid: data.aid}).limit(1).get()
         if (hasData && !hasData.data.length) { // 不操作旧数据
+          let {data: vData} = await bApiList.getVideoData({aid: data.aid})
+          Reflect.set(data, 'stat', vData.stat)
           await VIDEO.add({data})
           console.log('添加新视频内容', data.aid);
         }
@@ -94,10 +96,7 @@ async function updateAllListData(mid) {
     const {data: videoList} = await VIDEO
       .where({
         mid,
-
         v_data: _.eq(null),
-
-
       })
       .field({
         _id: true,
