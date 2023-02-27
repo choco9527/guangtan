@@ -129,7 +129,7 @@ async function updateAllListData(mid) {
 }
 
 /**
- * 获取并将所有列表信息存入videos表 （手动触发）
+ * 获取一个up主并将所有视频信息存入videos表 （手动触发！）
  * @param mid
  * @returns {Promise<{msg: string, success: boolean}|{msg: string, data: *, success: boolean}>}
  */
@@ -140,13 +140,18 @@ async function getAllList(mid) {
       let {list, page} = await bApiList.getVideoList({mid, pageSize: 20})
       console.log(list);
       const {count, pn, ps} = page
-
       if (list) {
         for (const data of list) { // 逐条添加到数据库
-          await VIDEO.add({
-            data // data 字段表示需新增的 JSON 数据
-          })
-          console.log('添加成功', data.aid);
+          const hasData = await VIDEO.where({aid: data.aid}).limit(1).get()
+          if (hasData && !hasData.data.length) { // 不操作旧数据
+            let {data: vData} = await bApiList.getVideoData({aid: data.aid}) // 获取视频详情数据
+            Reflect.set(data, '_stat', vData.stat)
+            [''].forEach(key => { // 删除一些不需要的属性
+              Reflect.deleteProperty(data, key)
+            })
+            await VIDEO.add({data})
+            console.log('添加新视频内容', data.aid);
+          }
         }
         console.log(`page${pageNum}完成`)
 
@@ -156,7 +161,7 @@ async function getAllList(mid) {
         return list
       }
     }
-    const data = await _add(11)
+    const data = await _add(1)
 
     return {
       success: true,
@@ -169,7 +174,7 @@ async function getAllList(mid) {
       msg: '添加失败',
     };
   }
-};
+}
 
 // 获取最新列表信息存入videos表
 exports.updateList = async (event, context) => {
