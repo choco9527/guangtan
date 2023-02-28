@@ -61,22 +61,14 @@ const bApiList = { // b站请求api
 }
 
 /**
- * 更新最新的视频数据 取最新发布的10条
+ * 添加最新的视频数据 (取最新发布的10条)
  * @returns {Promise<void>}
  */
-async function addNewData(mid) {
+async function addNewListData(mid) {
   try {
-    let {list, page} = await bApiList.getVideoList({mid, pageNum, pageSize: 10})
+    let {list, page} = await bApiList.getVideoList({mid, pageSize: 10})
     if (list) {
-      for (const data of list) { // 逐条添加到数据库
-        const hasData = await VIDEO.where({aid: data.aid}).limit(1).get()
-        if (hasData && !hasData.data.length) { // 不操作旧数据
-          let {data: vData} = await bApiList.getVideoData({aid: data.aid})
-          Reflect.set(data, 'stat', vData.stat)
-          await VIDEO.add({data})
-          console.log('添加新视频内容', data.aid);
-        }
-      }
+      await addTheList(list)
     }
   } catch (e) {
     console.warn('addNewData Error:', e)
@@ -85,10 +77,10 @@ async function addNewData(mid) {
 }
 
 /**
- * 更新列表最新50条的视频的关键信息
+ * 更新列表最新x条的视频的关键信息
  * @returns {Promise<void>}
  */
-async function updateAllListData(mid) {
+async function updateAllListData(mid, x = 20) {
   const day7 = 1000 * 3600 * 24 * 7
   const _ = db.command
 
@@ -104,11 +96,12 @@ async function updateAllListData(mid) {
         v_up_time: true,
         v_data: true
       })
-      .limit(20)
+      .limit(x)
       .orderBy('created', 'desc').get()
 
     const cur = new Date().getTime()
     console.log(videoList);
+
     for (const item of videoList) {
       let {data: vData} = await bApiList.getVideoData({aid: item.aid})
       console.log(vData.aid, vData.stat);
@@ -129,39 +122,46 @@ async function updateAllListData(mid) {
 }
 
 /**
+ * 将list入库（仅对新数据）
+ * @param list
+ * @returns {Promise<void>}
+ */
+async function addTheList(list = []) {
+  for (const data of list) { // 逐条添加到数据库
+    const hasData = await VIDEO.where({aid: data.aid}).limit(1).get()
+    if (hasData && !hasData.data.length) { // 不操作旧数据
+      let {data: vData} = await bApiList.getVideoData({aid: data.aid}); // 获取视频详情数据
+      ;['meta'].forEach(key => { // 删除一些不需要的属性
+        Reflect.deleteProperty(data, key)
+      })
+      Reflect.set(data, 'v_stat', vData.stat)
+      Reflect.set(data, 'v_up_time', new Date().getTime())
+      await VIDEO.add({data})
+      console.log('添加一条新视频内容！', data.aid);
+    }
+  }
+}
+
+/**
  * 获取一个up主并将所有视频信息存入videos表 （手动触发！）
  * @param mid
  * @returns {Promise<{msg: string, success: boolean}|{msg: string, data: *, success: boolean}>}
  */
-async function getAllList(mid) {
+async function addAllList(mid) {
   try {
-    const VIDEO = db.collection('videos')
     const _add = async pageNum => {
-      let {list, page} = await bApiList.getVideoList({mid, pageSize: 20})
+      let {list, page} = await bApiList.getVideoList({mid, pageSize: 25, pageNum})
       console.log(list);
       const {count, pn, ps} = page
       if (list) {
-        for (const data of list) { // 逐条添加到数据库
-          const hasData = await VIDEO.where({aid: data.aid}).limit(1).get()
-          if (hasData && !hasData.data.length) { // 不操作旧数据
-            let {data: vData} = await bApiList.getVideoData({aid: data.aid}) // 获取视频详情数据
-            Reflect.set(data, '_stat', vData.stat)
-            [''].forEach(key => { // 删除一些不需要的属性
-              Reflect.deleteProperty(data, key)
-            })
-            await VIDEO.add({data})
-            console.log('添加新视频内容', data.aid);
-          }
-        }
+        await addTheList(list)
         console.log(`page${pageNum}完成`)
-
         if ((pn * ps) < count) { // 1*50<51
           await _add(pn + 1)
         }
-        return list
       }
     }
-    const data = await _add(1)
+    const data = await _add(2)
 
     return {
       success: true,
@@ -189,7 +189,7 @@ exports.updateList = async (event, context) => {
 
 exports.fetchTask = async (event, context) => { // 定时触发的task 每天5点
   try {
-    await addNewData(429582883) // 更新列表
+    await addNewListData(429582883) // 更新列表
   } catch (e) {
     console.log('定时任务Error：', e);
   }
@@ -198,6 +198,7 @@ exports.fetchTask = async (event, context) => { // 定时触发的task 每天5�
 
 exports.main = async (event, context) => {
   try {
+    await addAllList(429582883)
 
     return {
       success: true,

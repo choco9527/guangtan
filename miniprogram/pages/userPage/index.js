@@ -8,7 +8,7 @@ Page({
   createBiliCollection() {
     wx.showLoading();
     // 创建bilibili数据库
-    $req('updateList')
+    $req('main')
       .then(resp => {
         console.log(resp);
         wx.hideLoading();
