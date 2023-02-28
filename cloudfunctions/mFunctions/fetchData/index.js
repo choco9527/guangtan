@@ -1,5 +1,6 @@
 const cloud = require('wx-server-sdk');
 const axios = require('axios');
+const PINCHENGJI = 429582883
 
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
@@ -15,7 +16,7 @@ const bApiList = { // b站请求api
    * @param pageNum
    * @returns {string}
    */
-  async getVideoList({mid = 0, pageSize = 40, pageNum = 1}) {
+  async getVideoList({mid = 0, pageSize = 25, pageNum = 1}) {
     let list = null, page = null
     try {
       if (mid) {
@@ -64,9 +65,9 @@ const bApiList = { // b站请求api
  * 添加最新的视频数据 (取最新发布的10条)
  * @returns {Promise<void>}
  */
-async function addNewListData(mid) {
+async function addNewListData(mid, pageSize = 10) {
   try {
-    let {list, page} = await bApiList.getVideoList({mid, pageSize: 10})
+    let {list, page} = await bApiList.getVideoList({mid, pageSize})
     if (list) {
       await addTheList(list)
     }
@@ -78,18 +79,17 @@ async function addNewListData(mid) {
 
 /**
  * 更新列表最新x条的视频的关键信息
+ * @param mid
+ * @param x
  * @returns {Promise<void>}
  */
-async function updateAllListData(mid, x = 20) {
-  const day7 = 1000 * 3600 * 24 * 7
-  const _ = db.command
+async function updateListData(mid, x = 20) {
+  // const day7 = 1000 * 3600 * 24 * 7
+  // const _ = db.command
 
   try {
     const {data: videoList} = await VIDEO
-      .where({
-        mid,
-        v_data: _.eq(null),
-      })
+      .where({mid})
       .field({
         _id: true,
         aid: true,
@@ -99,22 +99,8 @@ async function updateAllListData(mid, x = 20) {
       .limit(x)
       .orderBy('created', 'desc').get()
 
-    const cur = new Date().getTime()
     console.log(videoList);
-
-    for (const item of videoList) {
-      let {data: vData} = await bApiList.getVideoData({aid: item.aid})
-      console.log(vData.aid, vData.stat);
-      const upRes = await VIDEO
-        .doc(item._id)
-        .set({
-          data: {
-            v_data: vData.stat,
-            v_up_time: cur
-          }
-        })
-      console.log('更新成功', upRes);
-    }
+    await updateTheList(videoList)
   } catch (e) {
     console.warn('updateAllListData Error:', e)
     throw e
@@ -143,6 +129,21 @@ async function addTheList(list = []) {
 }
 
 /**
+ * 更新list的stat属性
+ * @param list
+ * @returns {Promise<void>}
+ */
+async function updateTheList(list = []) {
+  const cur = new Date().getTime()
+  for (const item of list) {
+    let {data: vData} = await bApiList.getVideoData({aid: item.aid})
+    await VIDEO.doc(item._id)
+      .update({data: {v_data: vData.stat, v_up_time: cur}})
+    console.log('更新一条新视频数据！', vData.aid);
+  }
+}
+
+/**
  * 获取一个up主并将所有视频信息存入videos表 （手动触发！）
  * @param mid
  * @returns {Promise<{msg: string, success: boolean}|{msg: string, data: *, success: boolean}>}
@@ -163,33 +164,17 @@ async function addAllList(mid) {
     }
     const data = await _add(2)
 
-    return {
-      success: true,
-      msg: '添加成功',
-      data
-    };
+    return {success: true, msg: '添加成功', data};
   } catch (e) {
-    return {
-      success: false,
-      msg: '添加失败',
-    };
+    return {success: false, msg: '添加失败'};
   }
 }
-
-// 获取最新列表信息存入videos表
-exports.updateList = async (event, context) => {
-  try {
-    await updateAllListData(429582883)
-    return {success: true};
-  } catch (e) {
-    return {success: false};
-  }
-};
 
 
 exports.fetchTask = async (event, context) => { // 定时触发的task 每天5点
   try {
-    await addNewListData(429582883) // 更新列表
+    await addNewListData(PINCHENGJI) // 新增
+    await updateListData(PINCHENGJI) // 更新
   } catch (e) {
     console.log('定时任务Error：', e);
   }
@@ -198,18 +183,11 @@ exports.fetchTask = async (event, context) => { // 定时触发的task 每天5�
 
 exports.main = async (event, context) => {
   try {
-    await addAllList(429582883)
+    // await addAllList(PINCHENGJI)
 
-    return {
-      success: true,
-      msg: '添加成功',
-      data: null
-    };
+    return {success: true, msg: '执行成功', data: null};
   } catch (e) {
-    return {
-      success: false,
-      msg: '添加失败',
-    };
+    return {success: false, msg: '执行失败'};
   }
 };
 
