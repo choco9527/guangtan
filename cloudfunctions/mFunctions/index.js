@@ -9,6 +9,8 @@ exports.main = async (event, context) => {
   }
 
   switch (event.type) {
+    case 'getVideo':
+      return await videos.getVideo(event, context);
     case 'getVideoList':
       return await videos.getVideoList(event, context);
     case 'main':

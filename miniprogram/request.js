@@ -1,6 +1,8 @@
 /* 统一请求request */
 const {envList} = require('./envList.js');
 const [selectedEnv] = envList
+import Toast from '@vant/weapp/toast/toast';
+
 
 export function $q(type) {
   return new Promise((resolve, reject) => {
@@ -25,6 +27,9 @@ export function $req(type, params = {}) {
       data: {type, ...params}
     }).then(res => {
       console.log('$req: ' + type, res.result)
+      if (!res.result.success){
+        Toast.fail(res.result.msg);
+      }
       resolve(res.result)
     }).catch(e => {
       reject(e)

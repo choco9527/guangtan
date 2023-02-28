@@ -8,14 +8,14 @@ Page({
     pulling: false,
     list: [],
     option1: [
-      { text: '全部商品', value: 0 },
-      { text: '新款商品', value: 1 },
-      { text: '活动商品', value: 2 },
+      {text: '全部商品', value: 0},
+      {text: '新款商品', value: 1},
+      {text: '活动商品', value: 2},
     ],
     option2: [
-      { text: '默认排序', value: 'a' },
-      { text: '好评排序', value: 'b' },
-      { text: '销量排序', value: 'c' },
+      {text: '默认排序', value: 'a'},
+      {text: '好评排序', value: 'b'},
+      {text: '销量排序', value: 'c'},
     ],
     value1: 0,
     value2: 'a',
@@ -64,10 +64,15 @@ Page({
       return data
     }
   },
-  onSearch({detail:search}) {
+  onSearch({detail: search}) {
     console.log(search)
     this.setData({search})
-
+  },
+  toDetail({target}) {
+    const {id} = target.dataset
+    if (id) {
+      wx.navigateTo({url: '/pages/detail/index?id=' + id})
+    }
   },
   onCancel() {
     // Toast('cancel' + this.data.search);

@@ -5,15 +5,15 @@ cloud.init({
 });
 
 const db = cloud.database();
+const VIDEO = db.collection('videos')
 
 // 获取搜索页视频列表
 exports.getVideoList = async (event, context) => {
   try {
     const {pn = 1} = event
     const ps = 20
-    const videoDb = db.collection('videos')
     const offset = (pn - 1) * ps
-    const {data} = await videoDb.where({
+    const {data} = await VIDEO.where({
       // aid: 525048109,
     })
       .orderBy('created', 'desc')
@@ -25,7 +25,7 @@ exports.getVideoList = async (event, context) => {
         video_review: true,
         created: true,
         pic: true,
-        v_data: true
+        v_stat: true
       })
       .get()
 
@@ -38,7 +38,28 @@ exports.getVideoList = async (event, context) => {
   } catch (e) {
     return {
       success: false,
-      msg: '获取失败',
+      msg: e.message || '失败',
+    };
+  }
+};
+
+
+// 获取单个视频信息
+exports.getVideo = async (event, context) => {
+  try {
+    const {id} = event
+    if (!id) throw new Error('no id')
+    const {data} = await VIDEO.doc(id).get()
+
+    return {
+      success: true,
+      msg: '',
+      data,
+    };
+  } catch (e) {
+    return {
+      success: false,
+      msg: e.message || '失败',
     };
   }
 };

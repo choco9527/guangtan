@@ -9,7 +9,7 @@ function parsePlayNum(num) {
 }
 
 function formatDate(s) {
-  var t = getDate(s * Math.pow(10,3))
+  var t = getDate(s * Math.pow(10, 3))
   var n = getDate().getTime()
     , r = t.getTime()
     , o = n - r,
@@ -21,7 +21,16 @@ function formatDate(s) {
   return o < just ? "刚刚" : o < min ? Math.floor(o / just) + "分钟前" : o < hour ? Math.floor(o / min) + "小时前" : r >= getDate(e.getFullYear(), e.getMonth(), e.getDate() - 1).getTime() ? "昨天" : r >= getDate(e.getFullYear(), 0, 1).getTime() ? t.getMonth() + 1 + "-" + t.getDate() : t.getFullYear() + "-" + (t.getMonth() + 1) + "-" + t.getDate()
 }
 
+// 获取b视频权重
+// 视频权重=硬币x0.4+收藏x0.3+弹幕x0.4+评论x0.4+播放x0.25+点赞x0.4+分享x0.6， 最新视频（一天内发布）提权[总值*1.5]
+
+function getWeight(stat) {
+  var a = stat.coin * 0.4 + stat.favorite * 0.3 + stat.danmaku * 0.4 + stat.reply * 0.4 + stat.view * 0.25 + stat.like * 0.4 + stat.share * 0.6
+  return parsePlayNum(parseInt(a))
+}
+
 module.exports = {
   parsePlayNum: parsePlayNum,
-  formatDate: formatDate
+  formatDate: formatDate,
+  getWeight: getWeight,
 };

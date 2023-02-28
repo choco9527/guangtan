@@ -31,24 +31,12 @@
                  class="main-list"
     >
         <view wx:for="{{list}}" wx:key="aid">
-            <van-card title="{{ item.title }}">
+            <van-card title="{{ item.title }}" data-id="{{ item._id }}" bind:tap="toDetail">
                 <van-row slot="desc" class="text-sec fs-12">
                     <van-col span="6">
-                        <van-icon name="eye-o" />
-                        <text>{{tools.parsePlayNum(item.play)}}</text>
+                        <van-icon name="fire"/>
+                        <text>{{ tools.getWeight(item.v_stat) }}</text>
                     </van-col>
-                    <van-col span="6">
-                        <van-icon name="comment-circle-o" />
-                        <text>{{tools.parsePlayNum(item.comment)}}</text>
-                    </van-col>
-                    <van-col span="6">
-                        <van-icon name="chat-o" />
-                        <text>{{tools.parsePlayNum(item.video_review)}}</text>
-                    </van-col>
-                    <van-col span="6" class="t-right">
-                        <text>{{tools.formatDate(item.created)}}</text>
-                    </van-col>
-
                 </van-row>
                 <view slot="thumb">
                     <image mode="widthFix" class="w-88 h-56 br-4 over-hide" src="{{item.pic}}"></image>
