@@ -1,1 +1,10 @@
-/* pages/detail/index.wxss */
+.detail-page .head-img {
+  min-width: 100%;
+  max-height: 20vh;
+}
+.detail-page .c-label {
+  max-height: 10vh;
+  overflow: auto;
+}
+
+/*# sourceMappingURL=index.wxss.map */

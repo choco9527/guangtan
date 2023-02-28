@@ -17,10 +17,9 @@
             <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}"/>
             <van-dropdown-item value="{{ value2 }}" options="{{ option2 }}"/>
         </van-dropdown-menu>
-
     </van-sticky>
 
-
+    <van-empty wx:if="{{!list.length}}" image="search"/>
     <scroll-view scroll-y
                  bindscrolltolower="onScrollToEnd"
                  lower-threshold="20px"
@@ -29,7 +28,9 @@
                  enable-passive
                  refresher-triggered="{{ pulling }}"
                  class="main-list"
+                 wx:if="{{list.length}}"
     >
+
         <view wx:for="{{list}}" wx:key="aid">
             <van-card title="{{ item.title }}" data-id="{{ item._id }}" bind:tap="toDetail">
                 <van-row slot="desc" class="text-sec fs-12">

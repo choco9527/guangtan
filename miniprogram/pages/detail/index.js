@@ -7,7 +7,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    detail: {}
+    detail: {},
+    latitude: 120,
+    longitude: 120,
+    markers: [{
+      latitude: 90,
+      longitude: 90,
+      title: 'ni'
+    }]
   },
 
   /**

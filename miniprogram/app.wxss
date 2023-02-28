@@ -11,6 +11,9 @@ page .container {
   align-items: center;
   box-sizing: border-box;
 }
+page .layout {
+  padding: 0 12px;
+}
 page button {
   background: initial;
 }

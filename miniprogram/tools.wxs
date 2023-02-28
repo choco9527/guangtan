@@ -25,6 +25,7 @@ function formatDate(s) {
 // 视频权重=硬币x0.4+收藏x0.3+弹幕x0.4+评论x0.4+播放x0.25+点赞x0.4+分享x0.6， 最新视频（一天内发布）提权[总值*1.5]
 
 function getWeight(stat) {
+  if (!stat) return '-'
   var a = stat.coin * 0.4 + stat.favorite * 0.3 + stat.danmaku * 0.4 + stat.reply * 0.4 + stat.view * 0.25 + stat.like * 0.4 + stat.share * 0.6
   return parsePlayNum(parseInt(a))
 }

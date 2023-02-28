@@ -1,2 +1,26 @@
-<!--pages/detail/index.wxml-->
-<text>pages/detail/index.wxml</text>
+<wxs src="../../tools.wxs" module="tools"/>
+
+<view class="detail-page">
+    <van-empty wx:if="{{!detail.aid}}" image="search"/>
+    <scroll-view wx:else scroll-y enable-passive>
+        <image mode="aspectFill" class="head-img" src="{{detail.pic}}"></image>
+        <van-cell-group border>
+            <van-cell title="{{detail.title}}" use-label-slot >
+                <view slot="label" class="c-label">
+                    {{detail.description}}
+                </view>
+            </van-cell>
+            <van-cell title="综合人气" value="{{ tools.getWeight(detail.v_stat) }}" />
+            <van-cell title="西城区" use-label-slot >
+                <map slot="label"
+                     show-compass
+                     markers="{{markers}}"
+                >
+
+                </map>
+            </van-cell>
+
+        </van-cell-group>
+    </scroll-view>
+
+</view>
