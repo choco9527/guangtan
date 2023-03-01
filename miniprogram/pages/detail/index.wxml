@@ -15,6 +15,9 @@
                 <map slot="label"
                      show-compass
                      markers="{{markers}}"
+                     id="myMap"
+                     latitude="{{latitude}}"
+                     longitude="{{longitude}}"
                 >
 
                 </map>

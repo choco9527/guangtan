@@ -8,13 +8,14 @@ Page({
    */
   data: {
     detail: {},
-    latitude: 120,
-    longitude: 120,
+    latitude: 23.099994,
+    longitude: 113.324520,
     markers: [{
-      latitude: 90,
-      longitude: 90,
-      title: 'ni'
-    }]
+      id: 1,
+      latitude: 23.099994,
+      longitude: 113.324520,
+      name: 'T.I.T 创意园'
+    }],
   },
 
   /**
@@ -24,6 +25,9 @@ Page({
     console.log('onload', id)
     await this.getData(id)
   },
+  onReady(e) {
+    this.mapCtx = wx.createMapContext('myMap')
+  },
   async getData(id) {
     if (!id) return
     const {success, data} = await $req('getVideo', {id})
@@ -31,13 +35,6 @@ Page({
     if (success) {
       this.setData({detail: data})
     }
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
 
   },
 
