@@ -27,12 +27,34 @@ export function $req(type, params = {}) {
       data: {type, ...params}
     }).then(res => {
       console.log('$req: ' + type, res.result)
-      if (!res.result.success){
+      if (!res.result.success) {
         Toast.fail(res.result.msg);
       }
       resolve(res.result)
     }).catch(e => {
       reject(e)
+    })
+  })
+}
+
+export function getSearchMap() {
+  const keyword = encodeURI('腾讯微信')
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: `https://apis.map.qq.com/ws/place/v1/search?boundary=nearby(23,133,1000,1)&keyword=${keyword}&page_size=10&page_index=1&key=ZNGBZ-JSPYU-SLIV3-B3ZIJ-V3EG6-UNBJI`,
+      data: {
+        x: '',
+        y: ''
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success(res) {
+        resolve(res.data)
+      },
+      fail(err) {
+        reject(err)
+      }
     })
   })
 }

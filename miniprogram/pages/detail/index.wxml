@@ -5,24 +5,22 @@
     <scroll-view wx:else scroll-y enable-passive>
         <image mode="aspectFill" class="head-img" src="{{detail.pic}}"></image>
         <van-cell-group border>
-            <van-cell title="{{detail.title}}" use-label-slot >
+            <van-cell title="{{detail.title}}" use-label-slot>
                 <view slot="label" class="c-label">
                     {{detail.description}}
                 </view>
             </van-cell>
-            <van-cell title="综合人气" value="{{ tools.getWeight(detail.v_stat) }}" />
-            <van-cell title="西城区" use-label-slot >
+            <van-cell title="综合人气" value="{{ tools.getWeight(detail.v_stat) }}"/>
+            <van-cell title="西城区" use-label-slot>
                 <map slot="label"
-                     show-compass
-                     markers="{{markers}}"
                      id="myMap"
                      latitude="{{latitude}}"
                      longitude="{{longitude}}"
-                >
-
-                </map>
+                     markers="{{markers}}"
+                     covers="{{covers}}"
+                     show-location
+                ></map>
             </van-cell>
-
         </van-cell-group>
     </scroll-view>
 

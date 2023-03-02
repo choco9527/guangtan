@@ -1,5 +1,5 @@
 // pages/detail/index.js
-import {$req} from "../../request";
+import {$req,getSearchMap} from "../../request";
 
 Page({
 
@@ -16,6 +16,15 @@ Page({
       longitude: 113.324520,
       name: 'T.I.T 创意园'
     }],
+    covers: [{
+      latitude: 23.099994,
+      longitude: 113.344520,
+      iconPath: '/image/location.png'
+    }, {
+      latitude: 23.099994,
+      longitude: 113.304520,
+      iconPath: '/image/location.png'
+    }]
   },
 
   /**
@@ -24,18 +33,32 @@ Page({
   async onLoad({id}) {
     console.log('onload', id)
     await this.getData(id)
+
+    // var myAmapFun = new amapFile.AMapWX({key: '7f439b90999fb60f1f1238a2c0325481'});
+    // myAmapFun.getPoiAround({
+    //   success: function (data) {
+    //     //成功回调
+    //   },
+    //   fail: function (info) {
+    //     //失败回调
+    //     console.log(info)
+    //   }
+    // })
   },
   onReady(e) {
     this.mapCtx = wx.createMapContext('myMap')
+    getSearchMap().then(res=>{
+      console.log(res);
+    })
+
+
   },
   async getData(id) {
     if (!id) return
     const {success, data} = await $req('getVideo', {id})
-    console.log(data);
     if (success) {
       this.setData({detail: data})
     }
-
   },
 
   /**
