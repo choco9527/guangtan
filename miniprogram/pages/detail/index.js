@@ -10,12 +10,7 @@ Page({
     detail: {},
     latitude: 23.099994,
     longitude: 113.324520,
-    markers: [{
-      id: 1,
-      latitude: 23.099994,
-      longitude: 113.324520,
-      name: 'T.I.T 创意园'
-    }],
+    markers: [],
     covers: [{
       latitude: 23.099994,
       longitude: 113.344520,
@@ -46,12 +41,36 @@ Page({
     // })
   },
   onReady(e) {
+
     this.mapCtx = wx.createMapContext('myMap')
-    getSearchMap({word: '腾讯', lat: this.data.latitude, lng: this.data.longitude}).then(res => {
-      console.log(res);
+  },
+  placeSearch() {
+    const allMarkers = []
+    getSearchMap({word: '腾讯', lat: this.data.latitude, lng: this.data.longitude}).then(result => {
+      const pois = result.data
+      for (let i = 0; i < pois.length; i++) {
+        var title = pois[i].title
+        var lat = pois[i].location.lat
+        var lng = pois[i].location.lng
+        console.log(title + "," + lat + "," + lng)
+        let marker = {
+          id: i,
+          latitude: lat,
+          longitude: lng,
+          callout: {
+            // 点击marker展示title
+            content: title
+          }
+        }
+        allMarkers.push(marker)
+        marker = null
+      }
+      this.setData({
+        latitude: allMarkers[0].latitude,
+        longitude: allMarkers[0].longitude,
+        markers: allMarkers
+      })
     })
-
-
   },
   async getData(id) {
     if (!id) return

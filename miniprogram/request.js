@@ -37,15 +37,18 @@ export function $req(type, params = {}) {
   })
 }
 
+/**
+ *
+ * @param word 🔍
+ * @param lat 经度
+ * @param lng 纬度
+ * @returns {Promise<unknown>}
+ */
 export function getSearchMap({word = '', lat, lng}) {
   const keyword = encodeURI(word)
   return new Promise((resolve, reject) => {
     wx.request({
       url: `https://apis.map.qq.com/ws/place/v1/search?boundary=nearby(${lat},${lng},1000,1)&keyword=${keyword}&page_size=10&page_index=1&key=ZNGBZ-JSPYU-SLIV3-B3ZIJ-V3EG6-UNBJI`,
-      data: {
-        x: '',
-        y: ''
-      },
       header: {
         'content-type': 'application/json' // 默认值
       },
