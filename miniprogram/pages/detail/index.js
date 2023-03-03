@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    searchVal: '',
     detail: {},
     latitude: 23.099994,
     longitude: 113.324520,
@@ -26,27 +27,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async onLoad({id}) {
-    console.log('onload', id)
     await this.getData(id)
-
-    // var myAmapFun = new amapFile.AMapWX({key: '7f439b90999fb60f1f1238a2c0325481'});
-    // myAmapFun.getPoiAround({
-    //   success: function (data) {
-    //     //成功回调
-    //   },
-    //   fail: function (info) {
-    //     //失败回调
-    //     console.log(info)
-    //   }
-    // })
+    // this.mapCtx = wx.createMapContext('myMap')
+    this.placeSearch()
   },
-  onReady(e) {
-
-    this.mapCtx = wx.createMapContext('myMap')
+  onSearch({detail: search}){
+    this.setData({searchVal: search})
+    this.placeSearch()
   },
   placeSearch() {
     const allMarkers = []
-    getSearchMap({word: '腾讯', lat: this.data.latitude, lng: this.data.longitude}).then(result => {
+    if (!this.data.searchVal) return
+    console.log(this.data.searchVal)
+    getSearchMap({word: this.data.searchVal, lat: this.data.latitude, lng: this.data.longitude}).then(result => {
       const pois = result.data
       for (let i = 0; i < pois.length; i++) {
         var title = pois[i].title
@@ -65,6 +58,7 @@ Page({
         allMarkers.push(marker)
         marker = null
       }
+      console.log(allMarkers);
       this.setData({
         latitude: allMarkers[0].latitude,
         longitude: allMarkers[0].longitude,
@@ -75,9 +69,7 @@ Page({
   async getData(id) {
     if (!id) return
     const {success, data} = await $req('getVideo', {id})
-    if (success) {
-      this.setData({detail: data})
-    }
+    if (success) this.setData({detail: data})
   },
 
   /**

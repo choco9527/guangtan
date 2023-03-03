@@ -11,7 +11,10 @@
                 </view>
             </van-cell>
             <van-cell title="综合人气" value="{{ tools.getWeight(detail.v_stat) }}"/>
-            <van-cell title="西城区" use-label-slot>
+
+            <van-search shape="round" bind:search="onSearch" value="{{ searchVal }}" placeholder=""/>
+
+            <van-cell title="{{searchVal}}" use-label-slot>
                 <map slot="label"
                      id="myMap"
                      latitude="{{latitude}}"

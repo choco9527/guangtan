@@ -14,6 +14,13 @@
           "name": "我的",
           "pathName": "pages/userPage/index",
           "query": ""
+        },
+        {
+          "name": "详情",
+          "pathName": "pages/detail/index",
+          "query": "id=0122a58763fd87a4024e76824be3f622",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
