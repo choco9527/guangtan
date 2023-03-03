@@ -26,7 +26,7 @@ export function $req(type, params = {}) {
       config: {env: selectedEnv.envId},
       data: {type, ...params}
     }).then(res => {
-      console.log('$req: ' + type, res.result)
+      // console.log('$req: ' + type, res.result)
       if (!res.result.success) {
         Toast.fail(res.result.msg);
       }
@@ -37,11 +37,11 @@ export function $req(type, params = {}) {
   })
 }
 
-export function getSearchMap() {
-  const keyword = encodeURI('腾讯微信')
+export function getSearchMap({word = '', lat, lng}) {
+  const keyword = encodeURI(word)
   return new Promise((resolve, reject) => {
     wx.request({
-      url: `https://apis.map.qq.com/ws/place/v1/search?boundary=nearby(23,133,1000,1)&keyword=${keyword}&page_size=10&page_index=1&key=ZNGBZ-JSPYU-SLIV3-B3ZIJ-V3EG6-UNBJI`,
+      url: `https://apis.map.qq.com/ws/place/v1/search?boundary=nearby(${lat},${lng},1000,1)&keyword=${keyword}&page_size=10&page_index=1&key=ZNGBZ-JSPYU-SLIV3-B3ZIJ-V3EG6-UNBJI`,
       data: {
         x: '',
         y: ''

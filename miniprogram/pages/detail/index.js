@@ -1,5 +1,5 @@
 // pages/detail/index.js
-import {$req,getSearchMap} from "../../request";
+import {$req, getSearchMap} from "../../request";
 
 Page({
 
@@ -47,7 +47,7 @@ Page({
   },
   onReady(e) {
     this.mapCtx = wx.createMapContext('myMap')
-    getSearchMap().then(res=>{
+    getSearchMap({word: '腾讯', lat: this.data.latitude, lng: this.data.longitude}).then(res => {
       console.log(res);
     })
 
