@@ -1,6 +1,7 @@
 /* 统一请求request */
 const {envList} = require('./envList.js');
 const [selectedEnv] = envList
+const MapKey = 'ZNGBZ-JSPYU-SLIV3-B3ZIJ-V3EG6-UNBJI'
 import Toast from '@vant/weapp/toast/toast';
 
 
@@ -38,26 +39,51 @@ export function $req(type, params = {}) {
 }
 
 /**
- *
+ * 关键字的补完与提示
+ *  https://lbs.qq.com/service/webService/webServiceGuide/webServiceSuggestion
+ * @param word
+ * @returns {Promise<unknown>}
+ */
+export function getSuggestion({word = ''}) {
+  if (word) {
+    const keyword = encodeURI(word)
+    return new Promise((r, j) => {
+      wx.request({
+        url: `https://apis.map.qq.com/ws/place/v1/suggestion?keyword=${keyword}&key=${MapKey}`,
+        header: {'content-type': 'application/json'}, // 默认值
+        success(res) {
+          r(res.data)
+        },
+        fail(err) {
+          j(err)
+        }
+      })
+    })
+  }
+}
+
+
+/**
+ * 地点搜索 https://lbs.qq.com/service/webService/webServiceGuide/webServiceSearch
  * @param word 🔍
  * @param lat 经度
  * @param lng 纬度
  * @returns {Promise<unknown>}
  */
 export function getSearchMap({word = '', lat, lng}) {
-  const keyword = encodeURI(word)
-  return new Promise((resolve, reject) => {
-    wx.request({
-      url: `https://apis.map.qq.com/ws/place/v1/search?boundary=nearby(${lat},${lng},1000,1)&keyword=${keyword}&page_size=10&page_index=1&key=ZNGBZ-JSPYU-SLIV3-B3ZIJ-V3EG6-UNBJI`,
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success(res) {
-        resolve(res.data)
-      },
-      fail(err) {
-        reject(err)
-      }
+  if (word && lat && lng) {
+    const keyword = encodeURI(word)
+    return new Promise((r, j) => {
+      wx.request({
+        url: `https://apis.map.qq.com/ws/place/v1/search?boundary=nearby(${lat},${lng},1000,1)&keyword=${keyword}&key=${MapKey}`,
+        header: {'content-type': 'application/json'}, // 默认值
+        success(res) {
+          r(res.data)
+        },
+        fail(err) {
+          j(err)
+        }
+      })
     })
-  })
+  }
 }

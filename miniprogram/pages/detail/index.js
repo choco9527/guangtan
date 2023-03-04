@@ -1,5 +1,5 @@
 // pages/detail/index.js
-import {$req, getSearchMap} from "../../request";
+import {$req, getSearchMap, getSuggestion} from "../../request";
 
 Page({
 
@@ -12,6 +12,7 @@ Page({
     latitude: 23.099994,
     longitude: 113.324520,
     markers: [],
+    searchList: [], // 推荐词
     covers: [{
       latitude: 23.099994,
       longitude: 113.344520,
@@ -31,9 +32,15 @@ Page({
     // this.mapCtx = wx.createMapContext('myMap')
     this.placeSearch()
   },
-  onSearch({detail: search}){
+  onSearch({detail: search}) {
     this.setData({searchVal: search})
-    this.placeSearch()
+  },
+  onSearChange({detail: search}) {
+    console.log(search);
+    getSuggestion({word: search}).then(res => {
+      console.log(res);
+
+    })
   },
   placeSearch() {
     const allMarkers = []

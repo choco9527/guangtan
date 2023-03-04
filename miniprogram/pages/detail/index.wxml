@@ -12,7 +12,14 @@
             </van-cell>
             <van-cell title="综合人气" value="{{ tools.getWeight(detail.v_stat) }}"/>
 
-            <van-search shape="round" bind:search="onSearch" value="{{ searchVal }}" placeholder=""/>
+            <van-search shape="round" bind:search="onSearch" bind:change="onSearChange"
+                        value="{{ searchVal }}" placeholder="添加地点"/>
+
+            <view class="word-list" wx:if="{{searchList.length}}">
+                <text class="item" wx:for="{{searchList}}">
+
+                </text>
+            </view>
 
             <van-cell title="{{searchVal}}" use-label-slot>
                 <map slot="label"

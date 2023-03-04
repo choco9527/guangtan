@@ -9,6 +9,7 @@
   "author": "CHOCO",
   "license": "ISC",
   "dependencies": {
-    "@vant/weapp": "^1.10.13"
+    "@vant/weapp": "^1.10.13",
+    "xe-utils": "^3.5.7"
   }
 }
