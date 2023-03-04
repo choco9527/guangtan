@@ -49,7 +49,7 @@ export function getSuggestion({word = ''}) {
     const keyword = encodeURI(word)
     return new Promise((r, j) => {
       wx.request({
-        url: `https://apis.map.qq.com/ws/place/v1/suggestion?keyword=${keyword}&key=${MapKey}`,
+        url: `https://apis.map.qq.com/ws/place/v1/suggestion?keyword=${keyword}&key=${MapKey}&region=广东`,
         header: {'content-type': 'application/json'}, // 默认值
         success(res) {
           r(res.data)
@@ -75,7 +75,7 @@ export function getSearchMap({word = '', lat, lng}) {
     const keyword = encodeURI(word)
     return new Promise((r, j) => {
       wx.request({
-        url: `https://apis.map.qq.com/ws/place/v1/search?boundary=nearby(${lat},${lng},1000,1)&keyword=${keyword}&key=${MapKey}`,
+        url: `https://apis.map.qq.com/ws/place/v1/search?boundary=nearby(${lat},${lng},1000,1)&keyword=${keyword}&key=${MapKey}&region=广东`,
         header: {'content-type': 'application/json'}, // 默认值
         success(res) {
           r(res.data)

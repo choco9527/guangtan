@@ -10,5 +10,11 @@
   width: 100%;
   height: 30vh;
 }
+.detail-page .word-list .item {
+  padding: 2px 10px;
+}
+.detail-page .word-list .item text:nth-of-type(1) {
+  margin-right: 10px;
+}
 
 /*# sourceMappingURL=index.wxss.map */

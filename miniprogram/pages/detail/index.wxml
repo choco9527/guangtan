@@ -15,11 +15,16 @@
             <van-search shape="round" bind:search="onSearch" bind:change="onSearChange"
                         value="{{ searchVal }}" placeholder="添加地点"/>
 
-            <view class="word-list" wx:if="{{searchList.length}}">
-                <text class="item" wx:for="{{searchList}}">
+            <van-transition show="{{ searchList.length>0 }}" custom-class="block">
+                <van-cell-group inset>
+                    <van-cell wx:for="{{searchList}}" wx:key="id"
+                              title="{{item.title}}" value="{{item.district}}"
+                              data-item="{{item}}"
+                              bind:tap="onSuggestionSel"
+                    />
 
-                </text>
-            </view>
+                </van-cell-group>
+            </van-transition>
 
             <van-cell title="{{searchVal}}" use-label-slot>
                 <map slot="label"

@@ -1,5 +1,6 @@
 // pages/detail/index.js
 import {$req, getSearchMap, getSuggestion} from "../../request";
+import {debounce} from 'xe-utils'
 
 Page({
 
@@ -29,49 +30,74 @@ Page({
    */
   async onLoad({id}) {
     await this.getData(id)
-    // this.mapCtx = wx.createMapContext('myMap')
-    this.placeSearch()
+    const that = this
+    wx.getLocation({
+      success(res){
+        console.log(res)
+        that.showOnMarker([{
+          id: 1,
+          latitude: res.latitude,
+          longitude: res.longitude
+        }])
+      },
+      fail(err){
+        console.log(err);
+      }
+    })
   },
   onSearch({detail: search}) {
     this.setData({searchVal: search})
   },
-  onSearChange({detail: search}) {
-    console.log(search);
-    getSuggestion({word: search}).then(res => {
-      console.log(res);
-
-    })
+  onSearChange: debounce(function ({detail: search}) {
+    if (search) {
+      getSuggestion({word: search}).then(({data}) => {
+        this.setSearchList(data)
+      })
+    } else {
+      this.setSearchList([])
+    }
+  }, 1200),
+  setSearchList(list){
+    this.setData({searchList: list})
   },
-  placeSearch() {
-    const allMarkers = []
+  async placeSearch() {
     if (!this.data.searchVal) return
-    console.log(this.data.searchVal)
-    getSearchMap({word: this.data.searchVal, lat: this.data.latitude, lng: this.data.longitude}).then(result => {
-      const pois = result.data
-      for (let i = 0; i < pois.length; i++) {
-        var title = pois[i].title
-        var lat = pois[i].location.lat
-        var lng = pois[i].location.lng
-        console.log(title + "," + lat + "," + lng)
-        let marker = {
-          id: i,
-          latitude: lat,
-          longitude: lng,
-          callout: {
-            // 点击marker展示title
-            content: title
-          }
+    const {data} = await getSearchMap({
+      word: this.data.searchVal,
+      lat: this.data.latitude,
+      lng: this.data.longitude
+    })
+    this.showOnMarker(data)
+  },
+  onSuggestionSel({target}) {
+    const item = target.dataset.item
+    this.showOnMarker([item])
+    this.setSearchList([])
+  },
+  showOnMarker(pois = []) { // 将地址展示到marker
+    if (!pois.length) return
+    const allMarkers = pois.map((poi, i) => {
+      let title = poi.title
+      let lat = poi.location.lat
+      let lng = poi.location.lng
+      return {
+        id: i,
+        latitude: lat,
+        longitude: lng,
+        callout: {
+          content: title  // 点击marker展示title
         }
-        allMarkers.push(marker)
-        marker = null
       }
-      console.log(allMarkers);
+    })
+
+    if (allMarkers.length) {
+      const [f] = allMarkers
       this.setData({
-        latitude: allMarkers[0].latitude,
-        longitude: allMarkers[0].longitude,
+        latitude: f.latitude,
+        longitude: f.longitude,
         markers: allMarkers
       })
-    })
+    }
   },
   async getData(id) {
     if (!id) return
