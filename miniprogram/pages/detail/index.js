@@ -1,6 +1,7 @@
 // pages/detail/index.js
 import {$req, getSearchMap, getSuggestion} from "../../request";
 import {debounce} from 'xe-utils'
+import Dialog from '@vant/weapp/dialog/dialog';
 
 Page({
 
@@ -63,7 +64,7 @@ Page({
   },
   onSuggestionSel({target}) {
     const item = target.dataset.item
-    this.showOnMarker([item])
+    this.showOnMarker([item], true)
     this.setSearchList([])
   },
   showOnMarker(pois = [], rePlace = false) { // 将地址展示到marker
@@ -97,7 +98,6 @@ Page({
           longitude: f.longitude,
         })
       }
-
     }
   },
   async getData(id) {
@@ -108,19 +108,28 @@ Page({
   onMarkerTap({detail}) {
     const {markerId} = detail
     const marker = this.data.markers[markerId]
-    console.log(marker);
+    Dialog.confirm({
+      title: '确认更新地址？',
+    })
+      .then(() => {
+        // on confirm
+        console.log(marker);
+      })
+      .catch(() => {
+        // on cancel
+      });
   },
   // 测试跳转小程序
   goBilibili() {
-    const aid=this.data.detail.aid
-    const timestamp=new Date().getTime()
-    const path=`pages/video/video?__preload_=${timestamp*10+3}&__key_=${timestamp*10+4}&avid=${aid}`
+    const aid = this.data.detail.aid
+    const timestamp = new Date().getTime()
+    const path = `pages/video/video?__preload_=${timestamp * 10 + 3}&__key_=${timestamp * 10 + 4}&avid=${aid}`
     // console.log(path);
     wx.navigateToMiniProgram({
       appId: 'wx7564fd5313d24844',
       path,
       success: res => {
-        console.log('跳转成功',path)
+        console.log('跳转成功', path)
       }
     })
   }

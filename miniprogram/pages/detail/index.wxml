@@ -18,15 +18,13 @@
             <van-transition show="{{ searchList.length>0 }}" custom-class="block">
                 <van-cell-group inset>
                     <van-cell wx:for="{{searchList}}" wx:key="id"
-                              title="{{item.title}}" value="{{item.district}}"
-                              data-item="{{item}}"
+                              title="{{item.title}}" value="{{item.city + item.district}}"
+                              data-item="{{item}}" label="{{item.address}}"
                               bind:tap="onSuggestionSel"
                     />
-
                 </van-cell-group>
             </van-transition>
-
-            <van-cell title="{{searchVal}}" use-label-slot>
+            <van-cell use-label-slot>
                 <map slot="label"
                      id="myMap"
                      latitude="{{latitude}}"
@@ -34,9 +32,10 @@
                      markers="{{markers}}"
                      show-location
                      bindmarkertap="onMarkerTap"
-                >  </map>
+                />
             </van-cell>
         </van-cell-group>
     </scroll-view>
+    <van-dialog id="van-dialog" />
 
 </view>

@@ -24,7 +24,6 @@
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",
-  "style": "v2",
   "tabBar": {
     "color": "#dbdbdb",
     "selectedColor": "#2c2c2c",
@@ -69,7 +68,8 @@
     "van-empty": "@vant/weapp/empty/index",
     "van-cell": "@vant/weapp/cell/index",
     "van-cell-group": "@vant/weapp/cell-group/index",
-    "van-transition": "@vant/weapp/transition/index"
+    "van-transition": "@vant/weapp/transition/index",
+    "van-dialog": "@vant/weapp/dialog/index"
   },
   "permission": {
     "scope.userLocation": {

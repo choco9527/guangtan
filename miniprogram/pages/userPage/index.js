@@ -1,18 +1,13 @@
-import {$req} from "../../request";
 
 Page({
-
   data: {
-
-  },
-  createBiliCollection() {
-    wx.showLoading();
-    // 创建bilibili数据库
-    $req('main')
-      .then(resp => {
-        console.log(resp);
-        wx.hideLoading();
-      })
+    active: 1,
   },
 
+  onChange(event) {
+    wx.showToast({
+      title: `切换到标签 ${event.detail.name}`,
+      icon: 'none',
+    });
+  },
 })
