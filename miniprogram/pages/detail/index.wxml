@@ -3,7 +3,7 @@
 <view class="detail-page">
     <van-empty wx:if="{{!detail.aid}}" image="search"/>
     <scroll-view wx:else scroll-y enable-passive>
-        <image mode="aspectFill" class="head-img" src="{{detail.pic}}"></image>
+        <image mode="aspectFill" bind:tap="goBilibili" class="head-img" src="{{detail.pic}}"></image>
         <van-cell-group border>
             <van-cell title="{{detail.title}}" use-label-slot>
                 <view slot="label" class="c-label">
@@ -32,9 +32,9 @@
                      latitude="{{latitude}}"
                      longitude="{{longitude}}"
                      markers="{{markers}}"
-                     covers="{{covers}}"
                      show-location
-                ></map>
+                     bindmarkertap="onMarkerTap"
+                >  </map>
             </van-cell>
         </van-cell-group>
     </scroll-view>

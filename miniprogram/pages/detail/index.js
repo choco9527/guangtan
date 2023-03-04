@@ -14,15 +14,6 @@ Page({
     longitude: 113.324520,
     markers: [],
     searchList: [], // 推荐词
-    covers: [{
-      latitude: 23.099994,
-      longitude: 113.344520,
-      iconPath: '/image/location.png'
-    }, {
-      latitude: 23.099994,
-      longitude: 113.304520,
-      iconPath: '/image/location.png'
-    }]
   },
 
   /**
@@ -30,23 +21,24 @@ Page({
    */
   async onLoad({id}) {
     await this.getData(id)
-    const that = this
-    wx.getLocation({
-      success(res){
-        console.log(res)
-        that.showOnMarker([{
-          id: 1,
-          latitude: res.latitude,
-          longitude: res.longitude
-        }])
-      },
-      fail(err){
-        console.log(err);
-      }
-    })
+    this.setUserLocation()
   },
   onSearch({detail: search}) {
     this.setData({searchVal: search})
+  },
+  setUserLocation() { // 设置当前位置
+    const _t = this
+    wx.getLocation({
+      success: ({latitude, longitude}) => {
+        _t.showOnMarker([{
+          title: '我家',
+          location: {lat: latitude, lng: longitude}
+        }], true)
+      },
+      fail(err) {
+        console.log(err);
+      }
+    })
   },
   onSearChange: debounce(function ({detail: search}) {
     if (search) {
@@ -57,7 +49,7 @@ Page({
       this.setSearchList([])
     }
   }, 1200),
-  setSearchList(list){
+  setSearchList(list) {
     this.setData({searchList: list})
   },
   async placeSearch() {
@@ -74,7 +66,7 @@ Page({
     this.showOnMarker([item])
     this.setSearchList([])
   },
-  showOnMarker(pois = []) { // 将地址展示到marker
+  showOnMarker(pois = [], rePlace = false) { // 将地址展示到marker
     if (!pois.length) return
     const allMarkers = pois.map((poi, i) => {
       let title = poi.title
@@ -84,7 +76,13 @@ Page({
         id: i,
         latitude: lat,
         longitude: lng,
+        alpha: 0.8,
         callout: {
+          display: 'ALWAYS',
+          padding: 4,
+          color: '#333',
+          borderWidth: 1,
+          bgColor: '#fafafa',
           content: title  // 点击marker展示title
         }
       }
@@ -92,11 +90,14 @@ Page({
 
     if (allMarkers.length) {
       const [f] = allMarkers
-      this.setData({
-        latitude: f.latitude,
-        longitude: f.longitude,
-        markers: allMarkers
-      })
+      this.setData({markers: allMarkers})
+      if (rePlace) {
+        this.setData({
+          latitude: f.latitude,
+          longitude: f.longitude,
+        })
+      }
+
     }
   },
   async getData(id) {
@@ -104,46 +105,23 @@ Page({
     const {success, data} = await $req('getVideo', {id})
     if (success) this.setData({detail: data})
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
+  onMarkerTap({detail}) {
+    const {markerId} = detail
+    const marker = this.data.markers[markerId]
+    console.log(marker);
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
+  // 测试跳转小程序
+  goBilibili() {
+    const aid=this.data.detail.aid
+    const timestamp=new Date().getTime()
+    const path=`pages/video/video?__preload_=${timestamp*10+3}&__key_=${timestamp*10+4}&avid=${aid}`
+    // console.log(path);
+    wx.navigateToMiniProgram({
+      appId: 'wx7564fd5313d24844',
+      path,
+      success: res => {
+        console.log('跳转成功',path)
+      }
+    })
   }
 })
