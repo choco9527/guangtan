@@ -25,7 +25,11 @@ export function $req(type, params = {}) {
     wx.cloud.callFunction({
       name: 'mFunctions',
       config: {env: selectedEnv.envId},
-      data: {type, ...params}
+      data: {
+        type,
+        ...params,
+        // weRunData: wx.cloud.CloudID('xxx'), // 这个 CloudID 值到云函数端会被替换
+      }
     }).then(res => {
       // console.log('$req: ' + type, res.result)
       if (!res.result.success) {

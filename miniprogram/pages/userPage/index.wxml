@@ -1,15 +1,30 @@
     <view class="user-page">
-        <van-image
-                round
-                width="80"
-                height="80"
-                src="https://img.yzcdn.cn/vant/cat.jpeg"
-        />
+<!--        <block wx:if="{{!hasUserInfo}}">-->
+<!--            <button  bindtap="getUserProfile"> 获取头像昵称 </button>-->
+<!--        </block>-->
+<!--        <block wx:else>-->
+<!--            <van-image-->
+<!--                    round-->
+<!--                    width="80px"-->
+<!--                    height="80px"-->
+<!--                    src="{{userInfo.avatarUrl}}"-->
+<!--            />-->
+<!--            <button open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">获取头像</button>-->
+<!--            <text class="userinfo-nickname">{{userInfo.nickName}}</text>-->
+<!--        </block>-->
+        <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+                        <van-image
+                                round
+                                width="80px"
+                                height="80px"
+                                src="{{avatarUrl}}"
+                        />
+        </button>
+
         <van-tabs class="tabs" active="{{ active }}" bind:change="onChange">
             <van-tab title="收藏">
             </van-tab>
             <van-tab title="标签 2">内容 2</van-tab>
             <van-tab title="标签 3">内容 3</van-tab>
         </van-tabs>
-
     </view>

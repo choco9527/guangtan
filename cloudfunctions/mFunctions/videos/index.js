@@ -63,3 +63,23 @@ exports.getVideo = async (event, context) => {
     };
   }
 };
+
+// 更新视频位置信息
+exports.updateVideoLocation = async (event, context) => {
+  try {
+    const {id} = event
+    if (!id) throw new Error('no id')
+    const {data} = await VIDEO.doc(id).get()
+
+    return {
+      success: true,
+      msg: '',
+      data,
+    };
+  } catch (e) {
+    return {
+      success: false,
+      msg: e.message || '失败',
+    };
+  }
+};

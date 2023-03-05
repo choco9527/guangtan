@@ -13,6 +13,8 @@ exports.main = async (event, context) => {
       return await videos.getVideo(event, context);
     case 'getVideoList':
       return await videos.getVideoList(event, context);
+    case 'updateVideoLocation':
+      return await videos.updateVideoLocation(event, context);
     case 'main':
       return await fetchData.main(event, context);
   }
