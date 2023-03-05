@@ -3,14 +3,15 @@ import {$req, getSearchMap, getSuggestion} from "../../js/request";
 import {debounce} from 'xe-utils'
 import Dialog from '@vant/weapp/dialog/dialog';
 import Toast from '@vant/weapp/toast/toast';
-import {locMapFn} from "../../js/util";
+import {locMapFn, goBilibili, deepClone} from "../../js/util";
 
+const {globalData} = getApp()
+const {userInfo} = globalData
+let curMarker = {}
+const UPDATE = '更新'
+const GO = '前往'
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     searchVal: '',
     detail: {},
@@ -18,7 +19,9 @@ Page({
     longitude: 113.324520,
     markers: [],
     searchList: [], // 推荐词
-    listLoading: false
+    listLoading: false,
+    showAction: false,
+    actions: [],
   },
   /**
    * 生命周期函数--监听页面加载
@@ -27,6 +30,9 @@ Page({
     this.getData(id).then(detail => {
       this.getDetailLocation(detail)
     })
+    let actions = [{name: GO}]
+    if (userInfo.IS_MANAGER) actions.push({name: UPDATE})
+    this.setData({actions})
   },
   onSearch({detail: search}) {
     this.setData({searchVal: search})
@@ -34,7 +40,6 @@ Page({
   getDetailLocation(detail) { // 获取当前位置
     if (detail.locInfo) {
       const {content, location} = detail.locInfo
-      console.log(location);
       const [lng, lat] = location.coordinates
       this.showOnMarker([{
         title: content,
@@ -97,39 +102,42 @@ Page({
   onMarkerTap({detail}) {
     const {markerId} = detail
     const marker = this.data.markers[markerId]
-    const {latitude, longitude, callout} = marker
-
-    wx.openLocation({
-      latitude, longitude
-    })
-
-
-    // Dialog.confirm({
-    //   title: '确认更新地址？',
-    // })
-    //   .then(() => {
-    //     const {_id} = this.data.detail
-    //     $req('updateVideoLocation', {id: _id, latitude, longitude, content: callout.content}).then(updateRes => {
-    //       console.log(updateRes);
-    //       Toast.success('更新成功');
-    //     })
-    //   })
-    //   .catch(() => {
-    //     // on cancel
-    //   });
+    curMarker = deepClone(marker)
+    this.setData({showAction: true});
   },
   // 测试跳转小程序
   goBilibili() {
     const aid = this.data.detail.aid
-    const timestamp = new Date().getTime()
-    const path = `pages/video/video?__preload_=${timestamp * 10 + 3}&__key_=${timestamp * 10 + 4}&avid=${aid}`
+    goBilibili(aid)
+  },
+  onActionSelect(e) {
+    const {name} = e.detail
+    const {latitude, longitude, callout} = curMarker
+    switch (name) {
+      case UPDATE:
+        Dialog.confirm({
+          title: '确认更新地址？',
+        })
+          .then(() => {
+            const {_id} = this.data.detail
+            $req('updateVideoLocation', {id: _id, latitude, longitude, content: callout.content}).then(updateRes => {
+              console.log(updateRes);
+              Toast.success('更新成功');
+            })
+          })
+          .catch(() => {
+            // on cancel
+          });
+        break
+      case GO:
+        wx.openLocation({
+          latitude, longitude
+        })
+        break
 
-    wx.navigateToMiniProgram({
-      appId: 'wx7564fd5313d24844',
-      path,
-      success: res => {
-        console.log('跳转成功', path)
-      }
-    })
-  }
+    }
+  },
+  onActionClose() {
+    this.setData({showAction: false});
+  },
 })

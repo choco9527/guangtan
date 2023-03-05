@@ -1,4 +1,5 @@
 const videos = require('./videos/index');
+const user = require('./user/index');
 const fetchData = require('./fetchData/index');
 
 // 云函数入口函数
@@ -9,7 +10,9 @@ exports.main = async (event, context) => {
   }
 
   switch (event.type) {
-    case 'getVideo':
+    case 'getUserInfo':
+      return await user.main(event, context);
+      case 'getVideo':
       return await videos.getVideo(event, context);
     case 'getVideoList':
       return await videos.getVideoList(event, context);

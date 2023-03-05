@@ -1,14 +1,17 @@
 const {envList} = require('../../envList.js');
 import {locMapFn} from "../../js/util";
+import {$req} from "../../js/request";
 
 Page({
-  data:{
+  data: {
     latitude: 23.099994,
     longitude: 113.324520,
     markers: [],
   },
   onLoad(query) {
     this.setUserLocation()
+  },
+  onShow() {
   },
   setUserLocation() { // 设置当前位置
     const _t = this

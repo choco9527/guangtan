@@ -61,7 +61,8 @@
     "van-dialog": "@vant/weapp/dialog/index",
     "van-tab": "@vant/weapp/tab/index",
     "van-tabs": "@vant/weapp/tabs/index",
-    "van-loading": "@vant/weapp/loading/index"
+    "van-loading": "@vant/weapp/loading/index",
+    "van-action-sheet": "@vant/weapp/action-sheet/index"
   },
   "permission": {
     "scope.userLocation": {
