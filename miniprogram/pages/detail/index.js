@@ -5,8 +5,6 @@ import Dialog from '@vant/weapp/dialog/dialog';
 import Toast from '@vant/weapp/toast/toast';
 import {locMapFn, goBilibili, deepClone} from "../../js/util";
 
-const {globalData} = getApp()
-const {userInfo} = globalData
 let curMarker = {}
 const UPDATE = '更新'
 const GO = '前往'
@@ -30,8 +28,11 @@ Page({
     this.getData(id).then(detail => {
       this.getDetailLocation(detail)
     })
+  },
+  onShow() {
+    const {globalData} = getApp()
     let actions = [{name: GO}]
-    if (userInfo.IS_MANAGER) actions.push({name: UPDATE})
+    if (globalData.userInfo.IS_MANAGER) actions.push({name: UPDATE})
     this.setData({actions})
   },
   onSearch({detail: search}) {
