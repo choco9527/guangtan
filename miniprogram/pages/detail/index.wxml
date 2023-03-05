@@ -14,6 +14,9 @@
 
             <van-search shape="round" bind:search="onSearch" bind:change="onSearChange"
                         value="{{ searchVal }}" placeholder="添加地点"/>
+            <view class="t-center">
+                <van-loading  wx:if="{{listLoading}}">searching...</van-loading>
+            </view>
 
             <van-transition show="{{ searchList.length>0 }}" custom-class="block">
                 <van-cell-group inset>
@@ -37,5 +40,4 @@
         </van-cell-group>
     </scroll-view>
     <van-dialog id="van-dialog" />
-
 </view>

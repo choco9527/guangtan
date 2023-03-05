@@ -1,6 +1,9 @@
 <!--index.wxml-->
 <view class="home-page container">
-  <view class="title">
-    <van-button bindtap="createBiliCollection" round type="primary">朴素按钮</van-button>
-  </view>
+  <map id="homeMap"
+       latitude="{{latitude}}"
+       longitude="{{longitude}}"
+       markers="{{markers}}"
+       show-location
+  />
 </view>

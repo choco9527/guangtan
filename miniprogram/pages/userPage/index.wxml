@@ -1,30 +1,23 @@
     <view class="user-page">
-<!--        <block wx:if="{{!hasUserInfo}}">-->
-<!--            <button  bindtap="getUserProfile"> 获取头像昵称 </button>-->
-<!--        </block>-->
-<!--        <block wx:else>-->
-<!--            <van-image-->
-<!--                    round-->
-<!--                    width="80px"-->
-<!--                    height="80px"-->
-<!--                    src="{{userInfo.avatarUrl}}"-->
-<!--            />-->
-<!--            <button open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">获取头像</button>-->
-<!--            <text class="userinfo-nickname">{{userInfo.nickName}}</text>-->
-<!--        </block>-->
-        <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-                        <van-image
-                                round
-                                width="80px"
-                                height="80px"
-                                src="{{avatarUrl}}"
-                        />
-        </button>
 
-        <van-tabs class="tabs" active="{{ active }}" bind:change="onChange">
-            <van-tab title="收藏">
-            </van-tab>
-            <van-tab title="标签 2">内容 2</van-tab>
-            <van-tab title="标签 3">内容 3</van-tab>
-        </van-tabs>
+<!--        <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">-->
+<!--                        <van-image-->
+<!--                                wx:if="{{avatarUrl}}"-->
+<!--                                round-->
+<!--                                width="80px"-->
+<!--                                height="80px"-->
+<!--                                src="{{avatarUrl}}"-->
+<!--                        />-->
+<!--                <text class="fs-10" wx:else>设置头像</text>-->
+<!--        </button>-->
+
+<!--        <van-tabs class="tabs" active="{{ active }}" bind:change="onChange">-->
+<!--            <van-tab title="收藏">-->
+<!--            </van-tab>-->
+<!--            <van-tab title="标签 2">内容 2</van-tab>-->
+<!--            <van-tab title="标签 3">内容 3</van-tab>-->
+<!--        </van-tabs>-->
+        <van-cell-group>
+            <van-cell title="收藏" is-link />
+        </van-cell-group>
     </view>

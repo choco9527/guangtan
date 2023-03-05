@@ -1,7 +1,10 @@
 // pages/detail/index.js
-import {$req, getSearchMap, getSuggestion} from "../../request";
+import {$req, getSearchMap, getSuggestion} from "../../js/request";
 import {debounce} from 'xe-utils'
 import Dialog from '@vant/weapp/dialog/dialog';
+import Toast from '@vant/weapp/toast/toast';
+import {locMapFn} from "../../js/util";
+
 
 Page({
 
@@ -15,41 +18,44 @@ Page({
     longitude: 113.324520,
     markers: [],
     searchList: [], // 推荐词
+    listLoading: false
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
-  async onLoad({id}) {
-    await this.getData(id)
-    this.setUserLocation()
+  onLoad({id}) {
+    this.getData(id).then(detail => {
+      this.getDetailLocation(detail)
+    })
   },
   onSearch({detail: search}) {
     this.setData({searchVal: search})
   },
-  setUserLocation() { // 设置当前位置
-    const _t = this
-    wx.getLocation({
-      success: ({latitude, longitude}) => {
-        _t.showOnMarker([{
-          title: '我家',
-          location: {lat: latitude, lng: longitude}
-        }], true)
-      },
-      fail(err) {
-        console.log(err);
-      }
-    })
+  getDetailLocation(detail) { // 获取当前位置
+    if (detail.locInfo) {
+      const {content, location} = detail.locInfo
+      console.log(location);
+      const [lng, lat] = location.coordinates
+      this.showOnMarker([{
+        title: content,
+        location: {lat, lng}
+      }], true)
+    } else {
+      Toast.fail('请添加位置')
+    }
   },
   onSearChange: debounce(function ({detail: search}) {
     if (search) {
+      this.setData({listLoading: true})
       getSuggestion({word: search}).then(({data}) => {
         this.setSearchList(data)
+      }).finally(() => {
+        this.setData({listLoading: false})
       })
     } else {
       this.setSearchList([])
     }
-  }, 1200),
+  }, 800),
   setSearchList(list) {
     this.setData({searchList: list})
   },
@@ -69,25 +75,7 @@ Page({
   },
   showOnMarker(pois = [], rePlace = false) { // 将地址展示到marker
     if (!pois.length) return
-    const allMarkers = pois.map((poi, i) => {
-      let title = poi.title
-      let lat = poi.location.lat
-      let lng = poi.location.lng
-      return {
-        id: i,
-        latitude: lat,
-        longitude: lng,
-        alpha: 0.8,
-        callout: {
-          display: 'ALWAYS',
-          padding: 4,
-          color: '#333',
-          borderWidth: 1,
-          bgColor: '#fafafa',
-          content: title  // 点击marker展示title
-        }
-      }
-    })
+    const allMarkers = pois.map(locMapFn)
 
     if (allMarkers.length) {
       const [f] = allMarkers
@@ -104,27 +92,38 @@ Page({
     if (!id) return
     const {success, data} = await $req('getVideo', {id})
     if (success) this.setData({detail: data})
+    return data
   },
   onMarkerTap({detail}) {
     const {markerId} = detail
     const marker = this.data.markers[markerId]
-    Dialog.confirm({
-      title: '确认更新地址？',
+    const {latitude, longitude, callout} = marker
+
+    wx.openLocation({
+      latitude, longitude
     })
-      .then(() => {
-        // on confirm
-        console.log(marker);
-      })
-      .catch(() => {
-        // on cancel
-      });
+
+
+    // Dialog.confirm({
+    //   title: '确认更新地址？',
+    // })
+    //   .then(() => {
+    //     const {_id} = this.data.detail
+    //     $req('updateVideoLocation', {id: _id, latitude, longitude, content: callout.content}).then(updateRes => {
+    //       console.log(updateRes);
+    //       Toast.success('更新成功');
+    //     })
+    //   })
+    //   .catch(() => {
+    //     // on cancel
+    //   });
   },
   // 测试跳转小程序
   goBilibili() {
     const aid = this.data.detail.aid
     const timestamp = new Date().getTime()
     const path = `pages/video/video?__preload_=${timestamp * 10 + 3}&__key_=${timestamp * 10 + 4}&avid=${aid}`
-    // console.log(path);
+
     wx.navigateToMiniProgram({
       appId: 'wx7564fd5313d24844',
       path,
