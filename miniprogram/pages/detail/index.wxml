@@ -5,28 +5,8 @@
     <scroll-view wx:else scroll-y enable-passive>
         <image mode="aspectFill" bind:tap="goBilibili" class="head-img" src="{{detail.pic}}"></image>
         <van-cell-group border>
-            <van-cell title="{{detail.title}}" use-label-slot>
-                <view slot="label" class="c-label">
-                    {{detail.description}}
-                </view>
-            </van-cell>
             <van-cell title="综合人气" value="{{ tools.getWeight(detail.v_stat) }}"/>
-
-            <van-search shape="round" bind:search="onSearch" bind:change="onSearChange"
-                        value="{{ searchVal }}" placeholder="添加地点"/>
-            <view class="t-center">
-                <van-loading  wx:if="{{listLoading}}" type="spinner">searching...</van-loading>
-            </view>
-
-            <van-transition show="{{ searchList.length>0 }}" custom-class="block">
-                <van-cell-group inset>
-                    <van-cell wx:for="{{searchList}}" wx:key="id"
-                              title="{{item.title}}" value="{{item.city + item.district}}"
-                              data-item="{{item}}" label="{{item.address}}"
-                              bind:tap="onSuggestionSel"
-                    />
-                </van-cell-group>
-            </van-transition>
+            <search-list wx:if="{{isManager}}" bind:onSelect="onSuggestionSel"></search-list>
             <van-cell use-label-slot>
                 <map slot="label"
                      id="myMap"
@@ -37,9 +17,22 @@
                      bindmarkertap="onMarkerTap"
                 />
             </van-cell>
+            <van-cell title="{{detail.title}}" use-label-slot>
+                <view slot="label" class="c-label">
+                    {{detail.description}}
+                </view>
+            </van-cell>
+        </van-cell-group>
+        <van-cell-group border wx:if="{{detail.replys}}">
+            <van-cell wx:for="{{detail.replys.top_replies}}" wx:key="rpid"
+                      title="{{item.content.message}}" value="{{item.member.uname}}"
+            />
+            <van-cell wx:for="{{detail.replys.replies}}" wx:key="rpid"
+                      title="{{item.content.message}}" value="{{item.member.uname}}"
+            />
         </van-cell-group>
     </scroll-view>
-    <van-dialog id="van-dialog" />
+    <van-dialog id="van-dialog"/>
     <van-action-sheet
             show="{{ showAction }}"
             actions="{{ actions }}"

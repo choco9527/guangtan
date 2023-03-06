@@ -1,6 +1,5 @@
 // pages/detail/index.js
-import {$req, getSearchMap, getSuggestion} from "../../js/request";
-import {debounce} from 'xe-utils'
+import {$req, getSearchMap} from "../../js/request";
 import Dialog from '@vant/weapp/dialog/dialog';
 import Toast from '@vant/weapp/toast/toast';
 import {locMapFn, goBilibili, deepClone} from "../../js/util";
@@ -11,33 +10,33 @@ const GO = '前往'
 
 Page({
   data: {
-    searchVal: '',
     detail: {},
     latitude: 23.099994,
     longitude: 113.324520,
     markers: [],
-    searchList: [], // 推荐词
-    listLoading: false,
     showAction: false,
     actions: [],
+    isManager: false // 管理员
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad({id}) {
     this.getData(id).then(detail => {
+      console.log(detail);
       this.getDetailLocation(detail)
     })
   },
   onShow() {
     const {globalData} = getApp()
     let actions = [{name: GO}]
-    if (globalData.userInfo.IS_MANAGER) actions.push({name: UPDATE})
+    if (globalData.userInfo.IS_MANAGER) {
+      actions.push({name: UPDATE})
+      this.setData({isManager: true})
+    }
     this.setData({actions})
   },
-  onSearch({detail: search}) {
-    this.setData({searchVal: search})
-  },
+
   getDetailLocation(detail) { // 获取当前位置
     if (detail.locInfo) {
       const {content, location} = detail.locInfo
@@ -50,21 +49,7 @@ Page({
       Toast.fail('请添加位置')
     }
   },
-  onSearChange: debounce(function ({detail: search}) {
-    if (search) {
-      this.setData({listLoading: true})
-      getSuggestion({word: search}).then(({data}) => {
-        this.setSearchList(data)
-      }).finally(() => {
-        this.setData({listLoading: false})
-      })
-    } else {
-      this.setSearchList([])
-    }
-  }, 800),
-  setSearchList(list) {
-    this.setData({searchList: list})
-  },
+
   async placeSearch() {
     if (!this.data.searchVal) return
     const {data} = await getSearchMap({
@@ -74,10 +59,8 @@ Page({
     })
     this.showOnMarker(data)
   },
-  onSuggestionSel({target}) {
-    const item = target.dataset.item
+  onSuggestionSel({detail: item}) {
     this.showOnMarker([item], true)
-    this.setSearchList([])
   },
   showOnMarker(pois = [], rePlace = false) { // 将地址展示到marker
     if (!pois.length) return
@@ -135,7 +118,6 @@ Page({
           latitude, longitude
         })
         break
-
     }
   },
   onActionClose() {

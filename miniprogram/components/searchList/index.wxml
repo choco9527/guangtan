@@ -1,0 +1,16 @@
+<view class="search-list">
+  <van-search shape="round" bind:search="onSearch" bind:change="onSearChange"
+              value="{{ searchVal }}" placeholder="添加地点"/>
+  <view class="t-center">
+    <van-loading wx:if="{{searching}}" type="spinner">searching...</van-loading>
+  </view>
+  <van-transition show="{{ searchList.length>0 }}" custom-class="block">
+    <van-cell-group inset>
+      <van-cell wx:for="{{searchList}}" wx:key="id"
+                title="{{item.title}}" value="{{item.city + item.district}}"
+                data-item="{{item}}" label="{{item.address}}"
+                bind:tap="onS"
+      />
+    </van-cell-group>
+  </van-transition>
+</view>

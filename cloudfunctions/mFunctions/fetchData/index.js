@@ -59,6 +59,30 @@ const bApiList = { // b站请求api
       return {data}
     }
   },
+
+  /**
+   * 获取一个视频的前几个评论信息
+   * @param aid
+   * @returns {Promise<{data: null | Object}>}
+   */
+  async getVideoReply({aid = 0}) {
+    let data = null
+    try {
+      if (aid) {
+        const url = `https://api.bilibili.com/x/v2/reply/main?mode=3&next=0&oid=${aid}&plat=1&seek_rpid=&type=1`
+        const {data: biliRes} = await axios.get(url)
+        if (biliRes && biliRes.code === 0) {
+          data = biliRes.data
+        }
+        return {data}
+      } else {
+        throw new Error('no mid')
+      }
+    } catch (e) {
+      console.warn('getVideoList Error', e)
+      return {data}
+    }
+  },
 }
 
 /**
@@ -69,7 +93,7 @@ async function addNewListData(mid, pageSize = 10) {
   try {
     let {list, page} = await bApiList.getVideoList({mid, pageSize})
     if (list) {
-      await addTheList(list)
+      await $addTheList(list)
     }
   } catch (e) {
     console.warn('addNewData Error:', e)
@@ -84,8 +108,6 @@ async function addNewListData(mid, pageSize = 10) {
  * @returns {Promise<void>}
  */
 async function updateListData(mid, x = 20) {
-  // const day7 = 1000 * 3600 * 24 * 7
-  // const _ = db.command
 
   try {
     const {data: videoList} = await VIDEO
@@ -94,13 +116,38 @@ async function updateListData(mid, x = 20) {
         _id: true,
         aid: true,
         v_up_time: true,
-        v_data: true
+        v_stat: true
       })
       .limit(x)
       .orderBy('created', 'desc').get()
 
     console.log(videoList);
-    await updateTheList(videoList)
+    await $updateTheList(videoList)
+  } catch (e) {
+    console.warn('updateAllListData Error:', e)
+    throw e
+  }
+}
+
+/**
+ * 更新列表最新x条的视频的关键信息
+ * @param mid
+ * @param x
+ * @param skip
+ * @returns {Promise<void>}
+ */
+async function updateListReply(mid, x = 20, skip = 0) {
+  try {
+    const {data: videoList} = await VIDEO
+      .where({mid})
+      .skip(skip)
+      .limit(x)
+      .orderBy('created', 'desc')
+      .field({_id: true, aid: true}).get()
+
+    console.log(videoList);
+    await $updateTheListReply(videoList)
+    console.log(x, skip, 'ok')
   } catch (e) {
     console.warn('updateAllListData Error:', e)
     throw e
@@ -112,7 +159,7 @@ async function updateListData(mid, x = 20) {
  * @param list
  * @returns {Promise<void>}
  */
-async function addTheList(list = []) {
+async function $addTheList(list = []) {
   for (const data of list) { // 逐条添加到数据库
     const hasData = await VIDEO.where({aid: data.aid}).limit(1).get()
     if (hasData && !hasData.data.length) { // 不操作旧数据
@@ -133,13 +180,36 @@ async function addTheList(list = []) {
  * @param list
  * @returns {Promise<void>}
  */
-async function updateTheList(list = []) {
+async function $updateTheList(list = []) {
   const cur = new Date().getTime()
   for (const item of list) {
     let {data: vData} = await bApiList.getVideoData({aid: item.aid})
     await VIDEO.doc(item._id)
-      .update({data: {v_data: vData.stat, v_up_time: cur}})
+      .update({data: {v_stat: vData.stat, v_up_time: cur}})
     console.log('更新一条新视频数据！', vData.aid);
+  }
+}
+
+
+/**
+ * 更新list的reply评论区
+ * @param list
+ * @returns {Promise<void>}
+ */
+async function $updateTheListReply(list = []) {
+  for (const key in list) {
+    const item = list[key]
+    let {data} = await bApiList.getVideoReply({aid: item.aid})
+    const {replies, top_replies} = data
+
+    await VIDEO.doc(item._id).update({
+      data: {
+        reply: {
+          replies, top_replies
+        }
+      }
+    })
+    console.log('更新一条新视频评论！', item.aid, key);
   }
 }
 
@@ -155,7 +225,7 @@ async function addAllList(mid) {
       console.log(list);
       const {count, pn, ps} = page
       if (list) {
-        await addTheList(list)
+        await $addTheList(list)
         console.log(`page${pageNum}完成`)
         if ((pn * ps) < count) { // 1*50<51
           await _add(pn + 1)
@@ -183,7 +253,18 @@ exports.fetchTask = async (event, context) => { // 定时触发的task 每天5�
 
 exports.main = async (event, context) => {
   try {
-    // await addAllList(PINCHENGJI)
+    console.log('main')
+
+    return {success: true, msg: '执行成功', data: null};
+  } catch (e) {
+    return {success: false, msg: '执行失败'};
+  }
+};
+
+exports.manual = async (event, context) => {
+  try {
+    // await addNewListData(PINCHENGJI) // 新增
+    await updateListReply(PINCHENGJI, 100, 700) // 更新
 
     return {success: true, msg: '执行成功', data: null};
   } catch (e) {
