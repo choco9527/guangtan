@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@vant/weapp": "^1.10.13",
+    "dayjs": "^1.11.7",
     "xe-utils": "^3.5.7"
   }
 }

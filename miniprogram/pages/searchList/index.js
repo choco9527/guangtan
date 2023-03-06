@@ -1,4 +1,5 @@
 import {$req} from "../../js/request";
+const dayjs = require("dayjs")
 
 Page({
   data: {
@@ -30,10 +31,10 @@ Page({
     }
   },
   async onFresh() {
-    console.log('刷新')
     const list = await this.getListData()
     if (list) {
-      this.setData({list})
+        console.log(list);
+        this.setData({list})
     }
     return list
   },

@@ -27,7 +27,6 @@ exports.getVideoList = async (event, context) => {
         pic: true,
         v_stat: true,
         locInfo: true,
-        reply: true,
       })
       .get()
 

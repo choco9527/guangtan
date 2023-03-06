@@ -1,3 +1,4 @@
+
 function parsePlayNum(num) {
   if (num > Math.pow(10, 4)) {
     var k = Math.floor(num / Math.pow(10, 3)).toString().slice(-1)

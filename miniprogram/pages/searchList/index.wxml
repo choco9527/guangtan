@@ -34,16 +34,31 @@
         <view wx:for="{{list}}" wx:key="aid">
             <van-card title="{{ item.title }}" data-id="{{ item._id }}" bind:tap="toDetail">
                 <van-row slot="desc" class="text-sec fs-12">
-                    <van-col span="6">
-                        <van-icon name="fire"/>
-                        <text>{{ tools.getWeight(item.v_stat) }}</text>
+                    <van-col span="24" >
+                        <van-icon name="underway-o" />
+                        <text>{{ tools.formatDate(item.created) }}</text>
                     </van-col>
+                    <van-col span="24" wx:if="{{item.locInfo}}">
+                        <van-icon name="aim" />
+                        <text>{{item.locInfo.content}}</text>
+                    </van-col>
+
                 </van-row>
                 <view slot="thumb">
                     <image mode="widthFix" class="w-88 h-56 br-4 over-hide" src="{{item.pic}}"></image>
+                    <van-row class="text-sec fs-10">
+                        <van-col span="12">
+                            <van-icon name="fire"/>
+                            <text>{{ tools.getWeight(item.v_stat) }}</text>
+                        </van-col>
+                        <van-col span="12">
+                            <van-icon name="eye-o" />
+                            <text>{{ tools.parsePlayNum(item.play) }}</text>
+                        </van-col>
+                    </van-row>
                 </view>
                 <view slot="price-top">
-                    {{item.locInfo && item.locInfo.content}}
+
                 </view>
                 <view slot="price">
 

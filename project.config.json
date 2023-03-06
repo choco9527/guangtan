@@ -40,7 +40,7 @@
     "minifyWXML": true
   },
   "appid": "wxef59aa82877d9d01",
-  "projectname": "quickstart-wx-cloud",
+  "projectname": "guangtan",
   "libVersion": "2.14.1",
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
   "condition": {
