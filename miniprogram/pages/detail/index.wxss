@@ -16,5 +16,16 @@
 .detail-page .word-list .item text:nth-of-type(1) {
   margin-right: 10px;
 }
+.detail-page .replies {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.detail-page .replies .r-item {
+  color: #333;
+  margin-bottom: 6px;
+}
+.detail-page .replies .r-item .uname {
+  color: #666;
+}
 
 /*# sourceMappingURL=index.wxss.map */

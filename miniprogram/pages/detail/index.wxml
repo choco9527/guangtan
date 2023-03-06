@@ -23,13 +23,15 @@
                 </view>
             </van-cell>
         </van-cell-group>
-        <van-cell-group border wx:if="{{detail.replys}}">
-            <van-cell wx:for="{{detail.replys.top_replies}}" wx:key="rpid"
-                      title="{{item.content.message}}" value="{{item.member.uname}}"
-            />
-            <van-cell wx:for="{{detail.replys.replies}}" wx:key="rpid"
-                      title="{{item.content.message}}" value="{{item.member.uname}}"
-            />
+        <van-cell-group border inset wx:if="{{detail.reply}}" custom-class="replies">
+            <van-row custom-class="fs-12 r-item" wx:for="{{detail.reply.top_replies}}" wx:key="rpid">
+                <van-col custom-class="uname" span="24">{{item.member.uname}}</van-col>
+                <van-col offset="1" span="23">{{item.content.message}}</van-col>
+            </van-row>
+            <van-row custom-class="fs-12 r-item" wx:for="{{detail.reply.replies}}" wx:key="rpid">
+                <van-col custom-class="uname" span="24">{{item.member.uname}}</van-col>
+                <van-col offset="1" span="23">{{item.content.message}}</van-col>
+            </van-row>
         </van-cell-group>
     </scroll-view>
     <van-dialog id="van-dialog"/>

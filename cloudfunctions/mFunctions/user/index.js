@@ -14,6 +14,7 @@ exports.main = async (event, context) => {
     UNIONID,
     ENV,
   } = cloud.getWXContext()
+
   const managerList = ["oiLOL5THpcMk1GydSJlz5pejV9nw"]
 
   return {
@@ -21,6 +22,7 @@ exports.main = async (event, context) => {
     APPID,
     UNIONID,
     ENV,
-    IS_MANAGER: managerList.includes(OPENID)
+    IS_MANAGER: true
+    // IS_MANAGER: managerList.includes(OPENID)
   };
 };
