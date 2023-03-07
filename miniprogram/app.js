@@ -13,8 +13,6 @@ App({
         traceUser: true,
       });
     }
-    $req('getUserInfo').then(info => {
-      Reflect.set(this.globalData, 'userInfo', {...info})
-    })
+    Reflect.set(this.globalData, 'userInfo', $req('getUserInfo')) // 存为Promise
   }
 });

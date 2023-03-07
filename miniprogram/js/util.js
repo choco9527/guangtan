@@ -13,6 +13,8 @@ export const locMapFn = (poi, i) => {
     latitude: lat,
     longitude: lng,
     alpha: 0.8,
+    width: 20,
+    height: 20,
     callout: {
       display: 'ALWAYS',
       padding: 4,

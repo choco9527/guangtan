@@ -29,12 +29,14 @@ Page({
   },
   onShow() {
     const {globalData} = getApp()
-    let actions = [{name: GO}]
-    if (globalData.userInfo.IS_MANAGER) {
-      actions.push({name: UPDATE})
-      this.setData({isManager: true})
-    }
-    this.setData({actions})
+    globalData.userInfo.then(info => {
+      let actions = [{name: GO}]
+      if (info.IS_MANAGER) {
+        actions.push({name: UPDATE})
+        this.setData({isManager: true})
+      }
+      this.setData({actions})
+    })
   },
 
   getDetailLocation(detail) { // 获取当前位置

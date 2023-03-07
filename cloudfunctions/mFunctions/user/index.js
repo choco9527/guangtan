@@ -19,9 +19,9 @@ exports.main = async (event, context) => {
 
   return {
     OPENID,
-    APPID,
+    // APPID,
     UNIONID,
-    ENV,
+    // ENV,
     IS_MANAGER: true
     // IS_MANAGER: managerList.includes(OPENID)
   };

@@ -1,5 +1,5 @@
 import {$req} from "../../js/request";
-const dayjs = require("dayjs")
+// const dayjs = require("dayjs")
 
 Page({
   data: {
