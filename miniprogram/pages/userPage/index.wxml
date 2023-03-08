@@ -12,15 +12,18 @@
                             height="40px"
                             src="{{avatarUrl}}"
                     />
-                    <text class="fs-10" wx:else>设置头像</text>
+                    <text class="fs-12" wx:else>设置头像</text>
                 </button>
             </view>
         </van-cell>
-        <van-cell title="昵称" value="{{nickname}}" bind:tap="showDialog"/>
+        <van-cell title="昵称" value="{{nickname }}">
+            <text wx:if="{{nickname}}">{{nickname}}</text>
+            <text class="fs-12" wx:else bind:tap="showDialog">设置昵称</text>
+        </van-cell>
     </van-cell-group>
     <van-dialog
             use-slot
-            title="修改昵称"
+            title="设置昵称"
             show="{{ show }}"
             showConfirmButton="{{false}}"
             closeOnClickOverlay
@@ -28,7 +31,7 @@
             custom-class="nick-dialog"
     >
         <form bindsubmit="formsubmit">
-            <input class="sub-input" type="nickname" placeholder="请输入新昵称" name="nickname"/>
+            <input class="sub-input" type="nickname" placeholder="请输入新昵称，暂不提供修改" name="nickname"/>
             <button class="sub-btn" form-type="submit" type="primary">提交</button>
         </form>
     </van-dialog>

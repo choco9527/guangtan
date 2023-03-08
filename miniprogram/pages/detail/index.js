@@ -29,9 +29,9 @@ Page({
   },
   onShow() {
     const {globalData} = getApp()
-    globalData.userInfo.then(info => {
+    globalData.userInfo.then(({IS_MANAGER}) => {
       let actions = [{name: GO}]
-      if (info.IS_MANAGER) {
+      if (IS_MANAGER) {
         actions.push({name: UPDATE})
         this.setData({isManager: true})
       }

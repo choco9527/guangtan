@@ -9,7 +9,7 @@ Page({
     nickname: '',
     show: false
   },
-  onLoad(query) {
+  onLoad() {
     const {globalData} = getApp()
     globalData.userInfo.then(({INFO}) => {
       if (INFO) {
@@ -59,10 +59,7 @@ Page({
         }
       })
     } else {
-      wx.showToast({
-        title: '昵称不合法️',
-        icon: 'error'
-      })
+      wx.showToast({title: '昵称不合法️', icon: 'error'})
     }
   }
 })

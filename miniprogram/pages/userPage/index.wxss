@@ -8,6 +8,7 @@
   display: inline-block;
   font-size: 0;
   line-height: 1;
+  color: var(--cell-value-color,#969799);
 }
 .user-page .sub-input {
   padding: 18px 12px;
