@@ -1,38 +1,36 @@
 <view class="user-page">
 
-
-    <!--        <van-tabs class="tabs" active="{{ active }}" bind:change="onChange">-->
-    <!--            <van-tab title="收藏">-->
-    <!--            </van-tab>-->
-    <!--            <van-tab title="标签 2">内容 2</van-tab>-->
-    <!--            <van-tab title="标签 3">内容 3</van-tab>-->
-    <!--        </van-tabs>-->
-    <form bindsubmit="formsubmit">
-        <van-cell-group inset>
-
-            <van-cell title="头像">
-                <view>
-                    <button class="avatar-wrapper-btn" open-type="chooseAvatar"
-                            bind:chooseavatar="onChooseAvatar">
-                        <van-image
-                                wx:if="{{avatarUrl}}"
-                                round
-                                width="80px"
-                                height="80px"
-                                src="{{avatarUrl}}"
-                        />
-                        <text class="fs-10" wx:else>设置头像</text>
-                    </button>
-
-                </view>
-            </van-cell>
-
-            <van-cell title="昵称">
-                <input type="nickname" placeholder="请输入昵称" name="nickname" value="{{nickname}}"/>
-            </van-cell>
-        </van-cell-group>
-
-        <button form-type="submit" type="primary">提交</button>
-    </form>
+    <van-cell-group inset>
+        <van-cell title="头像">
+            <view>
+                <button class="wrapper-btn" open-type="chooseAvatar"
+                        bind:chooseavatar="onChooseAvatar">
+                    <van-image
+                            wx:if="{{avatarUrl}}"
+                            round
+                            width="40px"
+                            height="40px"
+                            src="{{avatarUrl}}"
+                    />
+                    <text class="fs-10" wx:else>设置头像</text>
+                </button>
+            </view>
+        </van-cell>
+        <van-cell title="昵称" value="{{nickname}}" bind:tap="showDialog"/>
+    </van-cell-group>
+    <van-dialog
+            use-slot
+            title="修改昵称"
+            show="{{ show }}"
+            showConfirmButton="{{false}}"
+            closeOnClickOverlay
+            transition="fade"
+            custom-class="nick-dialog"
+    >
+        <form bindsubmit="formsubmit">
+            <input class="sub-input" type="nickname" placeholder="请输入新昵称" name="nickname"/>
+            <button class="sub-btn" form-type="submit" type="primary">提交</button>
+        </form>
+    </van-dialog>
 
 </view>

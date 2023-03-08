@@ -2,7 +2,6 @@
 const {envList} = require('../envList.js');
 const [selectedEnv] = envList
 const MapKey = 'ZNGBZ-JSPYU-SLIV3-B3ZIJ-V3EG6-UNBJI'
-import Toast from '@vant/weapp/toast/toast';
 
 
 export function $q(type) {
@@ -33,7 +32,10 @@ export function $req(type, params = {}) {
     }).then(res => {
       // console.log('$req: ' + type, res.result)
       if (!res.result.success) {
-        Toast.fail(res.result.msg);
+        wx.showToast({
+          title: res.result.msg,
+          icon: 'error'
+        })
       }
       resolve(res.result)
     }).catch(e => {

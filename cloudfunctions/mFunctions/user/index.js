@@ -9,51 +9,45 @@ const USERS = db.collection('users')
 
 // 获取openId云函数入口函数
 exports.main = async (event, context) => {
-  // 获取基础信息
-  const wxContext = cloud.getWXContext();
-  const {
-    OPENID,
-    APPID,
-    UNIONID,
-    ENV,
-  } = cloud.getWXContext()
+  try {
 
-  const {data} = await USERS.where({
-    _openid: OPENID
-  }).get()
-  const [userInfo] = data
+    // 获取基础信息
+    const {OPENID, APPID, UNIONID, ENV} = cloud.getWXContext()
 
-  let INFO = {}
+    const {data} = await USERS.where({_openid: OPENID}).get()
+    const [userInfo] = data
 
-  if (userInfo) {
-    INFO = userInfo
-  } else {
-    await USERS.add({
-      data: {
-        _openid: OPENID,
-        _unionid: UNIONID,
-        avatar: '',
-        nickname: ''
-      }
-    })
-    INFO = {
-      _openid: OPENID,
-      avatar: '',
-      nickname: ''
+    let INFO = {}
+    if (userInfo) {
+      INFO = userInfo
+    } else {
+      await USERS.add({
+        data: {
+          _openid: OPENID,
+          _unionid: UNIONID,
+          avatar: '',
+          nickname: ''
+        }
+      })
+      INFO = {_openid: OPENID, avatar: '', nickname: ''}
     }
+
+    const managerList = ["oiLOL5THpcMk1GydSJlz5pejV9nw"]
+
+    const d = {
+      OPENID,
+      // APPID,
+      UNIONID,
+      // ENV,
+      IS_MANAGER: true,
+      // IS_MANAGER: managerList.includes(OPENID)
+      INFO
+    };
+    return {success: true, data: d};
+  } catch (e) {
+    console.log(e);
+    return {success: true, msg: '获取基础信息失败'};
   }
-
-  const managerList = ["oiLOL5THpcMk1GydSJlz5pejV9nw"]
-
-  return {
-    OPENID,
-    // APPID,
-    UNIONID,
-    // ENV,
-    IS_MANAGER: true,
-    // IS_MANAGER: managerList.includes(OPENID)
-    INFO
-  };
 };
 
 exports.update = async (event, context) => {
