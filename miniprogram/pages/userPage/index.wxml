@@ -1,36 +1,38 @@
-    <view class="user-page">
+<view class="user-page">
 
 
+    <!--        <van-tabs class="tabs" active="{{ active }}" bind:change="onChange">-->
+    <!--            <van-tab title="收藏">-->
+    <!--            </van-tab>-->
+    <!--            <van-tab title="标签 2">内容 2</van-tab>-->
+    <!--            <van-tab title="标签 3">内容 3</van-tab>-->
+    <!--        </van-tabs>-->
+    <form bindsubmit="formsubmit">
+        <van-cell-group inset>
 
-<!--        <van-tabs class="tabs" active="{{ active }}" bind:change="onChange">-->
-<!--            <van-tab title="收藏">-->
-<!--            </van-tab>-->
-<!--            <van-tab title="标签 2">内容 2</van-tab>-->
-<!--            <van-tab title="标签 3">内容 3</van-tab>-->
-<!--        </van-tabs>-->
-        <form bindsubmit="formsubmit">
-            <van-cell-group inset>
+            <van-cell title="头像">
+                <view>
+                    <button class="avatar-wrapper-btn" open-type="chooseAvatar"
+                            bind:chooseavatar="onChooseAvatar">
+                        <van-image
+                                wx:if="{{avatarUrl}}"
+                                round
+                                width="80px"
+                                height="80px"
+                                src="{{avatarUrl}}"
+                        />
+                        <text class="fs-10" wx:else>设置头像</text>
+                    </button>
 
-                <van-cell title="昵称"  >
-                    <view>
-                        <button class="avatar-wrapper-btn" open-type="chooseAvatar"
-                                bind:chooseavatar="onChooseAvatar">
-                            <van-image
-                                    wx:if="{{avatarUrl}}"
-                                    round
-                                    width="80px"
-                                    height="80px"
-                                    src="{{avatarUrl}}"
-                            />
-                            <text class="fs-10" wx:else>设置头像</text>
-                        </button>
+                </view>
+            </van-cell>
 
-                    </view>
-                </van-cell>
-            </van-cell-group>
-            <input type="nickname" placeholder="请输入昵称" name="nickname" />
+            <van-cell title="昵称">
+                <input type="nickname" placeholder="请输入昵称" name="nickname" value="{{nickname}}"/>
+            </van-cell>
+        </van-cell-group>
 
-            <button form-type="submit" type="primary">提交</button>
-        </form>
+        <button form-type="submit" type="primary">提交</button>
+    </form>
 
-    </view>
+</view>

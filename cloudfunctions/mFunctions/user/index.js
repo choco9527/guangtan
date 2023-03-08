@@ -60,23 +60,26 @@ exports.update = async (event, context) => {
   try {
     // 获取基础信息
     const {params} = event
-
-    const {OPENID} = cloud.getWXContext()
-
-    const data = await USERS.where({
-      _openid: OPENID
-    }).update({
-      data: {
-        ...params
+    const reqData = {}
+    Reflect.ownKeys(params).forEach(key => {
+      if (['avatar', 'nickname'].includes(key)) {
+        reqData[key] = params[key]
       }
     })
+    if (JSON.stringify(reqData) !== '{}') {
+      const {OPENID} = cloud.getWXContext()
 
-    return {
-      success: true,
-      msg: '更新成功',
-      data
-    };
+      const data = await USERS.where({
+        _openid: OPENID
+      }).update({
+        data: reqData
+      })
+
+      return {success: true, msg: '更新成功', data};
+    }
+    return {success: false, msg: '更新失败'};
   } catch (e) {
     console.log(e);
+    return {success: false, msg: '更新失败'};
   }
 };
