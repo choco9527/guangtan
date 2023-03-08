@@ -12,6 +12,8 @@ exports.main = async (event, context) => {
   switch (event.type) {
     case 'getUserInfo':
       return await user.main(event, context); // 获取用户信息
+       case 'updateUserInfo':
+      return await user.update(event, context); // 获取用户信息
     case 'getVideo':
       return await videos.getVideo(event, context); // 获取用户信息
     case 'getVideoList':

@@ -1,10 +1,11 @@
+import {$req} from "../../js/request";
+
 Page({
   data: {
     active: 1,
     hasUserInfo: false,
     userInfo: {},
     avatarUrl: ''
-
   },
 
   onChange(event) {
@@ -13,39 +14,28 @@ Page({
       icon: 'none',
     });
   },
-  onChooseAvatar(e) {
+  onGetNickname(){ // 获取微信昵称
+
+  },
+  onChooseAvatar(e) { // 设置头像
     const {avatarUrl} = e.detail
     this.setData({
       avatarUrl,
     })
+    $req('updateUserInfo', {
+      params: {
+        avatar: avatarUrl
+      }
+    }).then(res=>{
+      console.log(res);
+
+    })
   },
   onLogin() {
-    console.log(1)
-    // wx.login({
-    //   success(res){
-    //     console.log(res);
-    //   },
-    //   fail(err){
-    //     console.log(err);
-    //
-    //   }
-    // })
-    wx.getUserProfile({
-      success(res) {
-        console.log(res);
-      }
-    })
   },
-  getUserProfile(e) {
-    wx.getUserProfile({
-      desc: '用于完善你的菜单',
-      success: (res) => {
-        console.log(res);
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    })
-  },
+  formsubmit(e){
+    const nickName = e.detail.value.nickname
+    console.log("nickName", nickName)
+    // do something
+  }
 })
