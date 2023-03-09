@@ -7,13 +7,17 @@ page {
   Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei',
   sans-serif;
 
+  // vant样式覆盖
+  --card-thumb-size: 80px;
+
   .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
   }
-  .layout{
+
+  .layout {
     padding: 0 12px;
   }
 
@@ -33,15 +37,15 @@ page {
     overflow: hidden !important;
   }
 
-  .t-center{
+  .t-center {
     text-align: center;
   }
 
-  .t-right{
+  .t-right {
     text-align: right;
   }
 
-  .t-left{
+  .t-left {
     text-align: left;
   }
 
@@ -66,7 +70,7 @@ page {
   }
 
 
-  @for $i from 0 through 50 {
+  @for $i from 0 through 60 {
     .w-#{$i * 2} {
       width: $i * 2px !important;
     }

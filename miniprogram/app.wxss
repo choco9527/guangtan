@@ -4,6 +4,7 @@ page {
   flex-direction: column;
   justify-content: flex-start;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Segoe UI, Arial, Roboto, "PingFang SC", "miui", "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+  --card-thumb-size: 80px;
 }
 page .container {
   display: flex;
@@ -1747,6 +1748,336 @@ page .pb-100 {
 }
 page .fs-100 {
   font-size: 100px !important;
+}
+page .w-102 {
+  width: 102px !important;
+}
+page .h-102 {
+  height: 102px !important;
+}
+page .ml-102 {
+  margin-left: 102px !important;
+}
+page .mr-102 {
+  margin-right: 102px !important;
+}
+page .mt-102 {
+  margin-top: 102px !important;
+}
+page .mb-102 {
+  margin-bottom: 102px !important;
+}
+page .pl-102 {
+  padding-left: 102px !important;
+}
+page .pr-102 {
+  padding-right: 102px !important;
+}
+page .pt-102 {
+  padding-top: 102px !important;
+}
+page .pb-102 {
+  padding-bottom: 102px !important;
+}
+page .fs-102 {
+  font-size: 102px !important;
+}
+page .w-104 {
+  width: 104px !important;
+}
+page .h-104 {
+  height: 104px !important;
+}
+page .ml-104 {
+  margin-left: 104px !important;
+}
+page .mr-104 {
+  margin-right: 104px !important;
+}
+page .mt-104 {
+  margin-top: 104px !important;
+}
+page .mb-104 {
+  margin-bottom: 104px !important;
+}
+page .pl-104 {
+  padding-left: 104px !important;
+}
+page .pr-104 {
+  padding-right: 104px !important;
+}
+page .pt-104 {
+  padding-top: 104px !important;
+}
+page .pb-104 {
+  padding-bottom: 104px !important;
+}
+page .fs-104 {
+  font-size: 104px !important;
+}
+page .w-106 {
+  width: 106px !important;
+}
+page .h-106 {
+  height: 106px !important;
+}
+page .ml-106 {
+  margin-left: 106px !important;
+}
+page .mr-106 {
+  margin-right: 106px !important;
+}
+page .mt-106 {
+  margin-top: 106px !important;
+}
+page .mb-106 {
+  margin-bottom: 106px !important;
+}
+page .pl-106 {
+  padding-left: 106px !important;
+}
+page .pr-106 {
+  padding-right: 106px !important;
+}
+page .pt-106 {
+  padding-top: 106px !important;
+}
+page .pb-106 {
+  padding-bottom: 106px !important;
+}
+page .fs-106 {
+  font-size: 106px !important;
+}
+page .w-108 {
+  width: 108px !important;
+}
+page .h-108 {
+  height: 108px !important;
+}
+page .ml-108 {
+  margin-left: 108px !important;
+}
+page .mr-108 {
+  margin-right: 108px !important;
+}
+page .mt-108 {
+  margin-top: 108px !important;
+}
+page .mb-108 {
+  margin-bottom: 108px !important;
+}
+page .pl-108 {
+  padding-left: 108px !important;
+}
+page .pr-108 {
+  padding-right: 108px !important;
+}
+page .pt-108 {
+  padding-top: 108px !important;
+}
+page .pb-108 {
+  padding-bottom: 108px !important;
+}
+page .fs-108 {
+  font-size: 108px !important;
+}
+page .w-110 {
+  width: 110px !important;
+}
+page .h-110 {
+  height: 110px !important;
+}
+page .ml-110 {
+  margin-left: 110px !important;
+}
+page .mr-110 {
+  margin-right: 110px !important;
+}
+page .mt-110 {
+  margin-top: 110px !important;
+}
+page .mb-110 {
+  margin-bottom: 110px !important;
+}
+page .pl-110 {
+  padding-left: 110px !important;
+}
+page .pr-110 {
+  padding-right: 110px !important;
+}
+page .pt-110 {
+  padding-top: 110px !important;
+}
+page .pb-110 {
+  padding-bottom: 110px !important;
+}
+page .fs-110 {
+  font-size: 110px !important;
+}
+page .w-112 {
+  width: 112px !important;
+}
+page .h-112 {
+  height: 112px !important;
+}
+page .ml-112 {
+  margin-left: 112px !important;
+}
+page .mr-112 {
+  margin-right: 112px !important;
+}
+page .mt-112 {
+  margin-top: 112px !important;
+}
+page .mb-112 {
+  margin-bottom: 112px !important;
+}
+page .pl-112 {
+  padding-left: 112px !important;
+}
+page .pr-112 {
+  padding-right: 112px !important;
+}
+page .pt-112 {
+  padding-top: 112px !important;
+}
+page .pb-112 {
+  padding-bottom: 112px !important;
+}
+page .fs-112 {
+  font-size: 112px !important;
+}
+page .w-114 {
+  width: 114px !important;
+}
+page .h-114 {
+  height: 114px !important;
+}
+page .ml-114 {
+  margin-left: 114px !important;
+}
+page .mr-114 {
+  margin-right: 114px !important;
+}
+page .mt-114 {
+  margin-top: 114px !important;
+}
+page .mb-114 {
+  margin-bottom: 114px !important;
+}
+page .pl-114 {
+  padding-left: 114px !important;
+}
+page .pr-114 {
+  padding-right: 114px !important;
+}
+page .pt-114 {
+  padding-top: 114px !important;
+}
+page .pb-114 {
+  padding-bottom: 114px !important;
+}
+page .fs-114 {
+  font-size: 114px !important;
+}
+page .w-116 {
+  width: 116px !important;
+}
+page .h-116 {
+  height: 116px !important;
+}
+page .ml-116 {
+  margin-left: 116px !important;
+}
+page .mr-116 {
+  margin-right: 116px !important;
+}
+page .mt-116 {
+  margin-top: 116px !important;
+}
+page .mb-116 {
+  margin-bottom: 116px !important;
+}
+page .pl-116 {
+  padding-left: 116px !important;
+}
+page .pr-116 {
+  padding-right: 116px !important;
+}
+page .pt-116 {
+  padding-top: 116px !important;
+}
+page .pb-116 {
+  padding-bottom: 116px !important;
+}
+page .fs-116 {
+  font-size: 116px !important;
+}
+page .w-118 {
+  width: 118px !important;
+}
+page .h-118 {
+  height: 118px !important;
+}
+page .ml-118 {
+  margin-left: 118px !important;
+}
+page .mr-118 {
+  margin-right: 118px !important;
+}
+page .mt-118 {
+  margin-top: 118px !important;
+}
+page .mb-118 {
+  margin-bottom: 118px !important;
+}
+page .pl-118 {
+  padding-left: 118px !important;
+}
+page .pr-118 {
+  padding-right: 118px !important;
+}
+page .pt-118 {
+  padding-top: 118px !important;
+}
+page .pb-118 {
+  padding-bottom: 118px !important;
+}
+page .fs-118 {
+  font-size: 118px !important;
+}
+page .w-120 {
+  width: 120px !important;
+}
+page .h-120 {
+  height: 120px !important;
+}
+page .ml-120 {
+  margin-left: 120px !important;
+}
+page .mr-120 {
+  margin-right: 120px !important;
+}
+page .mt-120 {
+  margin-top: 120px !important;
+}
+page .mb-120 {
+  margin-bottom: 120px !important;
+}
+page .pl-120 {
+  padding-left: 120px !important;
+}
+page .pr-120 {
+  padding-right: 120px !important;
+}
+page .pt-120 {
+  padding-top: 120px !important;
+}
+page .pb-120 {
+  padding-bottom: 120px !important;
+}
+page .fs-120 {
+  font-size: 120px !important;
 }
 
 /*# sourceMappingURL=app.wxss.map */

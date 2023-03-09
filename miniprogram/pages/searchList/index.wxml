@@ -13,10 +13,10 @@
 
             </view>
         </van-nav-bar>
-<!--        <van-dropdown-menu>-->
-<!--            <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}"/>-->
-<!--            <van-dropdown-item value="{{ value2 }}" options="{{ option2 }}"/>-->
-<!--        </van-dropdown-menu>-->
+        <!--        <van-dropdown-menu>-->
+        <!--            <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}"/>-->
+        <!--            <van-dropdown-item value="{{ value2 }}" options="{{ option2 }}"/>-->
+        <!--        </van-dropdown-menu>-->
     </van-sticky>
 
     <van-empty wx:if="{{!list.length}}" image="search"/>
@@ -32,19 +32,8 @@
     >
 
         <view wx:for="{{list}}" wx:key="aid">
-            <van-card title="{{ item.title }}" data-id="{{ item._id }}" bind:tap="toDetail">
-                <van-row slot="desc" class="text-sec fs-12">
-                    <van-col span="24" >
-                        <van-icon name="underway-o" />
-                        <text>{{ tools.formatDate(item.created) }}</text>
-                    </van-col>
-                    <van-col span="24" wx:if="{{item.locInfo}}">
-                        <van-icon name="aim" />
-                        <text>{{item.locInfo.content}}</text>
-                    </van-col>
-
-                </van-row>
-                <view slot="thumb">
+            <van-cell data-id="{{ item._id }}" bind:tap="toDetail">
+                <view slot="title">
                     <image mode="widthFix" class="w-88 h-56 br-4 over-hide" src="{{item.pic}}"></image>
                     <van-row class="text-sec fs-10">
                         <van-col span="12">
@@ -52,20 +41,26 @@
                             <text>{{ tools.getWeight(item.v_stat) }}</text>
                         </van-col>
                         <van-col span="12">
-                            <van-icon name="eye-o" />
+                            <van-icon name="eye-o"/>
                             <text>{{ tools.parsePlayNum(item.play) }}</text>
                         </van-col>
                     </van-row>
                 </view>
-                <view slot="price-top">
-
-                </view>
-                <view slot="price">
-
-                </view>
-            </van-card>
+                <van-row class="fs-12">
+                    <van-col span="24">
+                        {{ item.title }}
+                    </van-col>
+                    <van-col span="24">
+                        <van-icon name="underway-o"/>
+                        <text>{{ tools.formatDate(item.created) }}</text>
+                    </van-col>
+                    <van-col span="24" wx:if="{{item.locInfo}}">
+                        <van-icon name="aim"/>
+                        <text>{{item.locInfo.content}}</text>
+                    </van-col>
+                </van-row>
+            </van-cell>
         </view>
     </scroll-view>
-    <van-toast id="van-toast" />
-
+    <van-toast id="van-toast"/>
 </view>
