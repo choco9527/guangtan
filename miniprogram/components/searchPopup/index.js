@@ -1,5 +1,5 @@
 import {debounce} from 'xe-utils'
-import { getSuggestion} from "../../js/request";
+import {getSuggestion} from "../../js/request";
 
 Component({
   data: {
@@ -10,14 +10,15 @@ Component({
   properties: {
     onSuggestionSel: {
       type: Function,
-      value: null,
+      value: null
+    },
+    placeholder: {
+      type: String,
+      value: '搜索地址'
     }
   },
   methods: {
-    onSearch({detail: search}) {
-      this.setData({searchVal: search})
-    },
-    onSearChange: debounce(function ({detail: search}) {
+    onSearch: debounce(function ({detail: search}) {
       if (search) {
         this.setData({searching: true})
         getSuggestion({word: search}).then(({data}) => {
@@ -33,6 +34,9 @@ Component({
       const item = target.dataset.item
       this.setSearchList([])
       this.triggerEvent('onSelect', item)
+    },
+    onClose() {
+      this.setSearchList([])
     },
     setSearchList(list) {
       this.setData({searchList: list})

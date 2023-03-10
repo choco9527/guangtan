@@ -86,10 +86,10 @@ const bApiList = { // b站请求api
 }
 
 /**
- * 添加最新的视频数据 (取最新发布的10条)
+ * 添加最新的视频数据 (取最新发布的20条)
  * @returns {Promise<void>}
  */
-async function addNewListData(mid, pageSize = 10) {
+async function addNewListData(mid, pageSize = 20) {
   try {
     let {list, page} = await bApiList.getVideoList({mid, pageSize})
     if (list) {
@@ -244,7 +244,8 @@ async function addAllList(mid) {
 exports.fetchTask = async (event, context) => { // 定时触发的task 每天5点
   try {
     await addNewListData(PINCHENGJI) // 新增
-    await updateListData(PINCHENGJI) // 更新
+    await updateListData(PINCHENGJI) // 更新信息
+    await updateListReply(PINCHENGJI) // 更新评论
   } catch (e) {
     console.log('定时任务Error：', e);
   }
@@ -264,7 +265,8 @@ exports.main = async (event, context) => {
 exports.manual = async (event, context) => {
   try {
     // await addNewListData(PINCHENGJI) // 新增
-    await updateListReply(PINCHENGJI, 100, 700) // 更新
+    // await updateListData(PINCHENGJI) // 更新
+    await updateListReply(PINCHENGJI) // 更新
 
     return {success: true, msg: '执行成功', data: null};
   } catch (e) {

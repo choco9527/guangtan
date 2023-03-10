@@ -1,4 +1,5 @@
 import {$req} from "../../js/request";
+import Notify from '@vant/weapp/notify/notify';
 
 Page({
   data: {
@@ -28,12 +29,6 @@ Page({
       show
     })
   },
-  onChange(event) {
-    wx.showToast({
-      title: `切换到标签 ${event.detail.name}`,
-      icon: 'none',
-    });
-  },
 
   onChooseAvatar(e) { // 设置头像
     const {avatarUrl} = e.detail
@@ -42,7 +37,7 @@ Page({
       params: {avatar: avatarUrl}
     }).then(({success, msg}) => {
       if (success) {
-        wx.showToast({title: msg})
+        Notify({type: 'success', message: msg});
       }
     })
   },
@@ -54,12 +49,12 @@ Page({
         params: {nickname}
       }).then(({success, msg}) => {
         if (success) {
-          wx.showToast({title: msg})
+          Notify({type: 'success', message: msg});
           this.showDialog(false)
         }
       })
     } else {
-      wx.showToast({title: '昵称不合法️', icon: 'error'})
+      Notify('昵称不合法️');
     }
   }
 })

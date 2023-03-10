@@ -55,7 +55,7 @@
                 </van-col>
                 <van-col span="24" class="text-sec" wx:if="{{item.locInfo}}">
                     <van-icon name="location-o" />
-                    <text>{{item.locInfo.content}}</text>
+                    <text class="ml-2">{{item.locInfo.content}}</text>
                 </van-col>
             </van-row>
         </view>

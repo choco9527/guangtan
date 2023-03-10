@@ -72,9 +72,10 @@ exports.updateVideoLocation = async (event, context) => {
     if (!id || !latitude || !longitude) throw new Error('no id')
     const res = await VIDEO.doc(id).update({
       data: {
+        location: db.Geo.Point(longitude, latitude),
         locInfo: {
-          content,
-          location: db.Geo.Point(longitude, latitude)
+          content
+          // location: db.Geo.Point(longitude, latitude)
         }
       }
     })
@@ -99,13 +100,11 @@ exports.getLocVideos = async (event, content) => {
     console.log(latitude, longitude);
 
     const res = await VIDEO.where({
-      locInfo: {
-        location: _.geoNear({
-          geometry: db.Geo.Point(longitude, latitude),
-          // minDistance: 1000,
-          maxDistance: 15000,
-        })
-      }
+      location: _.geoNear({
+        geometry: db.Geo.Point(longitude, latitude),
+        minDistance: 1000,
+        maxDistance: 5000,
+      })
     }).get()
     return {
       success: true,

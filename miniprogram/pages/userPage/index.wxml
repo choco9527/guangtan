@@ -35,4 +35,5 @@
             <button class="sub-btn" form-type="submit" type="primary">提交</button>
         </form>
     </van-dialog>
+    <van-notify id="van-notify" />
 </view>

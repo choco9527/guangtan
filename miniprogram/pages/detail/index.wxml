@@ -5,8 +5,13 @@
     <scroll-view wx:else scroll-y enable-passive>
         <image mode="aspectFill" bind:tap="goBilibili" class="head-img" src="{{detail.pic}}"></image>
         <van-cell-group border>
+            <van-cell title="{{detail.title}}" use-label-slot>
+                <view slot="label" class="{{sDesc ? 'show c-label' : 'c-label'}}" bind:tap="showDesc">
+                    {{detail.description}}
+                </view>
+            </van-cell>
             <van-cell title="综合人气" value="{{ tools.getWeight(detail.v_stat) }}"/>
-            <search-list wx:if="{{isManager}}" bind:onSelect="onSuggestionSel"></search-list>
+            <search-popup wx:if="{{isManager}}" bind:onSelect="onSuggestionSel"></search-popup>
             <van-cell use-label-slot>
                 <map slot="label"
                      id="myMap"
@@ -14,13 +19,9 @@
                      longitude="{{longitude}}"
                      markers="{{markers}}"
                      show-location
+                     bindcallouttap="onMarkerTap"
                      bindmarkertap="onMarkerTap"
                 />
-            </van-cell>
-            <van-cell title="{{detail.title}}" use-label-slot>
-                <view slot="label" class="c-label">
-                    {{detail.description}}
-                </view>
             </van-cell>
         </van-cell-group>
         <van-cell-group border inset wx:if="{{detail.reply}}" custom-class="replies">
@@ -42,5 +43,5 @@
             bind:select="onActionSelect"
             cancel-text="取消"
     />
-    <van-toast id="van-toast" />
+    <van-notify id="van-notify" />
 </view>

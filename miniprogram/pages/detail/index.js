@@ -1,7 +1,7 @@
 // pages/detail/index.js
 import {$req, getSearchMap} from "../../js/request";
 import Dialog from '@vant/weapp/dialog/dialog';
-import Toast from '@vant/weapp/toast/toast';
+import Notify from '@vant/weapp/notify/notify';
 import {locMapFn, goBilibili, deepClone} from "../../js/util";
 
 let curMarker = {}
@@ -16,7 +16,8 @@ Page({
     markers: [],
     showAction: false,
     actions: [],
-    isManager: false // 管理员
+    isManager: false, // 管理员
+    sDesc: false
   },
   /**
    * 生命周期函数--监听页面加载
@@ -40,15 +41,16 @@ Page({
   },
 
   getDetailLocation(detail) { // 获取当前位置
-    if (detail.locInfo) {
-      const {content, location} = detail.locInfo
+    const {location} = detail
+    if (detail.locInfo && location) {
+      const {content} = detail.locInfo
       const [lng, lat] = location.coordinates
       this.showOnMarker([{
         title: content,
         location: {lat, lng}
       }], true)
     } else {
-      Toast.fail('请添加位置')
+      Notify({type: 'warning', message: '暂无位置信息 请更新位置信息。'});
     }
   },
 
@@ -107,8 +109,7 @@ Page({
           .then(() => {
             const {_id} = this.data.detail
             $req('updateVideoLocation', {id: _id, latitude, longitude, content: callout.content}).then(updateRes => {
-              console.log(updateRes);
-              Toast.success('更新成功');
+              Notify({ type: 'success', message: updateRes.msg });
             })
           })
           .catch(() => {
@@ -125,4 +126,7 @@ Page({
   onActionClose() {
     this.setData({showAction: false});
   },
+  showDesc() {
+    this.setData({sDesc: !this.data.sDesc})
+  }
 })

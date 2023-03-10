@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    "cloud-tip-modal": "/components/searchList/index"
+    "search-popup": "/components/searchPopup/index"
   }
 }

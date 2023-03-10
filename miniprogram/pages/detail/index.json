@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    "search-list": "/components/searchList/index"
+    "search-popup": "/components/searchPopup/index"
   }
 }
