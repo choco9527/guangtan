@@ -4,6 +4,26 @@
 }
 .search-page .main-list {
   max-height: calc(100vh - 66px);
+  box-sizing: border-box;
+  padding: 8px;
+}
+.search-page .main-list .list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-bottom: 8px;
+  background-color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+}
+.search-page .main-list .list-item .left {
+  margin-right: 6px;
+}
+.search-page .main-list .list-item .right {
+  font-size: 12px;
+}
+.search-page .main-list .list-item .right .created {
+  color: #666;
 }
 
 /*# sourceMappingURL=index.wxss.map */

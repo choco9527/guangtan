@@ -17,15 +17,24 @@ Page({
     const _t = this
     wx.getLocation({
       success: ({latitude, longitude}) => {
-        _t.showOnMarker([{
-          title: '',
-          location: {lat: latitude, lng: longitude}
-        }], true)
+        _t.setLocation(latitude, longitude)
+        _t.getNearBy(latitude, longitude)
       },
       fail(err) {
         console.log(err);
       }
     })
+  },
+  setLocation(latitude, longitude) { // 设置圆心
+    if (latitude && longitude) {
+      this.setData({latitude, longitude})
+    }
+  },
+  getNearBy(latitude, longitude) { // 获取附近店
+    $req('getLocVideos', {latitude, longitude})
+      .then(res => {
+        console.log('near', res);
+      })
   },
   showOnMarker(pois = [], rePlace = false) { // 将地址展示到marker
     if (!pois.length) return
@@ -34,12 +43,6 @@ Page({
     if (allMarkers.length) {
       const [f] = allMarkers
       this.setData({markers: allMarkers})
-      if (rePlace) {
-        this.setData({
-          latitude: f.latitude,
-          longitude: f.longitude,
-        })
-      }
     }
   },
 });

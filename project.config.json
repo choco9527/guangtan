@@ -37,7 +37,8 @@
     "disableUseStrict": false,
     "showES6CompileOption": false,
     "useCompilerPlugins": false,
-    "minifyWXML": true
+    "minifyWXML": true,
+    "condition": false
   },
   "appid": "wxef59aa82877d9d01",
   "projectname": "guangtan",

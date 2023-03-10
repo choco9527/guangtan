@@ -63,8 +63,9 @@ Page({
     console.log(search)
     this.setData({search})
   },
-  toDetail({target}) {
-    const {id} = target.dataset
+  toDetail({currentTarget}) {
+    console.log(currentTarget)
+    const {id} = currentTarget.dataset
     if (id) {
       wx.navigateTo({url: '/pages/detail/index?id=' + id})
     }

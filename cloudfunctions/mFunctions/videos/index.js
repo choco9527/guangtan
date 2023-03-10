@@ -91,3 +91,31 @@ exports.updateVideoLocation = async (event, context) => {
     };
   }
 };
+
+exports.getLocVideos = async (event, content) => {
+  try {
+    const _ = db.command
+    const {latitude, longitude} = event
+    console.log(latitude, longitude);
+
+    const res = await VIDEO.where({
+      locInfo: {
+        location: _.geoNear({
+          geometry: db.Geo.Point(longitude, latitude),
+          // minDistance: 1000,
+          maxDistance: 15000,
+        })
+      }
+    }).get()
+    return {
+      success: true,
+      data: res
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      success: false,
+      msg: e.message || '失败',
+    };
+  }
+}

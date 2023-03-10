@@ -6,7 +6,8 @@
             <view slot="left">
                 <van-search shape="round" value="{{ search }}"
                             bind:search="onSearch"
-                            placeholder="想吃的🔍"
+                            use-left-icon-slot
+                            placeholder="🔍"
                             clearable
                             custom-class="c-search"
                 />
@@ -30,37 +31,35 @@
                  class="main-list"
                  wx:if="{{list.length}}"
     >
-
-        <view wx:for="{{list}}" wx:key="aid">
-            <van-cell data-id="{{ item._id }}" bind:tap="toDetail">
-                <view slot="title">
-                    <image mode="widthFix" class="w-88 h-56 br-4 over-hide" src="{{item.pic}}"></image>
-                    <van-row class="text-sec fs-10">
-                        <van-col span="12">
-                            <van-icon name="fire"/>
-                            <text>{{ tools.getWeight(item.v_stat) }}</text>
-                        </van-col>
-                        <van-col span="12">
-                            <van-icon name="eye-o"/>
-                            <text>{{ tools.parsePlayNum(item.play) }}</text>
-                        </van-col>
-                    </van-row>
-                </view>
-                <van-row class="fs-12">
-                    <van-col span="24">
-                        {{ item.title }}
+        <view wx:for="{{list}}" wx:key="aid" class="list-item" data-id="{{ item._id }}" bind:tap="toDetail">
+            <view class="left">
+                <image mode="widthFix" class="w-88 h-56 br-4 over-hide" src="{{item.pic}}"></image>
+                <van-row class="text-sec fs-10">
+                    <van-col span="12">
+                        <van-icon name="fire"/>
+                        <text>{{ tools.getWeight(item.v_stat) }}</text>
                     </van-col>
-                    <van-col span="24">
-                        <van-icon name="underway-o"/>
-                        <text>{{ tools.formatDate(item.created) }}</text>
-                    </van-col>
-                    <van-col span="24" wx:if="{{item.locInfo}}">
-                        <van-icon name="aim"/>
-                        <text>{{item.locInfo.content}}</text>
+                    <van-col span="12">
+                        <van-icon name="eye-o"/>
+                        <text>{{ tools.parsePlayNum(item.play) }}</text>
                     </van-col>
                 </van-row>
-            </van-cell>
+            </view>
+            <van-row class="right">
+                <van-col span="24">
+                    {{ item.title }}
+                </van-col>
+                <van-col span="24" class="text-sec">
+                    <van-icon name="underway-o"/>
+                    <text class="ml-2">{{ tools.formatDate(item.created) }}</text>
+                </van-col>
+                <van-col span="24" class="text-sec" wx:if="{{item.locInfo}}">
+                    <van-icon name="location-o" />
+                    <text>{{item.locInfo.content}}</text>
+                </van-col>
+            </van-row>
         </view>
+
     </scroll-view>
     <van-toast id="van-toast"/>
 </view>

@@ -6,5 +6,28 @@
 
   .main-list {
     max-height: calc(100vh - 66px);
+    box-sizing: border-box;
+    padding: 8px;
+
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      margin-bottom: 8px;
+      background-color: #fff;
+      padding: 8px;
+      border-radius: 4px;
+
+      .left {
+        margin-right: 6px;
+      }
+
+      .right {
+        font-size: 12px;
+        .created{
+          color: #666;
+        }
+      }
+    }
   }
 }
