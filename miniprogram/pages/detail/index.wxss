@@ -1,13 +1,28 @@
+@charset "UTF-8";
 .detail-page .head-img {
   min-width: 100%;
   max-height: 20vh;
 }
 .detail-page .c-label {
-  max-height: 2em;
-  overflow: auto;
+  max-height: 0;
+  height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+  background-color: #fff;
+}
+.detail-page .c-label .inner {
+  padding: 4px 12px;
 }
 .detail-page .c-label.show {
   max-height: 50vh;
+  height: auto;
+}
+.detail-page .infos {
+  background-color: #fff;
+  padding: 4px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .detail-page #myMap {
   width: 100%;
@@ -15,22 +30,17 @@
   border-radius: 8px;
   overflow: hidden;
 }
-.detail-page .word-list .item {
-  padding: 2px 10px;
-}
-.detail-page .word-list .item text:nth-of-type(1) {
-  margin-right: 10px;
-}
 .detail-page .replies {
-  padding-top: 12px;
-  padding-bottom: 12px;
+  background-color: #fff;
+  padding: 12px;
 }
 .detail-page .replies .r-item {
-  color: #333;
   margin-bottom: 6px;
 }
-.detail-page .replies .r-item .uname {
-  color: #666;
+.detail-page .replies .r-item .user::after {
+  content: "：";
+  display: inline;
+  color: inherit;
 }
 
 /*# sourceMappingURL=index.wxss.map */

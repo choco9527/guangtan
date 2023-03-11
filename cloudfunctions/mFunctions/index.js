@@ -20,8 +20,8 @@ exports.main = async (event, context) => {
       return await videos.getVideoList(event, context);
     case 'updateVideoLocation': // 更新视频内地址
       return await videos.updateVideoLocation(event, context);
-    case 'getLocVideos': // 获取标记点范围内的坐标
-      return await videos.getLocVideos(event, context);
+    case 'getNearVideos': // 获取标记点范围内的坐标
+      return await videos.getNearVideos(event, context);
 
     case 'main': // 主
       return await fetchData.main(event, context);

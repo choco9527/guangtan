@@ -33,7 +33,7 @@
     >
         <view wx:for="{{list}}" wx:key="aid" class="list-item" data-id="{{ item._id }}" bind:tap="toDetail">
             <view class="left">
-                <image mode="widthFix" class="w-88 h-56 br-4 over-hide" src="{{item.pic}}"></image>
+                <image mode="widthFix" class="w-108 h-68 br-4 over-hide" src="{{item.pic}}"></image>
                 <van-row class="text-sec fs-10">
                     <van-col span="12">
                         <van-icon name="fire"/>
@@ -49,12 +49,12 @@
                 <van-col span="24">
                     {{ item.title }}
                 </van-col>
-                <van-col span="24" class="text-sec">
+                <van-col span="24" class="text-sec mt-4">
                     <van-icon name="underway-o"/>
                     <text class="ml-2">{{ tools.formatDate(item.created) }}</text>
                 </van-col>
-                <van-col span="24" class="text-sec" wx:if="{{item.locInfo}}">
-                    <van-icon name="location-o" />
+                <van-col span="24" class="text-sec mt-4" wx:if="{{item.locInfo}}">
+                    <van-icon name="guide-o" />
                     <text class="ml-2">{{item.locInfo.content}}</text>
                 </van-col>
             </van-row>

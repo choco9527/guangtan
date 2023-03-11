@@ -1,6 +1,7 @@
 .search-page .c-search {
   background: transparent !important;
   max-width: calc(100vw - 120px);
+  padding-left: 0;
 }
 .search-page .main-list {
   max-height: calc(100vh - 66px);
@@ -17,10 +18,11 @@
   border-radius: 4px;
 }
 .search-page .main-list .list-item .left {
-  margin-right: 6px;
+  margin-right: 8px;
 }
 .search-page .main-list .list-item .right {
   font-size: 12px;
+  flex: 1;
 }
 .search-page .main-list .list-item .right .created {
   color: #666;

@@ -93,22 +93,30 @@ exports.updateVideoLocation = async (event, context) => {
   }
 };
 
-exports.getLocVideos = async (event, content) => {
+exports.getNearVideos = async (event, content) => {
   try {
     const _ = db.command
     const {latitude, longitude} = event
     console.log(latitude, longitude);
 
-    const res = await VIDEO.where({
+    const {data} = await VIDEO.where({
       location: _.geoNear({
         geometry: db.Geo.Point(longitude, latitude),
-        minDistance: 1000,
-        maxDistance: 5000,
+        minDistance: 1,
+        maxDistance: 5000
       })
-    }).get()
+    })
+      .field({
+        _id: true,
+        aid: true,
+        location: true,
+        locInfo: true,
+        v_stat: true,
+      })
+      .get()
     return {
       success: true,
-      data: res
+      data
     };
   } catch (e) {
     console.log(e);

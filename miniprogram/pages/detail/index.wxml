@@ -5,12 +5,21 @@
     <scroll-view wx:else scroll-y enable-passive>
         <image mode="aspectFill" bind:tap="goBilibili" class="head-img" src="{{detail.pic}}"></image>
         <van-cell-group border>
-            <van-cell title="{{detail.title}}" use-label-slot>
-                <view slot="label" class="{{sDesc ? 'show c-label' : 'c-label'}}" bind:tap="showDesc">
-                    {{detail.description}}
+            <van-cell title="{{detail.title}}"></van-cell>
+            <view class="infos text-primary fs-13">
+                <text class="t-left text-red">人气:{{ tools.getWeight(detail.v_stat) }}</text>
+                <view class="text-sec" bind:tap="showDesc">
+                    <text>查看简介</text>
+                    <van-icon name="{{ sDesc ? 'arrow-up' :'arrow-down' }}"/>
                 </view>
-            </van-cell>
-            <van-cell title="综合人气" value="{{ tools.getWeight(detail.v_stat) }}"/>
+                <view class="text-link" bind:tap="goBilibili">
+                    <text>前往视频</text>
+                    <van-icon name="arrow"/>
+                </view>
+            </view>
+            <view class="{{sDesc ? 'show c-label fs-13 text-sec' : 'c-label fs-13 text-sec'}}">
+                <view class="inner">{{detail.description}}</view>
+            </view>
             <search-popup wx:if="{{isManager}}" bind:onSelect="onSuggestionSel"></search-popup>
             <van-cell use-label-slot>
                 <map slot="label"
@@ -24,15 +33,13 @@
                 />
             </van-cell>
         </van-cell-group>
-        <van-cell-group border inset wx:if="{{detail.reply}}" custom-class="replies">
-            <van-row custom-class="fs-12 r-item" wx:for="{{detail.reply.top_replies}}" wx:key="rpid">
-                <van-col custom-class="uname" span="24">{{item.member.uname}}</van-col>
-                <van-col offset="1" span="23">{{item.content.message}}</van-col>
-            </van-row>
-            <van-row custom-class="fs-12 r-item" wx:for="{{detail.reply.replies}}" wx:key="rpid">
-                <van-col custom-class="uname" span="24">{{item.member.uname}}</van-col>
-                <van-col offset="1" span="23">{{item.content.message}}</van-col>
-            </van-row>
+        <van-cell-group border wx:if="{{detail.reply}}" custom-class="replies">
+            <view class="fs-13 r-item" wx:for="{{ replies }}" wx:key="rpid">
+                <text class="user text-primary" span="24">{{item.member.uname}}</text>
+                <view class="ml-12 text-desc fs-12">
+                    <rich-text user-select nodes="{{item.content.message}}"></rich-text>
+                </view>
+            </view>
         </van-cell-group>
     </scroll-view>
     <van-dialog id="van-dialog"/>
@@ -43,5 +50,5 @@
             bind:select="onActionSelect"
             cancel-text="取消"
     />
-    <van-notify id="van-notify" />
+    <van-notify id="van-notify"/>
 </view>

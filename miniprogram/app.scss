@@ -1,5 +1,6 @@
 page {
-  background: #f6f6f6;
+  background: #fafafa;
+  color: #303030;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -52,7 +53,7 @@ page {
 
   //Color
   .text-primary {
-
+    color: #303030;
   }
 
   .text-desc {
@@ -61,6 +62,14 @@ page {
 
   .text-sec {
     color: rgba(69, 90, 100, 0.6);
+  }
+
+  .text-link {
+    color: rgb(25, 137, 250);
+  }
+
+  .text-red {
+    color: #ff4d4f;
   }
 
   @for $i from 1 through 8 {
@@ -103,6 +112,9 @@ page {
     }
     .fs-#{$i * 2} {
       font-size: $i * 2px !important;
+    }
+    .fs-13 {
+      font-size: 13px !important;
     }
   }
 }

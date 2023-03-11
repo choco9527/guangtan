@@ -1,9 +1,13 @@
 <!--index.wxml-->
 <view class="home-page container">
   <map id="homeMap"
+       setting="{{setting}}"
        latitude="{{latitude}}"
        longitude="{{longitude}}"
        markers="{{markers}}"
-       show-location
+       bindcallouttap="onMarkerTap"
+       bindmarkertap="onMarkerTap"
+       bindregionchange="regionChange"
   />
+  <van-notify id="van-notify"/>
 </view>

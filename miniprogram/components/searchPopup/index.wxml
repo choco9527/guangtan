@@ -1,8 +1,8 @@
 <view class="search-list">
-    <van-search bind:search="onSearch" value="{{ searchVal }}" placeholder="{{ placeholder }}" clearable disabled="{{searching}}"/>
+    <van-search bind:search="onSearch" value="{{ searchVal }}" placeholder="{{ placeholder }}" clearable />
     <van-popup show="{{ searchList.length>0 }}"
                position="bottom"
-               custom-style="max-height: 80vh;padding-top:30px;"
+               custom-style="max-height: 80vh;padding-top:45px;"
                bind:close="onClose"
                round
                closeable>

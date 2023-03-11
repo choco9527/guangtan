@@ -4,7 +4,6 @@ import {getSuggestion} from "../../js/request";
 Component({
   data: {
     searchVal: '',
-    searching: false,
     searchList: [], // 推荐词
   },
   properties: {
@@ -20,11 +19,11 @@ Component({
   methods: {
     onSearch: debounce(function ({detail: search}) {
       if (search) {
-        this.setData({searching: true})
+        wx.showLoading()
         getSuggestion({word: search}).then(({data}) => {
           this.setSearchList(data)
         }).finally(() => {
-          this.setData({searching: false})
+          wx.hideLoading()
         })
       } else {
         this.setSearchList([])

@@ -11,6 +11,7 @@ const GO = '前往'
 Page({
   data: {
     detail: {},
+    replies: [],
     latitude: 23.099994,
     longitude: 113.324520,
     markers: [],
@@ -84,7 +85,12 @@ Page({
   async getData(id) {
     if (!id) return
     const {success, data} = await $req('getVideo', {id})
-    if (success) this.setData({detail: data})
+    if (success) {
+      this.setData({detail: data})
+      if (data.reply) {
+        this.setData({replies: [...data.reply.top_replies, ...data.reply.replies]})
+      }
+    }
     return data
   },
   onMarkerTap({detail}) {
