@@ -8,17 +8,18 @@ Page({
     pageNum: 1,
     pulling: false,
     list: [],
-    option1: [
-      {text: '最新', value: 0},
-      {text: '最近', value: 1},
+    orderOptions: [
+      {text: '最新', value: 'created'},
+      {text: '收藏最多', value: 'v_stat.favorite'},
+      {text: '播放最多', value: 'v_stat.view'},
+      {text: '投币最多', value: 'v_stat.coin'},
+      {text: '点赞最多', value: 'v_stat.like'}
     ],
-    value1: 0,
-    value2: 'a',
+    orderBy: 'created'
   },
   async onLoad(query) {
-    await this.onFresh() // 刷新
+    await this._fresh() // 刷新
   },
-
   onScrollToEnd() {
     if (!this.data.loading) {
       console.log('触底追加')
@@ -30,37 +31,51 @@ Page({
       })
     }
   },
-  async onFresh() {
+  async _fresh() {
+    this.setData({pageNum: 1})
     const list = await this.getListData()
     if (list) {
-        console.log(list);
-        this.setData({list})
+      this.setData({list})
     }
     return list
   },
   onPullDown() {
     this.setData({pulling: true})
-    this.onFresh().then(() => {
+    this._fresh().then(() => {
       this.setData({pulling: false})
     })
   },
   /**
    * 获取列表数据
    * @param pn pageNum
+   * @param search
    * @returns {Promise<void>}
    */
-  async getListData(pn = 1) {
+  async getListData(pn = 1, search = '', orderBy='') {
     wx.showLoading();
     this.setData({loading: true})
-    const {success, data} = await $req('getVideoList', {pn})
+    const {success, data} = await $req('getVideoList', {pn, search, orderBy})
     wx.hideLoading();
     this.setData({loading: false})
     if (success) {
       return data
     }
   },
-  onSearch({detail: search}) {
+  async onOrder({detail: orderBy}) {
+    this.setData({pageNum: 1})
+    this.setData({orderBy})
+    const list = await this.getListData(1, this.data.search, orderBy)
+    if (list) {
+      this.setData({list})
+    }
+  },
+  async onSearch({detail: search}) {
     this.setData({search})
+    this.setData({pageNum: 1})
+    const list = await this.getListData(1, search)
+    if (list) {
+      this.setData({list})
+    }
   },
   toDetail({currentTarget}) {
     const {id} = currentTarget.dataset

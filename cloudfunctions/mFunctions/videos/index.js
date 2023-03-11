@@ -6,17 +6,27 @@ cloud.init({
 
 const db = cloud.database();
 const VIDEO = db.collection('videos')
+const _ = db.command
 
 // 获取搜索页视频列表
 exports.getVideoList = async (event, context) => {
   try {
-    const {pn = 1} = event
+    const {pn = 1, search = '', orderBy = ''} = event
     const ps = 20
     const offset = (pn - 1) * ps
-    const {data} = await VIDEO.where({
-      // aid: 525048109,
-    })
-      .orderBy('created', 'desc')
+    let wObj = {}
+
+    if (search) {
+      const regSear = db.RegExp({regexp: search, options: 'i'})
+      wObj = _.or([
+        {title: regSear},
+        {description: regSear}
+      ])
+    }
+
+    const {data} = await VIDEO
+      .where(wObj)
+      .orderBy(orderBy || 'created', 'desc')
       .skip(offset).limit(ps)
       .field({
         title: true,
@@ -79,7 +89,6 @@ exports.updateVideoLocation = async (event, context) => {
         }
       }
     })
-
     return {
       success: true,
       msg: '更新成功',
@@ -96,14 +105,14 @@ exports.updateVideoLocation = async (event, context) => {
 exports.getNearVideos = async (event, content) => {
   try {
     const _ = db.command
-    const {latitude, longitude} = event
-    console.log(latitude, longitude);
+    const {latitude, longitude, radius = 2000} = event
+    if (!latitude || !longitude || !radius) throw new Error('lack of params')
 
     const {data} = await VIDEO.where({
       location: _.geoNear({
         geometry: db.Geo.Point(longitude, latitude),
         minDistance: 1,
-        maxDistance: 5000
+        maxDistance: radius
       })
     })
       .field({
@@ -113,11 +122,9 @@ exports.getNearVideos = async (event, content) => {
         locInfo: true,
         v_stat: true,
       })
+      .limit(100)
       .get()
-    return {
-      success: true,
-      data
-    };
+    return {success: true, data};
   } catch (e) {
     console.log(e);
     return {

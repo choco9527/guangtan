@@ -1,10 +1,12 @@
 <!--index.wxml-->
 <view class="home-page container">
   <map id="homeMap"
+       show-scale
        setting="{{setting}}"
        latitude="{{latitude}}"
        longitude="{{longitude}}"
        markers="{{markers}}"
+       circles="{{circles}}"
        bindcallouttap="onMarkerTap"
        bindmarkertap="onMarkerTap"
        bindregionchange="regionChange"

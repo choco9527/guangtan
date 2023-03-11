@@ -6,8 +6,13 @@
         <image mode="aspectFill" bind:tap="goBilibili" class="head-img" src="{{detail.pic}}"></image>
         <van-cell-group border>
             <van-cell title="{{detail.title}}"></van-cell>
+            <view class="infos text-sec fs-12">
+                <text>点赞:{{ tools.parsePlayNum(detail.v_stat.like)}}</text>
+                <text>投币:{{ tools.parsePlayNum(detail.v_stat.coin) }}</text>
+                <text>收藏:{{ tools.parsePlayNum(detail.v_stat.favorite) }}</text>
+            </view>
             <view class="infos text-primary fs-13">
-                <text class="t-left text-red">人气:{{ tools.getWeight(detail.v_stat) }}</text>
+                <text class="text-red">人气:{{ tools.getWeight(detail.v_stat) }}</text>
                 <view class="text-sec" bind:tap="showDesc">
                     <text>查看简介</text>
                     <van-icon name="{{ sDesc ? 'arrow-up' :'arrow-down' }}"/>
@@ -24,6 +29,7 @@
             <van-cell use-label-slot>
                 <map slot="label"
                      id="myMap"
+                     setting="{{setting}}"
                      latitude="{{latitude}}"
                      longitude="{{longitude}}"
                      markers="{{markers}}"

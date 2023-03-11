@@ -2,7 +2,7 @@
 import {$req, getSearchMap} from "../../js/request";
 import Dialog from '@vant/weapp/dialog/dialog';
 import Notify from '@vant/weapp/notify/notify';
-import {locMapFn, goBilibili, deepClone} from "../../js/util";
+import {locMapFn, goBilibili, deepClone, mapSetting} from "../../js/util";
 
 let curMarker = {}
 const UPDATE = '更新'
@@ -18,7 +18,8 @@ Page({
     showAction: false,
     actions: [],
     isManager: false, // 管理员
-    sDesc: false
+    sDesc: false,
+    setting: mapSetting
   },
   /**
    * 生命周期函数--监听页面加载
