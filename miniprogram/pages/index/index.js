@@ -7,7 +7,6 @@ import {debounce} from 'xe-utils'
 const defaultScale = 13
 const defaultRadius = 3000
 let markerList = []
-let mapCtx = {}
 
 Page({
   data: {
@@ -15,9 +14,12 @@ Page({
     longitude: 113.36199,
     markers: [],
     circles: [],
-    setting: mapSetting
+    setting: mapSetting,
+    showPop: false
   },
   onLoad(query) {
+    this.mapCtx = {}
+
     this.setData({
       // 仅设置的属性会生效，其它的不受影响
       setting: {
@@ -30,13 +32,13 @@ Page({
   },
   onReady(e) {
     this.getUserLocation()
-    mapCtx = wx.createMapContext('homeMap')
+    this.mapCtx = wx.createMapContext('homeMap')
   },
   getUserLocation() { // 设置当前位置
     const _t = this
     const {globalData} = getApp()
     globalData.userLocation.then(data => {
-      console.log('index get', data);
+      console.log('HomePage get location:', data);
       const {latitude, longitude} = data
       _t.setLocation(latitude, longitude) // 设置用户位置
       _t.getNearBy(latitude, longitude, defaultRadius)
@@ -45,7 +47,7 @@ Page({
   moveToLocation() { // 回到用户位置
     // this.setUserLocation()
     const _t = this
-    mapCtx.moveToLocation({
+    this.mapCtx.moveToLocation({
       success() {
         console.log('moveToLocation')
         _t.getNearBy(_t.data.latitude, _t.data.longitude, defaultRadius)
@@ -114,8 +116,12 @@ Page({
   onMarkerTap({detail}) {
     const {markerId: index} = detail
     const id = markerList[index]?._id
-    if (id) {
-      wx.navigateTo({url: '/pages/detail/index?id=' + id})
-    }
+    // if (id) {
+    //   wx.navigateTo({url: '/pages/detail/index?id=' + id})
+    // }
+    this.setData({showPop: true})
   },
+  onClosePopup() {
+    this.setData({showPop: false})
+  }
 });

@@ -4,6 +4,7 @@
     <van-empty wx:if="{{!detail.aid}}" image="search"/>
     <scroll-view wx:else scroll-y enable-passive>
         <image mode="aspectFill" bind:tap="goBilibili" class="head-img" src="{{detail.pic}}"></image>
+        <video-detail></video-detail>
         <van-cell-group border>
             <van-cell title="{{detail.title}}"></van-cell>
             <view class="infos text-sec fs-12">

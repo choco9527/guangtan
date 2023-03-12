@@ -1,17 +1,28 @@
 <!--index.wxml-->
 <view class="home-page container">
-  <view class="guide" bind:tap="moveToLocation">
-    <van-icon name="guide-o" />
-  </view>
-  <map id="homeMap"
-       setting="{{setting}}"
-       latitude="{{latitude}}"
-       longitude="{{longitude}}"
-       markers="{{markers}}"
-       circles="{{circles}}"
-       bindcallouttap="onMarkerTap"
-       bindmarkertap="onMarkerTap"
-       bindregionchange="regionChange"
-  />
-  <van-notify id="van-notify"/>
+    <view class="guide" bind:tap="moveToLocation">
+        <van-icon name="guide-o"/>
+    </view>
+    <map id="homeMap"
+         setting="{{setting}}"
+         latitude="{{latitude}}"
+         longitude="{{longitude}}"
+         markers="{{markers}}"
+         circles="{{circles}}"
+         bindcallouttap="onMarkerTap"
+         bindmarkertap="onMarkerTap"
+         bindregionchange="regionChange"
+    />
+    <van-notify id="van-notify"/>
+    <van-popup
+            show="{{ showPop }}"
+            position="bottom"
+            custom-style="max-height: 80vh;padding-top:45px;"
+            round
+            closeable
+            bind:close="onClosePopup">
+12
+
+    </van-popup>
+
 </view>
