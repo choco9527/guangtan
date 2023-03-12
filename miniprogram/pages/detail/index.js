@@ -106,7 +106,6 @@ Page({
 
     this.setData({showAction: true});
   },
-  // 测试跳转小程序
   goBilibili() {
     const aid = this.data.detail.aid
     goBilibili(aid)

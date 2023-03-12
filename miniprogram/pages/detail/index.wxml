@@ -4,7 +4,6 @@
     <van-empty wx:if="{{!detail.aid}}" image="search"/>
     <scroll-view wx:else scroll-y enable-passive>
         <image mode="aspectFill" bind:tap="goBilibili" class="head-img" src="{{detail.pic}}"></image>
-        <video-detail></video-detail>
         <van-cell-group border>
             <van-cell title="{{detail.title}}"></van-cell>
             <view class="infos text-sec fs-12">
@@ -26,8 +25,7 @@
             <view class="{{sDesc ? 'show c-label fs-13 text-sec' : 'c-label fs-13 text-sec'}}">
                 <view class="inner">{{detail.description}}</view>
             </view>
-            <search-popup wx:if="{{isManager}}" bind:onSelect="onSuggestionSel"
-            />
+            <search-popup wx:if="{{isManager}}" bind:onSelect="onSuggestionSel"/>
             <van-cell use-label-slot>
                 <map slot="label"
                      id="myMap"
