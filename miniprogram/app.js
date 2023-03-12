@@ -13,8 +13,25 @@ App({
         traceUser: true,
       });
     }
+
+    // 获取用户信息存为Promise
     Reflect.set(this.globalData, 'userInfo',
       $req('getUserInfo').then(({data})=>Promise.resolve(data))
-    ) // 存为Promise
+    )
+
+    // 全局获取用户位置存为Promise
+    Reflect.set(this.globalData, 'userLocation',
+      new Promise((r,j)=>[
+        wx.getLocation({
+          success: (data) => {
+            r(data)
+          },
+          fail(err) {
+            console.log(err);
+            j(err)
+          }
+        })
+      ])
+    )
   }
 });

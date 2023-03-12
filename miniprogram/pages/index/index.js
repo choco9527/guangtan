@@ -1,22 +1,23 @@
 const {envList} = require('../../envList.js');
-import {mapScale, GetDistance, mapSetting, locMapFn} from "../../js/util";
+import {GetDistance, mapScale, mapSetting, locMapFn} from "../../js/util";
 import {$req} from "../../js/request";
 import Notify from '@vant/weapp/notify/notify';
 import {debounce} from 'xe-utils'
 
-const defaultScale = 12
+const defaultScale = 13
+const defaultRadius = 3000
 let markerList = []
+let mapCtx = {}
 
 Page({
   data: {
-    latitude: 23.099994,
-    longitude: 113.324520,
+    latitude: 23.12463,
+    longitude: 113.36199,
     markers: [],
     circles: [],
     setting: mapSetting
   },
   onLoad(query) {
-    this.setUserLocation()
     this.setData({
       // 仅设置的属性会生效，其它的不受影响
       setting: {
@@ -27,16 +28,27 @@ Page({
       }
     })
   },
-  onShow() {
+  onReady(e) {
+    this.getUserLocation()
+    mapCtx = wx.createMapContext('homeMap')
   },
-  setUserLocation() { // 设置当前位置
+  getUserLocation() { // 设置当前位置
     const _t = this
-    wx.getLocation({
-      success: ({latitude, longitude}) => {
-        _t.setLocation(latitude, longitude) // 设置用户位置
-      },
-      fail(err) {
-        console.log(err);
+    const {globalData} = getApp()
+    globalData.userLocation.then(data => {
+      console.log('index get', data);
+      const {latitude, longitude} = data
+      _t.setLocation(latitude, longitude) // 设置用户位置
+      _t.getNearBy(latitude, longitude, defaultRadius)
+    })
+  },
+  moveToLocation() { // 回到用户位置
+    // this.setUserLocation()
+    const _t = this
+    mapCtx.moveToLocation({
+      success() {
+        console.log('moveToLocation')
+        _t.getNearBy(_t.data.latitude, _t.data.longitude, defaultRadius)
       }
     })
   },
@@ -57,6 +69,8 @@ Page({
     this.setData({circles})
   },
   getNearBy(latitude, longitude, radius) { // 获取附近店
+    this.setCircle(latitude, longitude, radius) // 画出圆
+
     $req('getNearVideos', {latitude, longitude, radius})
       .then(({success, data}) => {
         if (success) {
@@ -80,16 +94,20 @@ Page({
       this.setData({markers: allMarkers})
     }
   },
-  regionChange: debounce(function ({detail}) { // 移动map
-    const {type, centerLocation, region} = detail
-    if (type === 'end') {
+  regionChange: debounce(function (params) { // 移动map
+    const {detail, causedBy, type} = params
+    const {centerLocation, region} = detail
+    let gesture = true
+    if (causedBy) {
+      gesture = ['drag', 'scale', 'gesture'].includes(causedBy)
+    }
+    if (type === 'end' && gesture) { // 保证为手势触发
       const {northeast, southwest} = region
       // 获取短边半径
       const km = GetDistance(northeast.latitude, northeast.longitude, northeast.latitude, southwest.longitude)
       const radius = km * 1000 / 2
 
       const {latitude, longitude} = centerLocation
-      this.setCircle(latitude, longitude, radius) // 画出圆
       this.getNearBy(latitude, longitude, radius)
     }
   }, 300),

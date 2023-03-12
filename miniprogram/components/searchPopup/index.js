@@ -5,16 +5,23 @@ Component({
   data: {
     searchVal: '',
     searchList: [], // 推荐词
+    latitude: 0,
+    longitude: 0,
   },
   properties: {
-    onSuggestionSel: {
-      type: Function,
-      value: null
-    },
     placeholder: {
       type: String,
       value: '搜索地址'
     }
+  },
+  attached() {
+    const _t = this
+    const {globalData} = getApp()
+    globalData.userLocation.then(data => {
+      console.log('pop getLocation', data);
+      const {latitude, longitude} = data
+      _t.setData({latitude, longitude})
+    })
   },
   methods: {
     onSearch: debounce(function ({detail: search}) {

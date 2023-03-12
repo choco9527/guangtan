@@ -8,7 +8,7 @@
                closeable>
         <van-cell-group inset>
             <van-cell wx:for="{{searchList}}" wx:key="id"
-                      title="{{item.title}}" value="{{item.city + item.district}}"
+                      title="{{item.title}}" value="{{item.city + (item.district || '')}}"
                       data-item="{{item}}" label="{{item.address}}"
                       bind:tap="onS"
             />

@@ -1,6 +1,25 @@
+.home-page {
+  position: relative;
+}
 .home-page #homeMap {
   width: 100vw;
   height: 100vh;
+  z-index: 1;
+}
+.home-page .guide {
+  z-index: 2;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background: #fff;
+  position: absolute;
+  bottom: 60px;
+  right: 10px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 36px;
+  opacity: 0.8;
+  color: var(--primary-color);
 }
 
 /*# sourceMappingURL=index.wxss.map */

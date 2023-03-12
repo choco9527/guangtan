@@ -7,8 +7,8 @@ export const deepClone = (obj) => {
 export const mapSetting = { // 地图设置
   skew: 0,
   rotate: 0,
-  showLocation: false,
-  showScale: false,
+  showLocation: true,
+  showScale: true,
   subKey: '',
   layerStyle: 1,
   enableZoom: true,

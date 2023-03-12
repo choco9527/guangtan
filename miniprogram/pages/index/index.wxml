@@ -1,7 +1,9 @@
 <!--index.wxml-->
 <view class="home-page container">
+  <view class="guide" bind:tap="moveToLocation">
+    <van-icon name="guide-o" />
+  </view>
   <map id="homeMap"
-       show-scale
        setting="{{setting}}"
        latitude="{{latitude}}"
        longitude="{{longitude}}"

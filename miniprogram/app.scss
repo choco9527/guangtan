@@ -50,7 +50,6 @@ page {
     text-align: left;
   }
 
-
   //Color
   .text-primary {
     color: #303030;
@@ -64,8 +63,10 @@ page {
     color: rgba(69, 90, 100, 0.6);
   }
 
+  --primary-color: #1677ff;
+
   .text-link {
-    color: rgb(25, 137, 250);
+    color: var(--primary-color);
   }
 
   .text-red {

@@ -9,12 +9,12 @@ let curMarker = {}
 const UPDATE = '更新'
 const GO = '前往'
 
+let id = ''
+
 Page({
   data: {
     detail: {},
     replies: [],
-    latitude: 23.099994,
-    longitude: 113.324520,
     markers: [],
     showAction: false,
     actions: [],
@@ -25,13 +25,14 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad({id}) {
+
+  onLoad({id: _id}) {
+    id = _id
+  },
+  onReady() {
     this.getData(id).then(detail => {
-      console.log(detail);
       this.getDetailLocation(detail)
     })
-  },
-  onShow() {
     const {globalData} = getApp()
     globalData.userInfo.then(({IS_MANAGER}) => {
       let actions = [{name: GO}]
@@ -46,10 +47,10 @@ Page({
   getDetailLocation(detail) { // 获取当前位置
     const {location} = detail
     if (detail.locInfo && location) {
-      const {content} = detail.locInfo
+      const {title} = detail.locInfo
       const [lng, lat] = location.coordinates
       this.showOnMarker([{
-        title: content,
+        title,
         location: {lat, lng}
       }], true)
     } else {

@@ -48,14 +48,16 @@ export function $req(type, params = {}) {
  * 关键字的补完与提示
  *  https://lbs.qq.com/service/webService/webServiceGuide/webServiceSuggestion
  * @param word
+ * @param lat
+ * @param lng
  * @returns {Promise<unknown>}
  */
-export function getSuggestion({word = ''}) {
+export function getSuggestion({word = '', lat = 23.12463, lng = 113.36199}) {
   if (word) {
     const keyword = encodeURI(word)
     return new Promise((r, j) => {
       wx.request({
-        url: `https://apis.map.qq.com/ws/place/v1/suggestion?keyword=${keyword}&key=${MapKey}&region=广东`,
+        url: `https://apis.map.qq.com/ws/place/v1/suggestion?keyword=${keyword}&key=${MapKey}&region=广东&location=${lat},${lng}`,
         header: {'content-type': 'application/json'}, // 默认值
         success(res) {
           r(res.data)

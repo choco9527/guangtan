@@ -26,21 +26,18 @@ exports.main = async (event, context) => {
           _openid: OPENID,
           _unionid: UNIONID,
           avatar: '',
-          nickname: ''
+          nickname: '',
+          appid:APPID,
+          env: ENV,
+          isManager: false
         }
       })
       INFO = {_openid: OPENID, avatar: '', nickname: ''}
     }
 
-    const managerList = ["oiLOL5THpcMk1GydSJlz5pejV9nw"]
-
     const d = {
       OPENID,
-      // APPID,
-      UNIONID,
-      // ENV,
-      IS_MANAGER: true,
-      // IS_MANAGER: managerList.includes(OPENID)
+      IS_MANAGER: INFO.isManager || false,
       INFO
     };
     return {success: true, data: d};

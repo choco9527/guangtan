@@ -78,7 +78,7 @@ exports.getVideo = async (event, context) => {
 // 更新视频位置信息
 exports.updateVideoLocation = async (event, context) => {
   try {
-    const {id, latitude, longitude, content, item} = event
+    const {id, latitude, longitude, item} = event
     if (!id || !latitude || !longitude) throw new Error('no id')
     const res = await VIDEO.doc(id).update({
       data: {
@@ -89,11 +89,7 @@ exports.updateVideoLocation = async (event, context) => {
         }
       }
     })
-    return {
-      success: true,
-      msg: '更新成功',
-      data: res
-    };
+    return {success: true, msg: '更新成功', data: res};
   } catch (e) {
     return {
       success: false,

@@ -6,6 +6,7 @@ page {
   justify-content: flex-start;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Segoe UI, Arial, Roboto, "PingFang SC", "miui", "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
   --card-thumb-size: 80px;
+  --primary-color: #1677ff;
 }
 page .container {
   display: flex;
@@ -47,7 +48,7 @@ page .text-sec {
   color: rgba(69, 90, 100, 0.6);
 }
 page .text-link {
-  color: rgb(25, 137, 250);
+  color: var(--primary-color);
 }
 page .text-red {
   color: #ff4d4f;
