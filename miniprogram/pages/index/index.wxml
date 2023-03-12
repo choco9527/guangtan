@@ -1,4 +1,5 @@
-<!--index.wxml-->
+<wxs src="../../tools.wxs" module="tools"/>
+
 <view class="home-page container">
     <view class="guide" bind:tap="moveToLocation">
         <van-icon name="guide-o"/>
@@ -18,10 +19,36 @@
             show="{{ showPop }}"
             position="bottom"
             custom-style="max-height: 80vh;padding-top:45px;"
+            custom-class="c-pop"
             round
             closeable
+            title="{{popDetail.title}}"
             bind:close="onClosePopup">
-12
+        <view class="title">
+            <view>{{popDetail.locInfo.content}}</view>
+        </view>
+        <van-cell-group border>
+            <view class="fs-13">{{popDetail.title}}</view>
+            <view class="c-label show fs-13 text-sec">
+                <view class="inner">{{popDetail.description}}</view>
+            </view>
+            <view class="infos text-sec fs-12">
+                <text>点赞:{{ tools.parsePlayNum(popDetail.v_stat.like)}}</text>
+                <text>投币:{{ tools.parsePlayNum(popDetail.v_stat.coin) }}</text>
+                <text>收藏:{{ tools.parsePlayNum(popDetail.v_stat.favorite) }}</text>
+            </view>
+            <view class="infos text-primary fs-13">
+                <text class="text-red">人气:{{ tools.getWeight(popDetail.v_stat) }}</text>
+
+                <view class="text-link" data-id="{{popDetail._id}}" bind:tap="toDetailPage">
+                    <text>前往详情</text>
+                    <van-icon name="arrow"/>
+                </view>
+            </view>
+            <view class="text-sec fs-13">
+                <view>{{popDetail.locInfo.address}}</view>
+            </view>
+        </van-cell-group>
 
     </van-popup>
 

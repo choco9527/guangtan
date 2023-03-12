@@ -22,4 +22,37 @@
   color: var(--primary-color);
 }
 
+.c-pop {
+  padding: 12px;
+  position: relative;
+}
+.c-pop .title {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.c-pop .infos {
+  background-color: #fff;
+  padding: 4px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+.c-pop .c-label {
+  max-height: 0;
+  height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+  background-color: #fff;
+}
+.c-pop .c-label .inner {
+  padding: 4px 0;
+}
+.c-pop .c-label.show {
+  max-height: 50vh;
+  height: auto;
+}
+
 /*# sourceMappingURL=index.wxss.map */

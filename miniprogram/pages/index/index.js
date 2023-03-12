@@ -1,5 +1,5 @@
 const {envList} = require('../../envList.js');
-import {GetDistance, mapScale, mapSetting, locMapFn} from "../../js/util";
+import {GetDistance, mapScale, mapSetting, locMapFn, goBilibili} from "../../js/util";
 import {$req} from "../../js/request";
 import Notify from '@vant/weapp/notify/notify';
 import {debounce} from 'xe-utils'
@@ -15,7 +15,8 @@ Page({
     markers: [],
     circles: [],
     setting: mapSetting,
-    showPop: false
+    showPop: false,
+    popDetail: {}
   },
   onLoad(query) {
     this.mapCtx = {}
@@ -115,13 +116,15 @@ Page({
   }, 300),
   onMarkerTap({detail}) {
     const {markerId: index} = detail
-    const id = markerList[index]?._id
-    // if (id) {
-    //   wx.navigateTo({url: '/pages/detail/index?id=' + id})
-    // }
-    this.setData({showPop: true})
+    this.setData({showPop: true, popDetail: markerList[index]})
   },
   onClosePopup() {
     this.setData({showPop: false})
+  },
+  toDetailPage({currentTarget}) {
+    const id = currentTarget.dataset.id
+    if (id) {
+      wx.navigateTo({url: '/pages/detail/index?id=' + id})
+    }
   }
 });

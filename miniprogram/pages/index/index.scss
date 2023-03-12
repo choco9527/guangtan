@@ -21,4 +21,37 @@
     color: var(--primary-color);
   }
 }
+.c-pop{
+  padding: 12px;
+  position: relative;
+  .title{
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .infos {
+    background-color: #fff;
+    padding: 4px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+  }
 
+  .c-label {
+    max-height: 0;
+    height: 0;
+    overflow: hidden;
+    transition: max-height .3s ease-in-out;
+    background-color: #fff;
+    .inner{
+      padding: 4px 0;
+    }
+
+    &.show {
+      max-height: 50vh;
+      height: auto;
+    }
+  }
+}

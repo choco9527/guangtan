@@ -117,6 +117,8 @@ exports.getNearVideos = async (event, content) => {
         location: true,
         locInfo: true,
         v_stat: true,
+        title: true,
+        description: true,
       })
       .limit(100)
       .get()
