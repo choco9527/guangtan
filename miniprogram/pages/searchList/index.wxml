@@ -13,9 +13,9 @@
                 />
             </view>
         </van-nav-bar>
-                <van-dropdown-menu>
-                    <van-dropdown-item bind:change="onOrder" value="{{ orderBy }}" options="{{ orderOptions }}"/>
-                </van-dropdown-menu>
+        <van-dropdown-menu>
+            <van-dropdown-item bind:change="onOrder" value="{{ orderBy }}" options="{{ orderOptions }}"/>
+        </van-dropdown-menu>
     </van-sticky>
 
     <van-empty wx:if="{{!list.length}}" image="search"/>
@@ -52,8 +52,11 @@
                     <text class="ml-2">{{ tools.formatDate(item.created) }}</text>
                 </van-col>
                 <van-col span="24" class="text-sec mt-4" wx:if="{{item.locInfo}}">
-                    <van-icon name="guide-o" />
+                    <van-icon name="guide-o"/>
                     <text class="ml-2">{{item.locInfo.content}}</text>
+                </van-col>
+                <van-col span="24" class="text-sec mt-4" wx:if="{{item.locInfo}}">
+                    <text class="ml-2 fs-10">{{item.locInfo.address }}</text>
                 </van-col>
             </van-row>
         </view>

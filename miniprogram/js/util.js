@@ -64,7 +64,7 @@ export const locMapFn = (poi, i) => {
   let lat = poi.location.lat // 纬度
   let lng = poi.location.lng // 经度
   return {
-    id: poi.id || i,
+    id: i,
     latitude: lat,
     longitude: lng,
     alpha: 0.9,

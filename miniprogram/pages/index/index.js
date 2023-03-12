@@ -5,12 +5,12 @@ import Notify from '@vant/weapp/notify/notify';
 import {debounce} from 'xe-utils'
 
 const defaultScale = 12
+let markerList = []
 
 Page({
   data: {
     latitude: 23.099994,
     longitude: 113.324520,
-    list: [],
     markers: [],
     circles: [],
     setting: mapSetting
@@ -61,7 +61,7 @@ Page({
       .then(({success, data}) => {
         if (success) {
           Notify({type: 'success', message: `附近有${data.length}家地址`});
-          this.setData({list: data})
+          markerList = data
           const pois = data.map(v => {
             const {content} = v.locInfo
             const [lng, lat] = v.location.coordinates
@@ -95,7 +95,7 @@ Page({
   }, 300),
   onMarkerTap({detail}) {
     const {markerId: index} = detail
-    const id = this.data.list[index]?._id
+    const id = markerList[index]?._id
     if (id) {
       wx.navigateTo({url: '/pages/detail/index?id=' + id})
     }

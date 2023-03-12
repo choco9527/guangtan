@@ -4,6 +4,7 @@ import Dialog from '@vant/weapp/dialog/dialog';
 import Notify from '@vant/weapp/notify/notify';
 import {locMapFn, goBilibili, deepClone, mapSetting} from "../../js/util";
 
+let markerList = []
 let curMarker = {}
 const UPDATE = '更新'
 const GO = '前往'
@@ -66,6 +67,7 @@ Page({
     this.showOnMarker(data)
   },
   onSuggestionSel({detail: item}) {
+    markerList = [item]
     this.showOnMarker([item], true)
   },
   showOnMarker(pois = [], rePlace = false) { // 将地址展示到marker
@@ -97,7 +99,10 @@ Page({
   onMarkerTap({detail}) {
     const {markerId} = detail
     const marker = this.data.markers[markerId]
-    curMarker = deepClone(marker)
+    const item = markerList[markerId]
+    curMarker = {...marker, item}
+    console.log(curMarker);
+
     this.setData({showAction: true});
   },
   // 测试跳转小程序
@@ -107,7 +112,7 @@ Page({
   },
   onActionSelect(e) {
     const {name} = e.detail
-    const {latitude, longitude, callout} = curMarker
+    const {latitude, longitude, callout, item} = curMarker
     switch (name) {
       case UPDATE:
         Dialog.confirm({
@@ -115,8 +120,8 @@ Page({
         })
           .then(() => {
             const {_id} = this.data.detail
-            $req('updateVideoLocation', {id: _id, latitude, longitude, content: callout.content}).then(updateRes => {
-              Notify({ type: 'success', message: updateRes.msg });
+            $req('updateVideoLocation', {id: _id, latitude, longitude, item}).then(updateRes => {
+              Notify({type: 'success', message: updateRes.msg});
             })
           })
           .catch(() => {

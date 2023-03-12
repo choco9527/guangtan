@@ -78,14 +78,14 @@ exports.getVideo = async (event, context) => {
 // 更新视频位置信息
 exports.updateVideoLocation = async (event, context) => {
   try {
-    const {id, latitude, longitude, content} = event
+    const {id, latitude, longitude, content, item} = event
     if (!id || !latitude || !longitude) throw new Error('no id')
     const res = await VIDEO.doc(id).update({
       data: {
         location: db.Geo.Point(longitude, latitude),
         locInfo: {
-          content
-          // location: db.Geo.Point(longitude, latitude)
+          content: item.title,
+          ...item
         }
       }
     })

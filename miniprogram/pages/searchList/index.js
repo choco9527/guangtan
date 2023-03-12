@@ -22,7 +22,7 @@ Page({
   },
   onScrollToEnd() {
     if (!this.data.loading) {
-      console.log('触底追加')
+      // console.log('触底追加')
       this.setData({pageNum: this.data.pageNum + 1})
       this.getListData(this.data.pageNum).then(newList => {
         if (newList) {
@@ -33,7 +33,7 @@ Page({
   },
   async _fresh() {
     this.setData({pageNum: 1})
-    const list = await this.getListData()
+    const list = await this.getListData(1, this.data.search, this.data.orderBy)
     if (list) {
       this.setData({list})
     }
@@ -51,7 +51,7 @@ Page({
    * @param search
    * @returns {Promise<void>}
    */
-  async getListData(pn = 1, search = '', orderBy='') {
+  async getListData(pn = 1, search = '', orderBy = '') {
     wx.showLoading();
     this.setData({loading: true})
     const {success, data} = await $req('getVideoList', {pn, search, orderBy})
