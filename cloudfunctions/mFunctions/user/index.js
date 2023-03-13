@@ -10,29 +10,27 @@ const USERS = db.collection('users')
 // 获取openId云函数入口函数
 exports.main = async (event, context) => {
   try {
-
     // 获取基础信息
     const {OPENID, APPID, UNIONID, ENV} = cloud.getWXContext()
 
     const {data} = await USERS.where({_openid: OPENID}).get()
     const [userInfo] = data
 
-    let INFO = {}
-    if (userInfo) {
+    let INFO = {_openid: OPENID, avatar: '', nickname: ''}
+    if (userInfo) { // 已注册
       INFO = userInfo
-    } else {
+    } else { // 自动注册
       await USERS.add({
         data: {
           _openid: OPENID,
           _unionid: UNIONID,
           avatar: '',
           nickname: '',
-          appid:APPID,
+          appid: APPID,
           env: ENV,
           isManager: false
         }
       })
-      INFO = {_openid: OPENID, avatar: '', nickname: ''}
     }
 
     const d = {

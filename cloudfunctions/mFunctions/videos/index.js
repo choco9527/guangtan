@@ -6,6 +6,7 @@ cloud.init({
 
 const db = cloud.database();
 const VIDEO = db.collection('videos')
+const USERS = db.collection('users')
 const _ = db.command
 
 // 获取搜索页视频列表
@@ -78,18 +79,30 @@ exports.getVideo = async (event, context) => {
 // 更新视频位置信息
 exports.updateVideoLocation = async (event, context) => {
   try {
+    const {OPENID} = cloud.getWXContext()
+
     const {id, latitude, longitude, item} = event
     if (!id || !latitude || !longitude) throw new Error('no id')
-    const res = await VIDEO.doc(id).update({
-      data: {
-        location: db.Geo.Point(longitude, latitude),
-        locInfo: {
-          content: item.title,
-          ...item
+
+
+    const {data} = await USERS.where({_openid: OPENID}).get()
+    const [userInfo] = data
+    const isManager = userInfo.isManager // 普通用户更新位置需要管理员审核
+
+    if (isManager) {
+      await VIDEO.doc(id).update({
+        data: {
+          location: db.Geo.Point(longitude, latitude),
+          locInfo: {
+            content: item.title,
+            ...item
+          }
         }
-      }
-    })
-    return {success: true, msg: '更新成功', data: res};
+      })
+      return {success: true, msg: '更新成功', data: null};
+    } else {
+      return {success: true, msg: '已提交，审核后将更新位置', data: null};
+    }
   } catch (e) {
     return {
       success: false,
