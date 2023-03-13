@@ -7,6 +7,7 @@ cloud.init({
 const db = cloud.database();
 const VIDEO = db.collection('videos')
 const USERS = db.collection('users')
+const AUDITS = db.collection('audits')
 const _ = db.command
 
 // 获取搜索页视频列表
@@ -84,24 +85,30 @@ exports.updateVideoLocation = async (event, context) => {
     const {id, latitude, longitude, item} = event
     if (!id || !latitude || !longitude) throw new Error('no id')
 
+    const isManager = await _isManager()
 
-    const {data} = await USERS.where({_openid: OPENID}).get()
-    const [userInfo] = data
-    const isManager = userInfo.isManager // 普通用户更新位置需要管理员审核
+    const saveData = {
+      location: db.Geo.Point(longitude, latitude),
+      locInfo: {
+        content: item.title,
+        ...item
+      }
+    }
 
     if (isManager) {
-      await VIDEO.doc(id).update({
+      const r = await VIDEO.doc(id).update({
+        data: saveData
+      })
+      return {success: true, msg: '更新成功', data: r};
+    } else {
+      const r = await AUDITS.add({
         data: {
-          location: db.Geo.Point(longitude, latitude),
-          locInfo: {
-            content: item.title,
-            ...item
-          }
+          ...saveData, videoId: id, status: 0,
+          byOpenId: OPENID,
+          created: new Date().getTime()
         }
       })
-      return {success: true, msg: '更新成功', data: null};
-    } else {
-      return {success: true, msg: '已提交，审核后将更新位置', data: null};
+      return {success: true, msg: '已提交，审核后将更新位置', data: r};
     }
   } catch (e) {
     return {
@@ -144,3 +151,75 @@ exports.getNearVideos = async (event, content) => {
     };
   }
 }
+
+exports.getAuditList = async (event, content) => {
+  try {
+    const isManager = await _isManager()
+    if (!isManager) throw new Error('非管理员')
+
+    const {status = 0, pn = 0, ps = 20} = event
+    const offset = (pn - 1) * ps
+
+    const {data} = await AUDITS.where({
+      status // 待审核
+    })
+      .skip(offset)
+      .limit(ps)
+      .orderBy('created', 'asc')
+      .get()
+    return {success: true, data};
+  } catch (e) {
+    console.log(e);
+    return {
+      success: false,
+      msg: e.message || '失败',
+    };
+  }
+}
+
+// 审核视频
+exports.auditVideo = async (event, content) => {
+  try {
+    const isManager = await _isManager()
+    if (!isManager) throw new Error('非管理员')
+
+    const {item, status} = event
+
+    const {locInfo, _id, videoId} = item
+    if (!locInfo || !_id || !videoId) throw new Error('参数缺失')
+    const aR = await AUDITS.doc(item._id).update({
+      data: {status: parseInt(status)}
+    })
+    const longitude = locInfo.longitude
+    const latitude = locInfo.latitude
+
+    if (parseInt(status) === 1) {
+      const saveData = {
+        location: db.Geo.Point(longitude, latitude),
+        locInfo
+      }
+      const r = await VIDEO.doc(videoId).update({
+        data: saveData
+      })
+      return {success: true, msg: '审核通过', data: r};
+    }
+    return {success: true, msg: '已拒绝', data: aR};
+  } catch (e) {
+    console.log(e);
+    return {
+      success: false,
+      msg: e.message || '失败',
+    };
+  }
+}
+
+async function _isManager() {
+  try {
+    const {OPENID} = cloud.getWXContext()
+    const {data: [userInfo]} = await USERS.where({_openid: OPENID}).get()
+    return userInfo.isManager || false
+  } catch (e) {
+    return false
+  }
+}
+

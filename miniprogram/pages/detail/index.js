@@ -2,7 +2,7 @@
 import {$req, getSearchMap} from "../../js/request";
 import Dialog from '@vant/weapp/dialog/dialog';
 import Notify from '@vant/weapp/notify/notify';
-import {locMapFn, goBilibili, deepClone, mapSetting} from "../../js/util";
+import {locMapFn, goBilibili, mapSetting} from "../../js/util";
 
 let markerList = []
 let curMarker = {}
@@ -18,7 +18,6 @@ Page({
     markers: [],
     showAction: false,
     actions: [],
-    isManager: false, // 管理员
     sDesc: false,
     setting: mapSetting
   },
@@ -33,15 +32,8 @@ Page({
     this.getData(id).then(detail => {
       this.getDetailLocation(detail)
     })
-    const {globalData} = getApp()
-    globalData.userInfo.then(({IS_MANAGER}) => {
-      let actions = [{name: GO}]
-      if (IS_MANAGER) {
-        actions.push({name: UPDATE})
-        this.setData({isManager: true})
-      }
-      this.setData({actions})
-    })
+    let actions = [{name: GO}, {name: UPDATE}]
+    this.setData({actions})
   },
 
   getDetailLocation(detail) { // 获取当前位置

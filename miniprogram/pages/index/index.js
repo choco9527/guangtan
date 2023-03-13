@@ -27,7 +27,8 @@ Page({
         scale: defaultScale, // 默认搜索2km内
         enable3D: true,
         enableTraffic: true,
-        minScale: 10
+        minScale: 10,
+        showScale: true
       }
     })
   },

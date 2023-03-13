@@ -25,7 +25,7 @@
             <view class="{{sDesc ? 'show c-label fs-13 text-sec' : 'c-label fs-13 text-sec'}}">
                 <view class="inner">{{detail.description}}</view>
             </view>
-            <search-popup wx:if="{{isManager}}" bind:onSelect="onSuggestionSel"/>
+            <search-popup bind:onSelect="onSuggestionSel"/>
             <van-cell use-label-slot>
                 <map slot="label"
                      id="myMap"

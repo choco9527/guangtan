@@ -60,7 +60,6 @@
                 </van-col>
             </van-row>
         </view>
-
     </scroll-view>
     <van-toast id="van-toast"/>
 </view>

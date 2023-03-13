@@ -1,0 +1,27 @@
+<wxs src="../../tools.wxs" module="tools"/>
+<view class="audit-page">
+    <van-empty wx:if="{{!list.length}}" image="search"/>
+    <scroll-view scroll-y
+                 bindscrolltolower="onScrollToEnd"
+                 lower-threshold="20px"
+                 refresher-enabled
+                 bindrefresherrefresh="onPullDown"
+                 enable-passive
+                 refresher-triggered="{{ pulling }}"
+                 wx:if="{{list.length}}"
+    >
+        <van-swipe-cell wx:for="{{list}}" wx:key="_id" right-width="135">
+            <van-cell title="{{item.locInfo.content}}"
+                      label="{{ tools.formatDate(item.created) }}"
+                      value="{{item.locInfo.address}}"
+                      is-link
+                      url="{{'/pages/detail/index?id='+item.videoId }}"
+            />
+            <view slot="right" class="btn-group">
+                    <van-button block data-status="1" data-item="{{item}}" bind:tap="onAudit" type="primary">通过</van-button>
+                    <van-button block data-status="2" data-item="{{item}}" bind:tap="onAudit" type="danger">不通过</van-button>
+            </view>
+        </van-swipe-cell>
+
+    </scroll-view>
+</view>

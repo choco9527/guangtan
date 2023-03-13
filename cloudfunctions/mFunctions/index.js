@@ -27,5 +27,11 @@ exports.main = async (event, context) => {
       return await fetchData.main(event, context);
     case 'manual': // 手动触发
       return await fetchData.manual(event, context);
+
+    case 'getAuditList': // 获取审核列表
+      return await videos.getAuditList(event, context);
+
+    case 'auditVideo': // 审核视频
+      return await videos.auditVideo(event, context);
   }
 };

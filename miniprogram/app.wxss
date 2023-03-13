@@ -54,6 +54,23 @@ page .text-link {
 page .text-red {
   color: var(--red-color);
 }
+page .flex {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+page .flex.center {
+  justify-content: center;
+}
+page .flex.start {
+  justify-content: flex-start;
+}
+page .flex.end {
+  justify-content: flex-end;
+}
+page .flex.between {
+  justify-content: space-between;
+}
 
 .br-1 {
   border-radius: 1px !important;

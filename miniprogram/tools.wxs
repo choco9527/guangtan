@@ -10,6 +10,7 @@ function parsePlayNum(num) {
 }
 
 function formatDate(s) {
+  if (!s) return ''
   var t = getDate(s * Math.pow(10, 3))
   var n = getDate().getTime()
     , r = t.getTime()

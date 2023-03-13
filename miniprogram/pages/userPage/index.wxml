@@ -6,20 +6,21 @@
                 <button class="wrapper-btn" open-type="chooseAvatar"
                         bind:chooseavatar="onChooseAvatar">
                     <van-image
-                            wx:if="{{avatarUrl}}"
+                            wx:if="{{info.avatar}}"
                             round
                             width="40px"
                             height="40px"
-                            src="{{avatarUrl}}"
+                            src="{{info.avatar}}"
                     />
                     <text class="fs-12" wx:else>设置头像</text>
                 </button>
             </view>
         </van-cell>
-        <van-cell title="昵称" value="{{nickname }}">
-            <text wx:if="{{nickname}}">{{nickname}}</text>
+        <van-cell title="昵称" value="{{info.nickname }}">
+            <text wx:if="{{info.nickname}}">{{info.nickname}}</text>
             <text class="fs-12" wx:else bind:tap="showDialog">设置昵称</text>
         </van-cell>
+        <van-cell wx:if="{{info.isManager}}" title="审核列表" url="/pages/audit/index" is-link/>
     </van-cell-group>
     <van-dialog
             use-slot

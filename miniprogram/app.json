@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/searchList/index",
     "pages/userPage/index",
-    "pages/detail/index"
+    "pages/detail/index",
+    "pages/audit/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -64,7 +65,8 @@
     "van-loading": "@vant/weapp/loading/index",
     "van-action-sheet": "@vant/weapp/action-sheet/index",
     "van-popup": "@vant/weapp/popup/index",
-    "van-notify": "@vant/weapp/notify/index"
+    "van-notify": "@vant/weapp/notify/index",
+    "van-swipe-cell": "@vant/weapp/swipe-cell/index"
   },
   "permission": {
     "scope.userLocation": {

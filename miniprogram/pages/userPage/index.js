@@ -5,23 +5,17 @@ Page({
   data: {
     active: 1,
     hasUserInfo: false,
-    userInfo: {},
-    avatarUrl: '',
-    nickname: '',
+    info: {},
+    isManager: false,
     show: false
   },
   onLoad() {
     const {globalData} = getApp()
-    globalData.userInfo.then(({INFO}) => {
+    globalData.userInfo.then(({INFO = {}, IS_MANAGER = false}) => {
       if (INFO) {
-        const {avatar, nickname} = INFO
-        if (avatar) {
-          this.setData({avatarUrl: INFO.avatar})
-        }
-        if (nickname) {
-          this.setData({nickname: INFO.nickname})
-        }
+        this.setData({info: INFO})
       }
+      this.setData({isManager: IS_MANAGER})
     })
   },
   showDialog(show = true) {

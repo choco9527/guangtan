@@ -8,7 +8,7 @@ export const mapSetting = { // 地图设置
   skew: 0,
   rotate: 0,
   showLocation: true,
-  showScale: true,
+  showScale: false,
   subKey: '',
   layerStyle: 1,
   enableZoom: true,

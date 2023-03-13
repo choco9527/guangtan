@@ -73,6 +73,25 @@ page {
   .text-red {
     color: var(--red-color);
   }
+
+  .flex{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    &.center{
+      justify-content: center;
+    }
+    &.start{
+      justify-content: flex-start;
+    }
+    &.end{
+      justify-content: flex-end;
+    }
+    &.between{
+      justify-content: space-between;
+    }
+
+  }
 }
 
 @for $i from 1 through 8 {

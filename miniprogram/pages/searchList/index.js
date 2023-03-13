@@ -4,7 +4,6 @@ import {$req} from "../../js/request";
 Page({
   data: {
     search: '', // 搜索
-    loading: false,
     pageNum: 1,
     pulling: false,
     list: [],
