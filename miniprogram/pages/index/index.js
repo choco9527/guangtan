@@ -126,5 +126,11 @@ Page({
     if (id) {
       wx.navigateTo({url: '/pages/detail/index?id=' + id})
     }
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '廣探',
+      path: '/pages/index/index',
+    }
   }
 });

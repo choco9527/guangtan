@@ -140,5 +140,11 @@ Page({
   },
   showDesc() {
     this.setData({sDesc: !this.data.sDesc})
+  },
+  onShareAppMessage: function () {
+    return {
+      title: this.data.detail.title,
+      path: '/pages/detail/index?id=' + this.data.detail._id,
+    }
   }
 })
