@@ -37,17 +37,24 @@
                 <text>投币:{{ tools.parsePlayNum(popDetail.v_stat.coin) }}</text>
                 <text>收藏:{{ tools.parsePlayNum(popDetail.v_stat.favorite) }}</text>
             </view>
-            <view class="infos text-primary fs-13">
+            <view class="infos fs-13">
                 <text class="text-red">人气:{{ tools.getWeight(popDetail.v_stat) }}</text>
-
                 <view class="text-link" data-id="{{popDetail._id}}" bind:tap="toDetailPage">
                     <text>前往详情</text>
                     <van-icon name="arrow"/>
                 </view>
             </view>
-            <view class="text-sec fs-13 pb-8">
-                <view>{{popDetail.locInfo.address}}</view>
+            <view class="infos fs-13">
+                <view class="text-sec" style="max-width: 70%">
+                    {{popDetail.locInfo.address}}
+                </view>
+                <view class="text-link" data-id="{{popDetail._id}}" bind:tap="toLocation">
+                    <text>前往位置</text>
+                    <van-icon name="arrow"/>
+                </view>
             </view>
+
+
         </van-cell-group>
 
     </van-popup>

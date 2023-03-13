@@ -4,23 +4,6 @@ export const deepClone = (obj) => {
   return clone(obj, true)
 }
 
-export const mapSetting = { // 地图设置
-  skew: 0,
-  rotate: 0,
-  showLocation: true,
-  showScale: false,
-  subKey: '',
-  layerStyle: 1,
-  enableZoom: true,
-  enableScroll: true,
-  enableRotate: false,
-  showCompass: false,
-  enable3D: false,
-  enableOverlooking: false,
-  enableSatellite: false,
-  enableTraffic: false
-}
-
 const km = 1e3
 export const mapScale = { // 比例尺 单位 m
   3: 1000 * km,

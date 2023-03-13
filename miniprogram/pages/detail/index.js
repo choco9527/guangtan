@@ -2,7 +2,7 @@
 import {$req, getSearchMap} from "../../js/request";
 import Dialog from '@vant/weapp/dialog/dialog';
 import Notify from '@vant/weapp/notify/notify';
-import {locMapFn, goBilibili, mapSetting} from "../../js/util";
+import {locMapFn, goBilibili} from "../../js/util";
 
 let markerList = []
 let curMarker = {}
@@ -20,11 +20,9 @@ Page({
     showAction: false,
     actions: [],
     sDesc: false,
-    setting: mapSetting
+    latitude: 23.12463,
+    longitude: 113.36199,
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
 
   onLoad({id: _id, lat, lng, title, from: f = ''}) {
     id = _id
@@ -36,7 +34,7 @@ Page({
       }], true)
     }
   },
-  onReady() {
+  onShow() {
     this.getData(id).then(detail => {
       this.getDetailLocation(detail)
     })
@@ -79,10 +77,13 @@ Page({
       const [f] = allMarkers
       this.setData({markers: allMarkers})
       if (rePlace) {
-        this.setData({
-          latitude: f.latitude,
-          longitude: f.longitude,
-        })
+        const t = setTimeout(() => {
+          this.setData({
+            latitude: f.latitude,
+            longitude: f.longitude,
+          })
+          clearTimeout(t)
+        }, 0)
       }
     }
   },

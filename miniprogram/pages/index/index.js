@@ -1,5 +1,5 @@
 const {envList} = require('../../envList.js');
-import {GetDistance, mapScale, mapSetting, locMapFn, goBilibili} from "../../js/util";
+import {GetDistance, mapScale, locMapFn, goBilibili} from "../../js/util";
 import {$req} from "../../js/request";
 import Notify from '@vant/weapp/notify/notify';
 import {debounce} from 'xe-utils'
@@ -14,25 +14,24 @@ Page({
     longitude: 113.36199,
     markers: [],
     circles: [],
-    setting: mapSetting,
+    setting: {},
     showPop: false,
-    popDetail: {}
+    popDetail: {},
+    mapCtx: {}
   },
   onLoad(query) {
-    this.mapCtx = {}
-
     this.setData({
-      // 仅设置的属性会生效，其它的不受影响
       setting: {
         scale: defaultScale, // 默认搜索2km内
+        showLocation: true,
         enable3D: true,
-        enableTraffic: true,
         minScale: 10,
-        showScale: true
+        showScale: true,
+        enableTraffic: true
       }
     })
   },
-  onReady(e) {
+  onShow(e) {
     this.getUserLocation()
     this.mapCtx = wx.createMapContext('homeMap')
   },
@@ -49,10 +48,11 @@ Page({
   moveToLocation() { // 回到用户位置
     // this.setUserLocation()
     const _t = this
+    const {latitude, longitude} = _t.data
     this.mapCtx.moveToLocation({
       success() {
-        console.log('moveToLocation')
-        _t.getNearBy(_t.data.latitude, _t.data.longitude, defaultRadius)
+        _t.setLocation(latitude, longitude)
+        _t.getNearBy(latitude, longitude, defaultRadius)
       }
     })
   },
@@ -127,6 +127,12 @@ Page({
     if (id) {
       wx.navigateTo({url: '/pages/detail/index?id=' + id})
     }
+  },
+  toLocation() {
+    const [longitude, latitude] = this.data.popDetail.location.coordinates
+    wx.openLocation({
+      latitude, longitude
+    })
   },
   onShareAppMessage: function () {
     return {

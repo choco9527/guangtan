@@ -29,7 +29,6 @@
             <van-cell use-label-slot>
                 <map slot="label"
                      id="myMap"
-                     setting="{{setting}}"
                      latitude="{{latitude}}"
                      longitude="{{longitude}}"
                      markers="{{markers}}"
