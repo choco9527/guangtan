@@ -10,6 +10,7 @@ const UPDATE = '更新'
 const GO = '前往'
 
 let id = ''
+let from = ''
 
 Page({
   data: {
@@ -25,8 +26,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
 
-  onLoad({id: _id}) {
+  onLoad({id: _id, lat, lng, title, from: f = ''}) {
     id = _id
+    from = f
+    if (lat || lng) {
+      this.showOnMarker([{
+        title,
+        location: {lat, lng}
+      }], true)
+    }
   },
   onReady() {
     this.getData(id).then(detail => {
@@ -90,13 +98,13 @@ Page({
     return data
   },
   onMarkerTap({detail}) {
-    const {markerId} = detail
-    const marker = this.data.markers[markerId]
-    const item = markerList[markerId]
-    curMarker = {...marker, item}
-    console.log(curMarker);
-
-    this.setData({showAction: true});
+    if (from !== 'audit') {
+      const {markerId} = detail
+      const marker = this.data.markers[markerId]
+      const item = markerList[markerId]
+      curMarker = {...marker, item}
+      this.setData({showAction: true});
+    }
   },
   goBilibili() {
     const aid = this.data.detail.aid

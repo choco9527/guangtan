@@ -11,11 +11,11 @@
                  wx:if="{{list.length}}"
     >
         <van-swipe-cell wx:for="{{list}}" wx:key="_id" right-width="135">
-            <van-cell title="{{item.locInfo.content}}"
+            <van-cell title="{{item.locInfo.title}}"
                       label="{{ tools.formatDate(item.created) }}"
                       value="{{item.locInfo.address}}"
                       is-link
-                      url="{{'/pages/detail/index?id='+item.videoId }}"
+                      url="{{'/pages/detail/index?from=audit&id='+item.videoId+'&title='+item.locInfo.title+'&lat='+item.locInfo.location.lat+'&lng='+item.locInfo.location.lng }}"
             />
             <view slot="right" class="btn-group">
                     <van-button block data-status="1" data-item="{{item}}" bind:tap="onAudit" type="primary">通过</van-button>

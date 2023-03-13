@@ -186,12 +186,12 @@ exports.auditVideo = async (event, content) => {
     const {item, status} = event
 
     const {locInfo, _id, videoId} = item
+
     if (!locInfo || !_id || !videoId) throw new Error('参数缺失')
     const aR = await AUDITS.doc(item._id).update({
       data: {status: parseInt(status)}
     })
-    const longitude = locInfo.longitude
-    const latitude = locInfo.latitude
+    const {lng: longitude, lat: latitude} = locInfo.location
 
     if (parseInt(status) === 1) {
       const saveData = {
