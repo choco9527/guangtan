@@ -264,9 +264,9 @@ exports.main = async (event, context) => {
 
 exports.manual = async (event, context) => {
   try {
-    // await addNewListData(PINCHENGJI) // 新增
-    // await updateListData(PINCHENGJI) // 更新
-    await updateListReply(PINCHENGJI) // 更新
+    await addNewListData(PINCHENGJI) // 新增
+    await updateListData(PINCHENGJI) // 更新信息
+    await updateListReply(PINCHENGJI) // 更新评论
 
     return {success: true, msg: '执行成功', data: null};
   } catch (e) {
