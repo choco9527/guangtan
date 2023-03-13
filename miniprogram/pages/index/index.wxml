@@ -28,7 +28,7 @@
             <view>{{popDetail.locInfo.content}}</view>
         </view>
         <van-cell-group border>
-            <view class="fs-13">{{popDetail.title}}</view>
+            <view class="fs-13 pt-8">{{popDetail.title}}</view>
             <view class="c-label show fs-13 text-sec">
                 <view class="inner">{{popDetail.description}}</view>
             </view>
@@ -45,7 +45,7 @@
                     <van-icon name="arrow"/>
                 </view>
             </view>
-            <view class="text-sec fs-13">
+            <view class="text-sec fs-13 pb-8">
                 <view>{{popDetail.locInfo.address}}</view>
             </view>
         </van-cell-group>
