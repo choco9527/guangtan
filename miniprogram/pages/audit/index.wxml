@@ -22,6 +22,6 @@
                     <van-button block data-status="2" data-item="{{item}}" bind:tap="onAudit" type="danger">不通过</van-button>
             </view>
         </van-swipe-cell>
-
     </scroll-view>
+    <van-notify id="van-notify"/>
 </view>

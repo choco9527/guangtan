@@ -1,11 +1,8 @@
 // pages/audit/index.js
 import {$req} from "../../js/request";
+import Notify from '@vant/weapp/notify/notify';
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     list: [],
     pageNum: 1
@@ -52,16 +49,18 @@ Page({
       })
     }
   },
-  async onAudit({currentTarget}){
+  async onAudit({currentTarget}) {
     console.log(currentTarget);
     const {dataset} = currentTarget
     const {item, status} = dataset
 
-    const {success, data} = await $req('auditVideo', {
+    const {success, msg} = await $req('auditVideo', {
       item,
       status
     })
-
-
+    if (success) {
+      Notify({type: 'success', message: msg});
+      this._fresh()
+    }
   }
 })
