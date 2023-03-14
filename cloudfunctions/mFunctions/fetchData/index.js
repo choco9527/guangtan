@@ -160,17 +160,20 @@ async function updateListReply(mid, x = 20, skip = 0) {
  * @returns {Promise<void>}
  */
 async function $addTheList(list = []) {
-  for (const data of list) { // 逐条添加到数据库
+  for (const key in list) { // 逐条添加到数据库
+    const data = list[key]
     const hasData = await VIDEO.where({aid: data.aid}).limit(1).get()
     if (hasData && !hasData.data.length) { // 不操作旧数据
       let {data: vData} = await bApiList.getVideoData({aid: data.aid}); // 获取视频详情数据
-      ;['meta'].forEach(key => { // 删除一些不需要的属性
-        Reflect.deleteProperty(data, key)
-      })
-      Reflect.set(data, 'v_stat', vData.stat)
-      Reflect.set(data, 'v_up_time', new Date().getTime())
-      await VIDEO.add({data})
-      console.log('添加一条新视频内容！', data.aid);
+      if (vData) {
+        ;['meta'].forEach(key => { // 删除一些不需要的属性
+          Reflect.deleteProperty(data, key)
+        })
+        Reflect.set(data, 'v_stat', vData.stat)
+        Reflect.set(data, 'v_up_time', new Date().getTime())
+        await VIDEO.add({data})
+        console.log('添加一条新视频内容！', data.aid, key);
+      }
     }
   }
 }
@@ -184,9 +187,11 @@ async function $updateTheList(list = []) {
   const cur = new Date().getTime()
   for (const item of list) {
     let {data: vData} = await bApiList.getVideoData({aid: item.aid})
-    await VIDEO.doc(item._id)
-      .update({data: {v_stat: vData.stat, v_up_time: cur}})
-    console.log('更新一条新视频数据！', vData.aid);
+    if (vData) {
+      await VIDEO.doc(item._id)
+        .update({data: {v_stat: vData.stat, v_up_time: cur}})
+      console.log('更新一条新视频数据！', vData.aid);
+    }
   }
 }
 
@@ -200,16 +205,18 @@ async function $updateTheListReply(list = []) {
   for (const key in list) {
     const item = list[key]
     let {data} = await bApiList.getVideoReply({aid: item.aid})
-    const {replies, top_replies} = data
+    if (data) {
+      const {replies, top_replies} = data
 
-    await VIDEO.doc(item._id).update({
-      data: {
-        reply: {
-          replies, top_replies
+      await VIDEO.doc(item._id).update({
+        data: {
+          reply: {
+            replies, top_replies
+          }
         }
-      }
-    })
-    console.log('更新一条新视频评论！', item.aid, key);
+      })
+      console.log('更新一条新视频评论！', item.aid, key);
+    }
   }
 }
 
@@ -255,6 +262,11 @@ exports.fetchTask = async (event, context) => { // 定时触发的task 每天5�
 exports.main = async (event, context) => {
   try {
     console.log('main')
+    // const USERS = db.collection('users')
+    // const {data} = await USERS.where({
+    //   nickname: 'CHOCO'
+    // }).get()
+    // console.log(data);
 
     return {success: true, msg: '执行成功', data: null};
   } catch (e) {

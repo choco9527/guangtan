@@ -47,7 +47,7 @@ exports.main = async (event, context) => {
 
 exports.update = async (event, context) => {
   try {
-    // 获取基础信息
+    // 更新基础信息
     const {params} = event
     const reqData = {}
     Reflect.ownKeys(params).forEach(key => {
@@ -55,6 +55,14 @@ exports.update = async (event, context) => {
         reqData[key] = params[key]
       }
     })
+    if (reqData.nickname) { // 用户名不可重复
+      const {data: hasUser} = await USERS.where({
+        nickname: reqData.nickname
+      }).get()
+      if (hasUser.length) {
+        throw new Error('该昵称已被人使用，请换一个吧')
+      }
+    }
     if (JSON.stringify(reqData) !== '{}') {
       const {OPENID} = cloud.getWXContext()
 
@@ -69,6 +77,6 @@ exports.update = async (event, context) => {
     return {success: false, msg: '更新失败'};
   } catch (e) {
     console.log(e);
-    return {success: false, msg: '更新失败'};
+    return {success: false, msg: e.message || '更新失败'};
   }
 };
